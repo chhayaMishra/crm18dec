@@ -1,0 +1,93 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3>Department</h3>
+    </div>
+    <div class="searchSection">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput appTrimAndPreventFirstSpac [(ngModel)]="searchString"
+          (input)="searchInput($event.target.value)">
+      </mat-form-field>
+      <div class="buttonSectionCenter">
+        <app-button [buttonClass]="'submit'" text="Add Department"
+          (click)="addUpdateDepartmentPopUp(addUpdateDepartmentComponent)"></app-button>
+        <app-button [buttonClass]="'submit'" text="Export" (click)="exportDepartmentList()"></app-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-3">
+    <table class="table display product-overview mb-30" id="support_table">
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Department</th>
+          <th>Description</th>
+          <th>Total Employee</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of departmentInformation?.tableData | paginate:config; let i = index;">
+          <td>{{ (config.currentPage-1)*config.itemsPerPage+i+1 }}</td>
+          <td>{{item.departmentName}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.employeeCount}}</td>
+          <td>
+            <i class="fa fa-edit" aria-hidden="true"
+              (click)="addUpdateDepartmentPopUp(addUpdateDepartmentComponent, item.departmentId)"></i>&nbsp;
+            <i class="fa fa-trash" aria-hidden="true" (click)="deleteDepartment(item.departmentId)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator showFirstLastButtons [length]="config.totalItems" [pageSize]="config.itemsPerPage"
+      [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChanged($event)">
+    </mat-paginator>
+  </div>
+
+</div>
+
+<ng-template #addUpdateDepartmentComponent let-modal>
+  <div class=" modal-header" style="background: #eee; padding: 14px">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #000">{{departmentId ? 'Edit' : 'Add'}} Department</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="addUpdateDepartmentForm">
+    <div class="modal-body">
+      <div class="card-content">
+        <div class="card-body">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Department Name</mat-label>
+            <input matInput appTrimAndPreventFirstSpac formControlName="departmentName">
+            <mat-error
+              *ngIf="department.departmentName.errors && (department.departmentName.dirty || department.departmentName.touched ||submitted)">
+              <small *ngIf="department.departmentName.errors.required">
+                Department Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput appTrimAndPreventFirstSpac formControlName="description">
+            <mat-error
+              *ngIf="department.description.errors && (department.description.dirty || department.description.touched ||submitted)">
+              <small *ngIf="department.description.errors.required">
+                Description is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <app-button [buttonClass]="'clear'" text="Clear"></app-button>
+      <app-button [buttonClass]="'submit'" [type]="'submit'" [text]="!departmentId ? 'Save' : 'Update'"
+        (click)="addUpdateDepartment(addUpdateDepartmentForm)">
+      </app-button>
+    </div>
+  </form>
+</ng-template>

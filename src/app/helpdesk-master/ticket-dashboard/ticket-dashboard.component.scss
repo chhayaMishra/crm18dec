@@ -1,0 +1,11 @@
+::ng-deep .chart-legend .legend-labels {
+  line-height: 85%;
+  list-style: none;
+  float: left;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: max-content !important;
+  background: none !important;
+  margin-top: 5rem !important;
+  margin-left: 3rem !important;
+}

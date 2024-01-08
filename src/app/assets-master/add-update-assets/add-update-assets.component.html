@@ -1,0 +1,259 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3>{{assetsId ? 'Edit': 'Add'}} Assets</h3>
+    </div>
+  </div>
+
+  <div class="card p-4">
+    <form [formGroup]="addUpdateAssetsForm">
+      <div class="row">
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Select warehouse</mat-label>
+            <mat-select formControlName="wareHouseId">
+              <mat-option *ngFor="let item of warehouseList"
+                [value]="item.warehouseId">{{item.warehouseName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Select Asset Type</mat-label>
+            <mat-select (selectionChange)="assetsTypeSelection($event.value)" formControlName="assetsType">
+              <mat-option *ngFor="let item of assetsTypeList" [value]="item.value">{{item.name}}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="assets.assetsType.errors && (assets.assetsType.dirty || assets.assetsType.touched ||submitted)">
+              <small *ngIf="assets.assetsType.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Select Base Category</mat-label>
+            <mat-select (selectionChange)="baseCategorySelection($event.value)" formControlName="assetsBaseCategoryId">
+              <mat-option *ngFor="let item of baseCategoryList"
+                [value]="item.baseCategoryId">{{item.baseCategoryName}}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="assets.assetsBaseCategoryId.errors && (assets.assetsBaseCategoryId.dirty || assets.assetsBaseCategoryId.touched ||submitted)">
+              <small *ngIf="assets.assetsBaseCategoryId.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Select Category</mat-label>
+            <mat-select formControlName="assetsCategoryId">
+              <mat-option *ngFor="let item of categoryList" [value]="item.categoryId">{{item.categoryName}}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="assets.assetsCategoryId.errors && (assets.assetsCategoryId.dirty || assets.assetsCategoryId.touched ||submitted)">
+              <small *ngIf="assets.assetsCategoryId.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Item Name</mat-label>
+            <input matInput appTrimAndPreventFirstSpace formControlName="itemName">
+            <mat-error *ngIf="assets.itemName.errors && (assets.itemName.dirty || assets.itemName.touched ||submitted)">
+              <small *ngIf="assets.itemName.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Item Code</mat-label>
+            <input matInput appTrimAndPreventFirstSpace formControlName="itemCode">
+            <mat-error *ngIf="assets.itemCode.errors && (assets.itemCode.dirty || assets.itemCode.touched ||submitted)">
+              <small *ngIf="assets.itemCode.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Serial Number</mat-label>
+            <input matInput appTrimAndPreventFirstSpace formControlName="serialNo">
+            <mat-error *ngIf="assets.serialNo.errors && (assets.serialNo.dirty || assets.serialNo.touched ||submitted)">
+              <small *ngIf="assets.serialNo.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3" *ngIf="isPhysicalAsset == false">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>License Key</mat-label>
+            <input matInput appTrimAndPreventFirstSpace formControlName="licenseKey">
+            <mat-error
+              *ngIf="assets.licenseKey.errors && (assets.licenseKey.dirty || assets.licenseKey.touched ||submitted)">
+              <small *ngIf="assets.licenseKey.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3" *ngIf="isPhysicalAsset == false">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>License Start Date</mat-label>
+            <input matInput appTrimAndPreventFirstSpace [matDatepicker]="licenseStartDate"
+              formControlName="licenseStartDate">
+            <mat-datepicker-toggle matSuffix [for]="licenseStartDate">
+            </mat-datepicker-toggle>
+            <mat-datepicker #licenseStartDate></mat-datepicker>
+            <mat-error
+              *ngIf="assets.licenseStartDate.errors && (assets.licenseStartDate.dirty || assets.licenseStartDate.touched ||submitted)">
+              <small *ngIf="assets.licenseStartDate.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3" *ngIf="isPhysicalAsset == false">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>License End Date</mat-label>
+            <input matInput appTrimAndPreventFirstSpace [matDatepicker]="licenseExpiryDate"
+              formControlName="licenseExpiryDate">
+            <mat-datepicker-toggle matSuffix [for]="licenseExpiryDate">
+            </mat-datepicker-toggle>
+            <mat-datepicker #licenseExpiryDate></mat-datepicker>
+            <mat-error
+              *ngIf="assets.licenseExpiryDate.errors && (assets.licenseExpiryDate.dirty || assets.licenseExpiryDate.touched ||submitted)">
+              <small *ngIf="assets.licenseExpiryDate.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Invoice Number</mat-label>
+            <input matInput appTrimAndPreventFirstSpace formControlName="invoiceNo">
+            <mat-error
+              *ngIf="assets.invoiceNo.errors && (assets.invoiceNo.dirty || assets.invoiceNo.touched ||submitted)">
+              <small *ngIf="assets.invoiceNo.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Price</mat-label>
+            <input matInput appNumberValidation formControlName="price">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Purchase Date</mat-label>
+            <input matInput appTrimAndPreventFirstSpace [matDatepicker]="purchaseDate" formControlName="purchaseDate">
+            <mat-datepicker-toggle matSuffix [for]="purchaseDate">
+            </mat-datepicker-toggle>
+            <mat-datepicker #purchaseDate></mat-datepicker>
+            <mat-error
+              *ngIf="assets.purchaseDate.errors && (assets.purchaseDate.dirty || assets.purchaseDate.touched ||submitted)">
+              <small *ngIf="assets.purchaseDate.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3" *ngIf="isPhysicalAsset">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Warrenty Expiry Date</mat-label>
+            <input matInput appTrimAndPreventFirstSpace [matDatepicker]="warrantyExpDate"
+              formControlName="warrantyExpDate">
+            <mat-datepicker-toggle matSuffix [for]="warrantyExpDate">
+            </mat-datepicker-toggle>
+            <mat-datepicker #warrantyExpDate></mat-datepicker>
+            <mat-error
+              *ngIf="assets.warrantyExpDate.errors && (assets.warrantyExpDate.dirty || assets.warrantyExpDate.touched ||submitted)">
+              <small *ngIf="assets.warrantyExpDate.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Location</mat-label>
+            <input matInput appTrimAndPreventFirstSpace formControlName="location">
+            <mat-error *ngIf="assets.location.errors && (assets.location.dirty || assets.location.touched ||submitted)">
+              <small *ngIf="assets.location.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Condition</mat-label>
+            <mat-select formControlName="assetCondition" (selectionChange)="conditionSelection($event.value)">
+              <mat-option *ngFor="let item of assetsConditionList" [value]="item.value">{{item.name}}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="assets.assetCondition.errors && (assets.assetCondition.dirty || assets.assetCondition.touched ||submitted)">
+              <small *ngIf="assets.assetCondition.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput appTrimAndPreventFirstSpace formControlName="assetsDescription">
+            <mat-error
+              *ngIf="assets.assetsDescription.errors && (assets.assetsDescription.dirty || assets.assetsDescription.touched ||submitted)">
+              <small *ngIf="assets.assetsDescription.errors.required">
+                Warehouse Name is required
+              </small>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3" *ngIf="assignable">
+          <ng-select placeholder="Select Employee" formControlName="assignToId">
+            <ng-option *ngFor="let item of employeeList" [value]="item.employeeId">{{item.employeeName}}</ng-option>
+          </ng-select>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="row ml-2">
+          <div class="form-group col-md-12">
+            <p>Upload Images Maximum 10</p>
+            <input type="file" id="file" #fileInput multiple="true" (change)="uploadFiles($event.target.files)">
+            <div *ngIf="filesArray.length > 0" class="mt-2 mb-2 ml-2" style="display: flex;">
+              <div class="ml-2" *ngFor="let item of filesArray; let i = index">
+                <div *ngIf="item">
+                  <i class="fa fa-times" aria-hidden="true" style="cursor: pointer;" (click)="deleteImage(i)"></i>
+                </div>
+                <div class="card-img-top1 p-2" *ngIf="item">
+                  <img class="displayimg" src="{{api +'/'+ item}}" alt="" width="75" height="75">
+                </div>
+                <div class="card-img-top1" *ngIf="!item">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="buttonSectionCenter">
+        <app-button [buttonClass]="'clear'" [type]="'button'" text="Clear"></app-button>
+        <app-button [buttonClass]="'submit'" [type]="'submit'" text="Submit"
+          (click)="submitAssetValue(addUpdateAssetsForm)"></app-button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,221 @@
+SCSS .login-block {
+  background: #ffff;
+  /* fallback for old browsers */
+
+  width: 100%;
+}
+
+.img-section {
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+  background-size: cover;
+  // background-image: url("../../../assets/images/Freelancer-bro 1.jpg");
+}
+
+.backgroundLoginright {
+  background: #f6f3f3;
+  border-radius: 50% 0% 0% 50%;
+}
+
+.login-form {
+  padding: 15px;
+  color: #911924;
+  background: white;
+  box-shadow: -10px 0px 60px rgba(15, 0, 167, 0.05);
+}
+
+.newcard {
+  background: #ffffff;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 15px 15px;
+  width: 500px;
+}
+
+.cl-submit {
+  background-color: #fa5d00;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 100px;
+  color: white;
+}
+
+.login100-form-title {
+  font-size: 30px;
+  text-align: center;
+  display: block;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 48px;
+  text-transform: capitalize;
+  color: #1e1f22;
+}
+
+.text {
+  position: relative;
+  float: right;
+  clear: right;
+}
+
+.text::after {
+  content: "";
+  position: absolute;
+  border-top: 3px solid #fa5d00;
+  left: 45%;
+  bottom: -3px;
+  width: 12%;
+  height: 0px;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+.h-custom {
+  height: calc(100% - 73px);
+}
+
+@media (max-width: 450px) {
+  .h-custom {
+    height: 100%;
+  }
+}
+
+.LoginwithEmail {
+  align-items: center;
+  padding: 11px;
+  gap: 10px;
+  margin-top: 20px;
+  color: #fff;
+  width: 450px;
+  height: 55px;
+  background: rgb(255, 97, 84);
+  border: none;
+  margin-bottom: 60px;
+  box-shadow: 0px 8px 16px rgba(247, 71, 30, 0.2);
+  border-radius: 100px;
+}
+
+.SigninwithGoogle {
+  align-items: center;
+  padding: 11px;
+  gap: 10px;
+  margin-top: 20px;
+  width: 450px;
+  height: 55px;
+  color: #fff;
+  background: #4285f4;
+  border: none;
+  box-shadow: 0px 16px 32px rgba(190, 190, 190, 0.2);
+  border-radius: 20px;
+}
+
+.SigninwithMicrosoft {
+  align-items: center;
+  padding: 11px;
+  gap: 10px;
+  margin-top: 20px;
+  width: 450px;
+  height: 55px;
+  color: #fff;
+  background: #004086;
+  border: none;
+  box-shadow: 0px 16px 32px rgba(190, 190, 190, 0.2);
+  border-radius: 20px;
+}
+
+.LogIn {
+  width: 450px;
+  height: 55px;
+  color: #ffffff;
+  background: rgb(255, 97, 84);
+  box-shadow: 0px 8px 16px rgba(247, 71, 30, 0.2);
+  border-radius: 100px;
+}
+
+.classlogoimg {
+  width: 50%;
+  margin: auto;
+  display: block;
+  margin-bottom: -15px;
+  margin-top: 28px;
+}
+
+@media all and (min-width: 1024px) and (max-width: 1439px) {
+  .newcard {
+    background: #ffffff;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 15px 25px;
+    width: 408px;
+  }
+
+  .card {
+    margin-bottom: 0px !important;
+  }
+
+  .classlogoimg {
+    width: 50%;
+    margin: auto;
+    display: block;
+    margin-bottom: -15px;
+    margin-top: 10px;
+  }
+
+  .logingif {
+    width: 405px;
+  }
+
+  .LoginwithEmail {
+    align-items: center;
+    padding: 11px;
+    gap: 10px;
+    margin-top: 20px;
+    color: #fff;
+    width: 350px;
+    height: 55px;
+    background: rgb(255, 97, 84);
+    border: none;
+    margin-bottom: 60px;
+    box-shadow: 0px 8px 16px rgba(247, 71, 30, 0.2);
+    border-radius: 100px;
+  }
+
+  .SigninwithGoogle {
+    align-items: center;
+    padding: 11px;
+    gap: 10px;
+    margin-top: 20px;
+    width: 350px;
+    height: 55px;
+    color: #fff;
+    background: #4285f4;
+    border: none;
+    box-shadow: 0px 16px 32px rgba(190, 190, 190, 0.2);
+    border-radius: 20px;
+  }
+
+  .SigninwithMicrosoft {
+    align-items: center;
+    padding: 11px;
+    gap: 10px;
+    margin-top: 40px;
+    width: 350px;
+    height: 55px;
+    color: #fff;
+    background: #004086;
+    border: none;
+    box-shadow: 0px 16px 32px rgba(190, 190, 190, 0.2);
+    border-radius: 20px;
+  }
+}

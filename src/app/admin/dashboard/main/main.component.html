@@ -1,0 +1,122 @@
+<!-- Rows and column  main div -->
+
+<div class="d-flex gap-3 ">
+  <div class="d-flex  flex-column maindiv1 ">
+    <div class="d-flex gap-3">
+      <!-- <app-achievement></app-achievement>
+         <app-clockin></app-clockin> -->
+    </div>
+
+    <div class="ms-3">
+      <div class="card py-3 px-3">
+        <div class="d-flex justify-content-between m-2">
+          <p class="polltext">Videos</p>
+          <p class="cardI14 mt-2">View Details</p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3">
+            <iframe src="https://www.taxmann.com/emailer/images/CompaniesAct.mp4" width="100%"
+              style="border-radius: 15px;"></iframe>
+          </div>
+          <div class="col-lg-3">
+            <iframe src="https://www.taxmann.com/emailer/images/CompaniesAct.mp4" width="100%"
+              style="border-radius: 15px;"></iframe>
+          </div>
+          <div class="col-lg-3">
+            <iframe src="https://www.taxmann.com/emailer/images/CompaniesAct.mp4" width="100%"
+              style="border-radius: 15px;"></iframe>
+          </div>
+          <div class="col-lg-3">
+            <iframe src="https://www.taxmann.com/emailer/images/CompaniesAct.mp4" width="100%"
+              style="border-radius: 15px;"></iframe>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card py-3 px-3 ">
+        <div class="d-flex justify-content-between m-2">
+          <p class="polltext">Recent Jobs</p>
+          <p class="cardI14 mt-2">View Details</p>
+        </div>
+
+        <ngb-carousel *ngIf="recentJobnew">
+          <ng-template ngbSlide>
+            <div class="d-flex gap-2">
+
+              <div class="card col-md-4 p-2" *ngFor=" let data of recentJobnew">
+                <div class="d-flex gap-3 p-2">
+                  <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="19.5" cy="19.5" r="19.5" fill="#D9D9D9" />
+                  </svg>
+                  <div class="d-flex flex-column">
+                    <p class="textannoucement1">{{data}}</p>
+                    <p class="poppins6">Indore</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                  <p>Requirement</p>
+                  <app-button [buttonStyle]="{'width':'100px'} " [buttonClass]="'view'" text="Urgent">
+                  </app-button>
+                </div>
+
+              </div>
+
+
+            </div>
+          </ng-template>
+          <ng-template ngbSlide>
+            <div class="d-flex gap-2">
+              <div class="card col-md-4 p-2" *ngFor=" let data of recentJobnew">
+                <div class="d-flex gap-3 p-2">
+                  <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="19.5" cy="19.5" r="19.5" fill="#D9D9D9" />
+                  </svg>
+                  <div class="d-flex flex-column">
+                    <p class="textannoucement1">{{data}}</p>
+                    <p class="poppins6">Indore</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                  <p>Requirement</p>
+                  <app-button [buttonStyle]="{'width':'100px'} " [buttonClass]="'view'" text="Urgent">
+                  </app-button>
+                </div>
+
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template ngbSlide>
+            <div class="d-flex gap-2">
+              <div class="card col-md-4 p-2" *ngFor=" let data of recentJobnew">
+                <div class="d-flex gap-3 p-2">
+                  <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="19.5" cy="19.5" r="19.5" fill="#D9D9D9" />
+                  </svg>
+                  <div class="d-flex flex-column">
+                    <p class="textannoucement1">{{data}}</p>
+                    <p class="poppins6">Indore</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                  <p>Requirement</p>
+                  <app-button [buttonStyle]="{'width':'100px'} " [buttonClass]="'view'" text="Urgent">
+                  </app-button>
+                </div>
+
+              </div>
+            </div>
+          </ng-template>
+        </ngb-carousel>
+
+      </div>
+    </div>
+  </div>
+  <!-- <app-post></app-post> -->
+
+</div>

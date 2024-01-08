@@ -1,0 +1,135 @@
+<div class="buttonSectionEnd">
+  <app-button [buttonClass]="'submit'" [type]="'button'" text="Add Holiday"
+    (click)="addUpdateHolidayPopup(addUpdateHolidayContent)"></app-button>
+</div>
+<table class="table display product-overview" id="support_table">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Holiday Name</th>
+      <th>Holiday Date</th>
+      <th>Description</th>
+      <th>Floating Holiday</th>
+      <th>Created By</th>
+      <th>Updated By</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of holidayList  | paginate : config; let i = index">
+      <td>{{(config.currentPage - 1) * config.itemsPerPage + i + 1}}</td>
+      <td>{{item.holidayName}}</td>
+      <td>{{item.holidayDate | date : 'mediumDate'}}</td>
+      <td>{{item.description}}</td>
+      <td>{{item.isFloaterOptional ? 'YES': 'NO'}}</td>
+      <td>{{item.createBy}}<br><small>{{item.createdOn | date : 'mediumDate'}}</small>
+      </td>
+      <td>{{item.updateBy}}<br><small>{{item.updatedOn | date : 'mediumDate'}}</small>
+      </td>
+      <td>
+        <div class="d-flex gap-2">
+          <i class="fa fa-edit" (click)="addUpdateHolidayPopup(addUpdateHolidayContent, item.holidayId)"></i>
+          <i class="fa fa-trash" (click)="deleteHoliday(item.holidayId)"></i>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<mat-paginator showFirstLastButtons [length]="holidayList.length" [pageSize]="config.itemsPerPage"
+  [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChanged($event)">
+</mat-paginator>
+
+
+<ng-template #addUpdateHolidayContent let-modal>
+  <div class=" modal-header" style="background: #eee; padding: 14px">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #000">{{holidayId ? 'Update' : 'Add'}} Holiday</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="addUpdateHolidayForm">
+    <div class="modal-body">
+      <div class=" upload">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Holiday Name</mat-label>
+                  <input matInput appTrimAndPreventFirstSpac formControlName="holidayName">
+                  <mat-error
+                    *ngIf="holiday.holidayName.errors && (holiday.holidayName.dirty || holiday.holidayName.touched ||submitted)">
+                    <small *ngIf="holiday.holidayName.errors.required">
+                      Holiday Name is required
+                    </small>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Description</mat-label>
+                  <input matInput appTrimAndPreventFirstSpac formControlName="description">
+                  <mat-error
+                    *ngIf="holiday.description.errors && (holiday.description.dirty || holiday.description.touched ||submitted)">
+                    <small *ngIf="holiday.description.errors.required">
+                      Description is required
+                    </small>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Holiday Date</mat-label>
+                  <input matInput [matDatepicker]="holidayDate" formControlName="holidayDate">
+                  <mat-datepicker-toggle matSuffix [for]="holidayDate"></mat-datepicker-toggle>
+                  <mat-datepicker #holidayDate></mat-datepicker>
+                  <mat-error
+                    *ngIf="holiday.holidayDate.errors && (holiday.holidayDate.dirty || holiday.holidayDate.touched ||submitted)">
+                    <small *ngIf="holiday.holidayDate.errors.required">
+                      Holiday Date is required
+                    </small>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Is Floater Optional</mat-label>
+                  <mat-select formControlName="isFloaterOptional">
+                    <mat-option [value]="true">Yes</mat-option>
+                    <mat-option [value]="false">No</mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="holiday.isFloaterOptional.errors && (holiday.isFloaterOptional.dirty || holiday.isFloaterOptional.touched ||submitted)">
+                    <small *ngIf="holiday.isFloaterOptional.errors.required">
+                      Is Floater Optional Selection is required
+                    </small>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Select Text Color</mat-label>
+                  <mat-select formControlName="textColor" placeholder="">
+                    <mat-option [value]="'1'">Black</mat-option>
+                    <mat-option [value]="'2'">White</mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="holiday.textColor.errors && (holiday.textColor.dirty || holiday.textColor.touched ||submitted)">
+                    <small *ngIf="holiday.textColor.errors.required">
+                      Text Color Selection is required
+                    </small>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <app-button [buttonClass]="'clear'" [text]="'Clear'" (click)="resetForm()"></app-button>
+      <app-button [buttonClass]="'submit'" [text]="holidayId ? 'Update':'Submit'" [type]="'submit'"
+        (click)="addUpdateHoliday(addUpdateHolidayForm)"></app-button>
+    </div>
+  </form>
+</ng-template>

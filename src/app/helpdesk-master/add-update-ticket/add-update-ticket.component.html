@@ -1,0 +1,139 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3 flex-wrap">
+    <h3 class="textannoucement1">{{!categoryId ? "Add" : "Update"}} Ticket Category</h3>
+  </div>
+  <div class="card p-4">
+    <p class="heading">
+      Here you can configure the settings related to this category
+    </p>
+
+    <div class="formSection">
+      <form [formGroup]="addUpdateCategoryForm">
+        <div class="row">
+          <div class="col-lg-4">
+            <mat-label>Category Name<span class="danger">*</span></mat-label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput appTrimAndPreventFirstSpace formControlName="categoryName"
+                placeholder="Enter Category Name">
+              <mat-error
+                *ngIf="category.categoryName.errors && (category.categoryName.dirty || category.categoryName.touched ||submitted)">
+                <span *ngIf="category.categoryName.errors.required">
+                  Category Name is required
+                </span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Description<span class="danger">*</span></mat-label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput appTrimAndPreventFirstSpace formControlName="description" placeholder="Enter Description">
+              <mat-error
+                *ngIf="category.description.errors && (category.description.dirty || category.description.touched ||submitted)">
+                <span *ngIf="category.description.errors.required">
+                  Description required
+                </span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Category Tag<span class="danger">*</span></mat-label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput appTrimAndPreventFirstSpace formControlName="categoryTag" maxlength="3"
+                placeholder="Enter Category Tag">
+              <mat-error
+                *ngIf="category.categoryTag.errors && (category.categoryTag.dirty || category.categoryTag.touched ||submitted)">
+                <span *ngIf="category.categoryTag.errors.required">
+                  Category tag is required
+                </span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-label class="mb-3">Select Category Head<span class="danger">*</span></mat-label>
+            <ng-select formControlName="categoryHead" placeholder="Select Category Head">
+              <ng-option disabled="ture" value="0">Select Category Head</ng-option>
+              <ng-option *ngFor="let item of employeeList" [value]="item.employeeId">{{item.displayName}}</ng-option>
+            </ng-select>
+            <mat-error
+              *ngIf="category.categoryHead.errors && (category.categoryHead.dirty || category.categoryHead.touched ||submitted)">
+              <small *ngIf="category.categoryHead.errors.required">
+                Category Head is required
+              </small>
+            </mat-error>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Category Assignee</mat-label>
+            <ng-select multiple="true" formControlName="categoriesAssign" placeholder="Select Category Assignee">
+              <ng-option *ngFor="let item of employeeList" [value]="item.employeeId">{{item.displayName}}</ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="priorityBox mt-5">
+          <h3>
+            Priority Settings
+          </h3>
+          <div class="row">
+            <div class="col-lg-6" *ngFor="let item of priorityList">
+              <div class="card p-4">
+                <div class="d-flex gap-2">
+                  <mat-icon [ngStyle]="{'color': item.color}">{{item.icon}}</mat-icon>
+                  <span>{{item.name}}</span>
+                  <mat-slide-toggle color="primary" [checked]="item.isRequired"
+                    (change)="prioritySelection($event.checked, item.priorityType)"></mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="subCategoryBox p-3">
+          <h4>Want Sub-Category for this Ticket Category</h4>
+          <mat-radio-group (change)="radioChange($event.value)">
+            <mat-radio-button value="1" [checked]="selected == '1'">Yes</mat-radio-button>
+            <mat-radio-button value="2" [checked]="selected == '2'">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="d-flex gap-3" *ngIf="selected == '1'">
+          <h5>Add Sub Category</h5>
+          <div class="addIcon" (click)="addSubCategory()">
+            <span>+</span>
+          </div>
+        </div>
+        <div class="formArrayBox" *ngFor="let item of subCategories.controls; let i = index">
+          <div class="d-flex gap-3" [formGroup]="item">
+            <div class="inputTag">
+              <mat-label>Sub Category Name<span class="danger">*</span></mat-label>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <input matInput appTrimAndPreventFirstSpace formControlName="subCategoriesName"
+                  placeholder="Enter Sub-Category">
+              </mat-form-field>
+            </div>
+            <div class="inputTag">
+              <mat-label>Description<span class="danger">*</span></mat-label>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <input matInput appTrimAndPreventFirstSpace formControlName="subCategoriesDescription"
+                  placeholder="Enter Description">
+              </mat-form-field>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-trash" (click)="deleteSubCategory(i)"></i>
+            </div>
+          </div>
+        </div>
+        <div class="row"></div>
+        <div class="reopenBox p-3">
+          <h5>Can Reopen Ticket</h5>
+          <mat-slide-toggle color="primary" formControlName="reOpenTicket"></mat-slide-toggle>
+        </div>
+        <div class="activeCategoryBox p-3" *ngIf="categoryId">
+          <h5>Activate Category</h5>
+          <mat-slide-toggle color="primary" formControlName="active"></mat-slide-toggle>
+        </div>
+        <div class="buttonSectionCenter">
+          <app-button [buttonClass]="'submit'" [type]="'submit'" [text]="!categoryId ? 'Submit' : 'Update'"
+            (click)="submitCategory(addUpdateCategoryForm)">
+          </app-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

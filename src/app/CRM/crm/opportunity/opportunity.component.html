@@ -1,0 +1,565 @@
+<div class="">
+  <mat-drawer-container class="innercontent">
+    <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
+      <!-- <h2 class="welcome-msg"><strong>Details</strong></h2> -->
+
+      
+
+      <!-- Opportunity Form -->
+
+      <form
+        class="validate-form"
+        [formGroup]="AddformGroup"
+        style="padding: 1rem !important"
+      >
+      <p class="auth-signup-text text-muted">
+        Enter details to create your opportunity
+      </p>
+        <section class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Topic</mat-label>
+
+              <input matInput formControlName="Topic" required />
+            </mat-form-field>
+
+            <!-- <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Account</mat-label>
+              <mat-select (selectionChange)="getContactSelect($event)" formControlName="contactId" required>
+                <mat-option *ngFor="let contact of contactList" [value]="contact.ContactId">
+           {{contact.FirstNameResponse + " " +contact.LastNameResponse}} 
+                  {{ contact.AccountName}}
+                </mat-option>
+              </mat-select>
+         <input matInput formControlName="Account" required /> 
+            </mat-form-field>
+          </section> -->
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Account</mat-label>
+              <mat-select
+                (selectionChange)="getAccountSelect($event)"
+                formControlName="accountId"
+                required
+              >
+                <mat-option
+                  *ngFor="let account of accountList"
+                  [value]="account.AccountId"
+                >
+                  <!-- {{contact.FirstNameResponse + " " +contact.LastNameResponse}} -->
+                  {{ account.AccountName }}
+                </mat-option>
+              </mat-select>
+              <!-- <input matInput formControlName="Account" required /> -->
+            </mat-form-field>
+          </div>
+        </section>
+        <!--  -->
+
+        <section class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Contact</mat-label>
+              <mat-select
+                (selectionChange)="getAccountSelect($event)"
+                formControlName="accountId"
+                required
+              >
+                <mat-option
+                  *ngFor="let account of accountList"
+                  [value]="account.AccountId"
+                >
+                  <!-- {{contact.FirstNameResponse + " " +contact.LastNameResponse}} -->
+                  {{ account.PrimaryContact }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matSuffix> contact_phone</mat-icon>
+              <!-- <input matInput formControlName="Contact" required /> -->
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Budget Amount</mat-label>
+
+              <input matInput formControlName="BudgetAmount" required />
+            </mat-form-field>
+          </div>
+        </section>
+        <section class="d-flex gap-2">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Currency</mat-label>
+              <mat-select
+                (selectionChange)="getCurrencySelect($event)"
+                formControlName="currencyId"
+                required
+              >
+                <mat-option
+                  *ngFor="let currency of currencyList"
+                  [value]="currency.CurrencyId"
+                >
+                  <!-- {{contact.FirstNameResponse + " " +contact.LastNameResponse}} -->
+                  {{ currency.CurrencyName }}
+                </mat-option>
+              </mat-select>
+              <!-- <input matInput formControlName="Contact" required /> -->
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Customerneed</mat-label>
+
+              <input matInput formControlName="Customerneed" required />
+            </mat-form-field>
+          </div>
+        </section>
+
+        <section class="row">
+          <div class="col-md-12">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Estclosedate</mat-label>
+
+              <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="Estclosedate"
+              />
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </section>
+
+        <section class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Estrevenue</mat-label>
+
+              <input matInput formControlName="Estrevenue" required />
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>OrganizationId</mat-label>
+
+              <input matInput formControlName="OrganizationId" required />
+            </mat-form-field>
+          </div>
+        </section>
+        <section class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>CompanyID</mat-label>
+
+              <input matInput formControlName="CompanyID" required />
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="Status">
+                <mat-option
+                  value="false"
+                  style="background-color: rgb(120, 148, 209); color: white"
+                  >Loss</mat-option
+                >
+                <mat-option
+                  value="true"
+                  style="background-color: rgb(252, 148, 200); color: white"
+                  >Won</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </section>
+        <!-- <section class="d-flex gap-2">
+          <button
+          mat-flat-button
+          class="auth-btn-cancle"
+          type="cancle"
+          (click)="CloseEvent()"
+        >
+          Cancle
+        </button>
+
+          <button
+            mat-flat-button
+            color="primary"
+            class="auth-form-btn submit"
+            type="submit"
+            (click)="AddUtility(AddformGroup.value)"
+          >
+            Submit
+          </button>
+
+         
+        </section> -->
+        <section class="d-flex" style="justify-content: flex-end">
+          <app-button
+            style="margin-right: 1rem"
+            [buttonstyle]="{ width: '139px' }"
+            [buttonClass]="'submit'"
+            text="Submit"
+            (click)="AddUtility(AddformGroup.value)"
+          >
+          </app-button>
+          <app-button
+            [buttonstyle]="{ width: '139px' }"
+            [buttonClass]="'submit'"
+            text="Cancel"
+            (click)="CloseEvent()"
+          >
+          </app-button>
+        </section>
+      </form>
+    </mat-drawer>
+
+    <mat-drawer-content>
+      <mat-card class="cardWithShadow theme-card" style=" height: 100% !important;">
+        <mat-card-content class="b-t-1">
+          <!-- <div class="container-fluid">
+        <div class="col-md-12 mt-4">
+          <h2 class="welcome-msg"><b>OPPORTUNITY</b></h2>
+        </div>
+      </div> -->
+          <div
+            class="d-flex align-items-end"
+            style="justify-content: space-between"
+          >
+            <div>
+              <h2 class="welcome-msg"><b>Opportunity Information</b></h2>
+            </div>
+            <div>
+              <ng-template #content1 let-c="close" let-d="dismiss">
+                <div class="modal-content">
+                  <div class="modal-header techHeader">
+                    <h4 class="modal-title">Excel Validation</h4>
+                    <button
+                      type="button"
+                      style="margin-bottom: 4px"
+                      class="close"
+                      aria-label="Close"
+                      (click)="c('Close click')"
+                    >
+                      <span
+                        aria-hidden="true"
+                        style="color: #000; font-size: 26px"
+                        >&times;</span
+                      >
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="card-content">
+                      <div class="card-body">
+                        <div class="list-group">
+                          <h5>
+                            <b>Account's fields </b> should contain only
+                            Alphabet
+                          </h5>
+                          <br />
+                          <div class="Demo">
+                            <h5
+                              style="
+                                font-weight: 500;
+                                font-size: 14px;
+                                line-height: 22px;
+                                color: #616576;
+                                padding-top: 10px;
+                              "
+                            ></h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <label
+                        for="inputFile"
+                        class="btn add-btn ml-2 submit"
+                        style="margin: 0"
+                        >Upload</label
+                      >
+                      <input
+                        hidden
+                        type="file"
+                        (change)="onChange($event, content1)"
+                        id="inputFile"
+                        name="inputFile"
+                        accept=".xlsx, .xls"
+                      />
+                      <button
+                        type="button"
+                        class="btn can-btn mr-2 submit"
+                        (click)="c('Close click')"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+
+              <section class="d-flex gap-2 me-4" style="float: right">
+                <button
+                  type="reset"
+                  class="btn add-btn mr-3 bg submit"
+                  (click)="Import(content1)"
+                >
+                  Import
+                </button>
+
+                <button
+                  type="button"
+                  class="btn add-btn mr-3 submit bg"
+                  (click)="downloadTemplate()"
+                >
+                  Download Template
+                </button>
+                <button
+                  class="btn add-btn mr-3 me-4 submit bg"
+                  (click)="exportToExcel()"
+                >
+                  Export
+                </button>
+              </section>
+            </div>
+          </div>
+
+          <div class="container-fluid mainTableData">
+            <div
+              class="d-flex align-items-end"
+              style="justify-content: space-between"
+            >
+              <div class="p-2">
+                <mat-form-field class="searchNavbar1 mb-4">
+                  <mat-label>Search</mat-label>
+
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="searchKeyword"
+                    (ngModelChange)="onSearchChange()"
+                    placeholder="Search "
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="ml-auto p-2">
+                <app-button
+                  [buttonClass]="'submit'"
+                  [type]="'button'"
+                  text="Create Opportunity"
+                  (click)="openAddDrawer()"
+                ></app-button>
+                <!-- <button mat-icon-button (click)="openAddDrawer()">
+                    <mat-icon>add</mat-icon>
+                  </button> -->
+              </div>
+            </div>
+
+            <!-- Opportunity table -->
+            <div style="padding: 10px" class="">
+              <table
+                mat-table
+                [dataSource]="OpportunitydetailsData"
+                class="mat-elevation-z8"
+              >
+                <ng-container matColumnDef="sno">
+                  <th mat-header-cell *matHeaderCellDef>S.no</th>
+
+                  <td mat-cell *matCellDef="let Account; let j = index">
+                    {{ j + 1 }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Topic">
+                  <th mat-header-cell *matHeaderCellDef>Topic.</th>
+
+                  <td mat-cell *matCellDef="let Account">
+                    {{ Account.Topic }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="account">
+                  <th mat-header-cell *matHeaderCellDef>Account</th>
+
+                  <td mat-cell *matCellDef="let Account">
+                    {{ Account.Account }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="contact">
+                  <th mat-header-cell *matHeaderCellDef>Contact</th>
+
+                  <td mat-cell *matCellDef="let Account">
+                    {{ Account.FullName }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Convo">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let Account">
+                    <button
+                      mat-icon-button
+                      matTooltip="Start Conversation"
+                      (click)="openActivity(Account.Id,Account)"
+                    >
+                      <mat-icon>chat_bubble</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Bamount">
+                  <th mat-header-cell *matHeaderCellDef>Budget Amount</th>
+
+                  <td mat-cell *matCellDef="let Account">
+                    {{ Account.BudgetAmount }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Erevenue">
+                  <th mat-header-cell *matHeaderCellDef>Est. Revenue</th>
+
+                  <td mat-cell *matCellDef="let Account">
+                    {{ Account.Estrevenue }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Eclosedate">
+                  <th mat-header-cell *matHeaderCellDef>Est. Close Date</th>
+
+                  <td mat-cell *matCellDef="let Account">
+                    {{ Account.Estclosedate | date: "MMMM dd YYYY" }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="OrganizationId">
+                  <th mat-header-cell *matHeaderCellDef>Organization Id</th>
+
+                  <td mat-cell *matCellDef="let Account">
+                    {{ Account.OrganizationId }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="CompanyId">
+                  <th mat-header-cell *matHeaderCellDef>Company Id</th>
+
+                  <td mat-cell *matCellDef="let Account">
+                    {{ Account.CompanyID }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="CustomerNeed">
+                  <th mat-header-cell *matHeaderCellDef>Customer Need</th>
+
+                  <td mat-cell *matCellDef="let Account">
+                    {{ Account.Customerneed }}
+                  </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="Status">
+                  <th mat-header-cell *matHeaderCellDef>Status</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let Account"
+                    style="padding: 10px; text-align: center"
+                    [ngStyle]="
+                      Account.Status == '0'
+                        ? {
+                            'background-color': ' rgb(120, 148, 209)',
+                            color: 'white'
+                          }
+                          : Account.Status == '1'
+                          ? {
+                              'background-color': ' rgb(252, 148, 200)',
+                              color: 'white'
+                            }
+                        : { 'background-color':  ' rgb(90, 77, 206)',
+                        color: 'white' }
+                    "
+                  >
+                    <p>{{ Account.Status }}</p>
+                  </td>
+                </ng-container> -->
+
+                <ng-container matColumnDef="Status">
+                  <th mat-header-cell *matHeaderCellDef>Status</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let Account"
+                    style="
+                      padding: 10px;
+                      text-align: center;
+                      border: 10px solid white;
+                    "
+                    [ngStyle]="getStatusCellStyle(Account.Status)"
+                  >
+                    <p>{{ Account.Status ? "Won" : "Lost" }}</p>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="CurrencyName">
+                  <th mat-header-cell *matHeaderCellDef>Currency</th>
+
+                  <td mat-cell *matCellDef="let Account">
+                    {{ Account.CurrencyName }}
+                  </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="Currency_id">
+                <th mat-header-cell *matHeaderCellDef>Currency_id </th>
+
+                <td mat-cell *matCellDef="let Account">
+                  {{ Account.currencyId}}
+                </td>
+              </ng-container> -->
+
+                <ng-container matColumnDef="Actions">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <p style="padding: 1rem 1rem 0rem 2rem">Action</p>
+
+                    <!-- <button mat-icon-button (click)="drawer.toggle()">
+                      <mat-icon>add</mat-icon>
+                    </button> -->
+                  </th>
+
+                  <tr>
+                    <td mat-cell *matCellDef="let element">
+                      <button mat-icon-button (click)="openEditDrawer(element)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+
+                      <!-- <button mat-icon-button (click)="deleteUtilityItem(element.Id)">
+                        <mat-icon>delete</mat-icon>
+                      </button> -->
+                      <button mat-icon-button (click)="openDelete(element.Id)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+
+              <mat-paginator
+                [pageSize]="pageSize"
+                [pageSizeOptions]="[5, 10, 25, 50]"
+                [length]="totalItems"
+                (page)="onPageChange($event)"
+              ></mat-paginator>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

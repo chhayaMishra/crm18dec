@@ -1,0 +1,71 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3>All Employee</h3>
+    </div>
+    <div class="searchSection d-flex gap-3">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Organization</mat-label>
+        <mat-select multiple [(ngModel)]="orgId" (selectionChange)="organizationSelection($event.value)">
+          <mat-option *ngFor="let item of organizationList" [value]="item.orgId">{{item.orgName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput appTrimAndPreventFirstSpac [(ngModel)]="searchString"
+          (input)="searchInput($event.target.value)">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="p-3">
+    <div class="buttonSectionCenter">
+      <app-button [buttonClass]="'submit'" text="Import"></app-button>
+      <app-button [buttonClass]="'submit'" text="Export"></app-button>
+      <app-button [buttonClass]="'submit'" text="Import Bulk Update"></app-button>
+      <app-button [buttonClass]="'submit'" text="Download Template"></app-button>
+      <app-button [buttonClass]="'submit'" text="Add Employee"
+        (click)="addUpdateEmployee()"></app-button>
+    </div>
+
+    <table class="table display product-overview mb-30" id="support_table">
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Employee Name</th>
+          <th>Contact no.</th>
+          <th>Official Mail</th>
+          <th>Organization</th>
+          <th>Department </th>
+          <th>Added By</th>
+          <th>Updated By</th>
+          <th>More Details</th>
+          <th>Action</th>
+          <th>Employee Activation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of employeeInformation?.employeeList | paginate:config; let i = index;">
+          <td>{{ (config.currentPage-1)*config.itemsPerPage+i+1 }}</td>
+          <td>{{item.displayName}}</td>
+          <td>{{item.mobilePhone}}</td>
+          <td>{{item.officeEmail}}</td>
+          <td>{{item.orgName}}</td>
+          <td>{{item.departmentName}}</td>
+          <td>{{item.addedByName}}</td>
+          <td>{{item.lastUpdatedByName}}</td>
+          <td><i class="fa fa-user"></i></td>
+          <td><i class="fa fa-edit" (click)="addUpdateEmployee(item.employeeId)"></i></td>
+          <td>
+            <mat-slide-toggle [(ngModel)]="item.isEmployeeIsLock" color="primary"
+              (change)="employeeActivationChange(item.employeeId)">
+            </mat-slide-toggle>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator showFirstLastButtons [length]="employeeInformation?.employeeList.length" [pageSize]="config.itemsPerPage"
+      [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChanged($event)">
+    </mat-paginator>
+  </div>
+</div>

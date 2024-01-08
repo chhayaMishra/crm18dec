@@ -1,0 +1,220 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3 flex-wrap">
+    <h3 class="textannoucement1">Ticket Management</h3>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card p-4">
+        <div class="d-flex">
+          <mat-icon [class]="ticketDetials?.class"
+            [ngStyle]="{'color':ticketDetials?.color}">{{ticketDetials?.iconName}}</mat-icon>
+          <h3 [matTooltip]="ticketDetials?.title | showtooltip : 50">{{ticketDetials?.title | wordslimit : 50}}</h3>
+        </div>
+        <span>{{ticketDetials?.ticketViewId}}</span>
+        <hr>
+        <div class="chatSection">
+          <div class="col-lg-12" *ngFor="let item of ticketDetials?.commentList">
+            <div style="width: 55%;" [ngStyle]="{'float':item.commentType === 'RECIVER' ? 'left' : 'right'}">
+              <div class="d-flex gap-2">
+                <div class="shortName ">
+                  <span>
+                    {{item.commentName | shortName}}
+                  </span>
+                </div>
+                <span class="d-flex align-items-center">{{item.commentName}}</span>
+              </div>
+              <div class="card messageSection ps-2"
+                [ngStyle]="{'background-color':item.commentType === 'RECIVER' ? '#f0f2f5' : '#d9fdd3'}">
+                <span class="description">{{item.message}}</span>
+                <div>
+                  <small class="commentTime">
+                    {{item.createOn | date:'medium'}}
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="imageSection">
+          <div class="" *ngFor="let item of ticketDetials?.commentList">
+            <div class="images" *ngFor="let img of item.imageUrl">
+              <img class="displayimg1" src="{{baseURL +'/'+ img}}" alt=""
+                (click)="imageViewPopup(imageViewContent, img)">
+            </div>
+          </div>
+        </div>
+        <div class="card-footer d-flex gap-2" *ngIf="ticketDetials?.ticketStatus != 3">
+          <div class="form-group">
+            <input type="text" class="form-control" appTrimAndPreventFirstSpace [(ngModel)]="message"
+              style="padding-left: 10px;" (keypress)="enterKeyPress($event)" placeholder="Please enter message">
+          </div>
+          <div class="buttonSection">
+            <app-button [buttonClass]="'submit'" text="Send" (click)="submitComment()">
+            </app-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card p-4" *ngIf="!creatorPage">
+        <small class="Heading ml-3">TICKET RAISED BY</small>
+        <div class="col-md-12">
+          <div class="d-flex align-content-center">
+            <span class='material-icons-round'>person</span>
+            <mat-label>Name</mat-label>
+          </div>
+          <p class="details">{{this.ticketDetials?.employeeBlock?.employeeName}}</p>
+        </div>
+        <div class="col-md-12">
+          <div class="d-flex align-content-center">
+            <span class='material-icons'>phone</span>
+            <mat-label>Contact Number</mat-label>
+          </div>
+          <p *ngIf="this.ticketDetials?.employeeBlock?.contactNumber == null">--Not set--</p>
+          <p class="details">{{this.ticketDetials?.employeeBlock?.contactNumber}}</p>
+        </div>
+        <div class="col-md-12">
+          <mat-label>Designation</mat-label>
+          <p class="details">{{this.ticketDetials?.employeeBlock?.designation}}</p>
+        </div>
+        <div class="col-md-12">
+          <mat-label>Ticket Category Head</mat-label>
+          <p class="details">{{this.ticketDetials?.categoryHeadName}}</p>
+        </div>
+        <div class="col-md-12">
+          <mat-label>Currently Assign To</mat-label>
+          <p class="details">{{this.ticketDetials?.assignedToName}}</p>
+        </div>
+      </div>
+      <div class="card p-4">
+        <span *ngIf="!creatorPage">TAKE ACTIONS</span>
+        <form [formGroup]="ticketStatusForm">
+          <div class="col-lg-12">
+            <mat-form-field class="example-full-width" appearance="outline" style="width: 100%;">
+              <mat-label>Category</mat-label>
+              <mat-select (selectionChange)="ticketCategorySelection($event.value)" formControlName="categoryId"
+                [disabled]="creatorPage || ticketDetials?.ticketStatus == 3">
+                <mat-option *ngFor="let item of ticketCategoryList"
+                  [value]="item.categoryId">{{item.categoryName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="col-lg-12" *ngIf="subCategoryList.length != 0">
+              <mat-form-field class="example-full-width" appearance="outline" style="width: 100%;">
+                <mat-label>Sub Category</mat-label>
+                <mat-select formControlName="subCategoriesId"
+                  [disabled]="creatorPage || ticketDetials?.ticketStatus == 3">
+                  <mat-option *ngFor="let item of subCategoryList"
+                    [value]="item.subCategoriesId">{{item.subCategoriesName}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-12">
+              <mat-form-field class="example-full-width" appearance="outline" style="width: 100%;">
+                <mat-label>Assigned to</mat-label>
+                <mat-select formControlName="assignedToId" [disabled]="creatorPage || ticketDetials?.ticketStatus == 3">
+                  <mat-option *ngFor="let item of assigneeList"
+                    [value]="item.assignedToId">{{item.assignedToName}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-12">
+              <mat-form-field class="example-full-width" appearance="outline" style="width: 100%;">
+                <mat-label>Priority</mat-label>
+                <mat-select formControlName="priorityType" [disabled]="creatorPage || ticketDetials?.ticketStatus == 3">
+                  <mat-option *ngFor="let item of priorityList"
+                    [value]="item.priorityType">{{item.priorityName}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-12">
+              <mat-form-field class="example-full-width" appearance="outline" style="width: 100%;">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="ticketStatus" [disabled]="creatorPage || ticketDetials?.ticketStatus == 3">
+                  <mat-option *ngFor="let item of status" [value]="item.id">{{item.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="buttonSection" *ngIf="!creatorPage && ticketDetials?.ticketStatus != 3">
+            <app-button [buttonClass]="'submit'" text="Update"
+              (click)="updateTicketStatus(ticketStatusForm)"></app-button>
+          </div>
+        </form>
+      </div>
+
+      <div class="reOpenSection p-4" *ngIf="ticketDetials?.ticketStatus == 3 && ticketDetials?.reOpenTicket">
+        <mat-label>Not Satisfied with Response?</mat-label>
+        <app-button [buttonClass]="'submit'" text="Re-Open Ticket"
+          (click)="reOpenTicketPopUp(reOpenTicketContent)"></app-button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #reOpenTicketContent let-modal>
+  <div class=" modal-header" style="background: #eee; padding: 14px">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #000">Uploaded Image</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="ticketReOpenForm">
+    <div class="modal-body">
+      <div class=" upload">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="col-lg-12">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Reason to Reopen Ticket</mat-label>
+                <input matInput appTrimAndPreventFirstSpac formControlName="message">
+                <mat-error
+                  *ngIf="reOpenTicekt.message.errors && (reOpenTicekt.message.dirty || reOpenTicekt.message.touched ||submitted)">
+                  <small *ngIf="reOpenTicekt.message.errors.required">
+                    Reason For Reopen is required
+                  </small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-12">
+              <p>Upload Images Maximum 5</p>
+              <input type="file" id="file" #fileInput (change)="uploadFiles($event.target.files)">
+              <div *ngIf="filesArray.length > 0" class="mt-2 mb-2 ml-2" style="display: flex;">
+                <div class="ml-2" *ngFor="let item of filesArray; let i = index">
+                  <div *ngIf="item">
+                    <i class="fa fa-times" aria-hidden="true" style="cursor: pointer;" (click)="deleteImage(i)"></i>
+                  </div>
+                  <div class="card-img-top1 p-2" *ngIf="item">
+                    <img class="displayimg" src="{{baseURL +'/'+ item}}" alt="" width="75" height="75">
+                  </div>
+                  <div class="card-img-top1" *ngIf="!item">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <app-button [buttonClass]="'submit'" text="Re-Open" (click)="reOpenTicket(ticketReOpenForm)"></app-button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #imageViewContent let-modal>
+  <div class=" modal-header" style="background: #eee; padding: 14px">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #000">Uploaded Image</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class=" upload">
+      <div class="card-content">
+        <div class="card-body">
+          <img class="" src="{{baseURL +'/'+ image}}" alt="" style="height: 100%;width: 100%;">
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

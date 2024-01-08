@@ -1,0 +1,24 @@
+.heading {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #1e1f22;
+}
+
+.priorityBox {
+  padding: 25px;
+  background: #f8f9fa;
+  border-radius: 15px;
+}
+
+.addIcon {
+  width: 30px;
+  height: 30px;
+  background: #4691ff;
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}

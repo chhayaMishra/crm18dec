@@ -1,0 +1,33 @@
+.heading {
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.quantity {
+  font-weight: 600;
+  font-size: 34px;
+}
+
+.quantitySign {
+  color: gray;
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.chartData {
+  display: grid;
+  align-items: center;
+}
+
+.assetsHeading {
+  font-weight: 500;
+  font-size: 32px;
+  color: #000000;
+}
+
+.Legend-colorBox {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: inline-block;
+}

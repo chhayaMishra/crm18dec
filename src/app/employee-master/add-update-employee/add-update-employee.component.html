@@ -1,0 +1,720 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3>{{information?.message}} Employee</h3>
+    </div>
+  </div>
+
+  <div class="employeeInformationSection mt-3">
+
+    <!-- intial information section -->
+    <mat-expansion-panel [hideToggle]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Initial Information</mat-panel-title>
+        <mat-panel-description></mat-panel-description>
+      </mat-expansion-panel-header>
+      <form [formGroup]="initialInformationForm">
+        <div class="row">
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="firstName">
+              <mat-error
+                *ngIf="initial.firstName.errors && (initial.firstName.dirty || initial.firstName.touched ||submitted)">
+                <small *ngIf="initial.firstName.errors.required">
+                  firstName is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Middle Name</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="middleName">
+              <mat-error
+                *ngIf="initial.middleName.errors && (initial.middleName.dirty || initial.middleName.touched ||submitted)">
+                <small *ngIf="initial.middleName.errors.required">
+                  middleName is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="lastName">
+              <mat-error
+                *ngIf="initial.lastName.errors && (initial.lastName.dirty || initial.lastName.touched ||submitted)">
+                <small *ngIf="initial.lastName.errors.required">
+                  lastName is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Gender</mat-label>
+              <mat-select formControlName="gender">
+                <mat-option value="Male">Male</mat-option>
+                <mat-option value="Female">Female</mat-option>
+                <mat-option value="Other">Other</mat-option>
+              </mat-select>
+              <mat-error *ngIf="initial.gender.errors && (initial.gender.dirty || initial.gender.touched ||submitted)">
+                <small *ngIf="initial.gender.errors.required">
+                  gender is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput [matDatepicker]="dateOfBirth" [max]="today" formControlName="dateOfBirth">
+              <mat-datepicker-toggle matSuffix [for]="dateOfBirth">
+              </mat-datepicker-toggle>
+              <mat-datepicker #dateOfBirth></mat-datepicker>
+              <mat-error
+                *ngIf="initial.dateOfBirth.errors && (initial.dateOfBirth.dirty || initial.dateOfBirth.touched ||submitted)">
+                <small *ngIf="initial.dateOfBirth.errors.required">
+                  dateOfBirth is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Mobile Number</mat-label>
+              <input matInput appNumberValidation formControlName="mobilePhone">
+              <mat-error
+                *ngIf="initial.mobilePhone.errors && (initial.mobilePhone.dirty || initial.mobilePhone.touched ||submitted)">
+                <small *ngIf="initial.mobilePhone.errors.required">
+                  mobilePhone is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Personal Email</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="personalEmail">
+              <mat-error
+                *ngIf="initial.personalEmail.errors && (initial.personalEmail.dirty || initial.personalEmail.touched ||submitted)">
+                <small *ngIf="initial.personalEmail.errors.required">
+                  personalEmail is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Office Email</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="officeEmail">
+              <mat-error
+                *ngIf="initial.officeEmail.errors && (initial.officeEmail.dirty || initial.officeEmail.touched ||submitted)">
+                <small *ngIf="initial.officeEmail.errors.required">
+                  officeEmail is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="buttonSectionCenter">
+          <app-button [buttonClass]="'clear'" text="Clear"></app-button>
+          <app-button [buttonClass]="'submit'" [type]="'submit'" text="Submit"
+            (click)="submitEmployeeInformations(initialInformationForm)"></app-button>
+        </div>
+      </form>
+    </mat-expansion-panel>
+    <br>
+
+    <!-- Personal Information section -->
+    <mat-expansion-panel [hideToggle]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Personal Information</mat-panel-title>
+        <mat-panel-description></mat-panel-description>
+      </mat-expansion-panel-header>
+      <form [formGroup]="personalInformationForm">
+        <div class="row">
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Nick Name</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="nickName">
+              <mat-error
+                *ngIf="personalInformation.nickName.errors && (personalInformation.nickName.dirty || personalInformation.nickName.touched ||submitted)">
+                <small *ngIf="personalInformation.nickName.errors.required">
+                  nickName is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Father Name</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="fatherName">
+              <mat-error
+                *ngIf="personalInformation.fatherName.errors && (personalInformation.fatherName.dirty || personalInformation.fatherName.touched ||submitted)">
+                <small *ngIf="personalInformation.fatherName.errors.required">
+                  fatherName is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Mother Name</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="motherName">
+              <mat-error
+                *ngIf="personalInformation.motherName.errors && (personalInformation.motherName.dirty || personalInformation.motherName.touched ||submitted)">
+                <small *ngIf="personalInformation.motherName.errors.required">
+                  motherName is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>DOB Per Adhaar</mat-label>
+              <input matInput [matDatepicker]="dobPerAdhaar" [max]="today" formControlName="dobPerAdhaar">
+              <mat-datepicker-toggle matSuffix [for]="dobPerAdhaar">
+              </mat-datepicker-toggle>
+              <mat-datepicker #dobPerAdhaar></mat-datepicker>
+              <mat-error
+                *ngIf="personalInformation.dobPerAdhaar.errors && (personalInformation.dobPerAdhaar.dirty || personalInformation.dobPerAdhaar.touched ||submitted)">
+                <small *ngIf="personalInformation.dobPerAdhaar.errors.required">
+                  dobPerAdhaar is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Blood Group</mat-label>
+              <mat-select formControlName="bloodGroup">
+                <mat-option [value]="item.bloodGroupId" *ngFor="let item of bloodGroupList">
+                  {{item.bloodGroupType}}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="personalInformation.bloodGroup.errors && (personalInformation.bloodGroup.dirty || personalInformation.bloodGroup.touched ||submitted)">
+                <small *ngIf="personalInformation.bloodGroup.errors.required">
+                  bloodGroup is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Total Experience</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="totalExperience">
+              <mat-error
+                *ngIf="personalInformation.totalExperience.errors && (personalInformation.totalExperience.dirty || personalInformation.totalExperience.touched ||submitted)">
+                <small *ngIf="personalInformation.totalExperience.errors.required">
+                  totalExperience is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Marital Status</mat-label>
+              <mat-select formControlName="maritalStatus">
+                <mat-option [value]="item" *ngFor="let item of maritalStatus">{{item}}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="personalInformation.maritalStatus.errors && (personalInformation.maritalStatus.dirty || personalInformation.maritalStatus.touched ||submitted)">
+                <small *ngIf="personalInformation.maritalStatus.errors.required">
+                  maritalStatus is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Medical Issue</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="medicalIssue">
+              <mat-error
+                *ngIf="personalInformation.medicalIssue.errors && (personalInformation.medicalIssue.dirty || personalInformation.medicalIssue.touched ||submitted)">
+                <small *ngIf="personalInformation.medicalIssue.errors.required">
+                  medicalIssue is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Medical Insurance Number</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="medicalInsuranceNumber">
+              <mat-error
+                *ngIf="personalInformation.medicalInsuranceNumber.errors && (personalInformation.medicalInsuranceNumber.dirty || personalInformation.medicalInsuranceNumber.touched ||submitted)">
+                <small *ngIf="personalInformation.medicalInsuranceNumber.errors.required">
+                  medicalInsuranceNumber is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Aadhar Number</mat-label>
+              <input matInput appNumberValidation formControlName="aadharNumber">
+              <mat-error
+                *ngIf="personalInformation.aadharNumber.errors && (personalInformation.aadharNumber.dirty || personalInformation.aadharNumber.touched ||submitted)">
+                <small *ngIf="personalInformation.aadharNumber.errors.required">
+                  aadharNumber is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Pan Number</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="panNumber">
+              <mat-error
+                *ngIf="personalInformation.panNumber.errors && (personalInformation.panNumber.dirty || personalInformation.panNumber.touched ||submitted)">
+                <small *ngIf="personalInformation.panNumber.errors.required">
+                  panNumber is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Whatsapp Number</mat-label>
+              <input matInput appNumberValidation formControlName="whatsappNumber">
+              <mat-error
+                *ngIf="personalInformation.whatsappNumber.errors && (personalInformation.whatsappNumber.dirty || personalInformation.whatsappNumber.touched ||submitted)">
+                <small *ngIf="personalInformation.whatsappNumber.errors.required">
+                  whatsappNumber is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Emergency Number</mat-label>
+              <input matInput appNumberValidation formControlName="emergencyNumber">
+              <mat-error
+                *ngIf="personalInformation.emergencyNumber.errors && (personalInformation.emergencyNumber.dirty || personalInformation.emergencyNumber.touched ||submitted)">
+                <small *ngIf="personalInformation.emergencyNumber.errors.required">
+                  emergencyNumber is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Local Address</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="localAddress">
+              <mat-error
+                *ngIf="personalInformation.localAddress.errors && (personalInformation.localAddress.dirty || personalInformation.localAddress.touched ||submitted)">
+                <small *ngIf="personalInformation.localAddress.errors.required">
+                  localAddress is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Permanent Address</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="permanentAddress">
+              <mat-error
+                *ngIf="personalInformation.permanentAddress.errors && (personalInformation.permanentAddress.dirty || personalInformation.permanentAddress.touched ||submitted)">
+                <small *ngIf="personalInformation.permanentAddress.errors.required">
+                  permanentAddress is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Citizenship</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="citizenship">
+              <mat-error
+                *ngIf="personalInformation.citizenship.errors && (personalInformation.citizenship.dirty || personalInformation.citizenship.touched ||submitted)">
+                <small *ngIf="personalInformation.citizenship.errors.required">
+                  citizenship is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Visa Type</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="visaType">
+              <mat-error
+                *ngIf="personalInformation.visaType.errors && (personalInformation.visaType.dirty || personalInformation.visaType.touched ||submitted)">
+                <small *ngIf="personalInformation.visaType.errors.required">
+                  visaType is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Visa Number</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="visaNumber">
+              <mat-error
+                *ngIf="personalInformation.visaNumber.errors && (personalInformation.visaNumber.dirty || personalInformation.visaNumber.touched ||submitted)">
+                <small *ngIf="personalInformation.visaNumber.errors.required">
+                  visaNumber is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Passport Number</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="passportNumber">
+              <mat-error
+                *ngIf="personalInformation.passportNumber.errors && (personalInformation.passportNumber.dirty || personalInformation.passportNumber.touched ||submitted)">
+                <small *ngIf="personalInformation.passportNumber.errors.required">
+                  passportNumber is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Passport Valid Until</mat-label>
+              <input matInput [matDatepicker]="passportValidUntil" formControlName="passportValidUntil">
+              <mat-datepicker-toggle matSuffix [for]="passportValidUntil">
+              </mat-datepicker-toggle>
+              <mat-datepicker #passportValidUntil></mat-datepicker>
+              <mat-error
+                *ngIf="personalInformation.passportValidUntil.errors && (personalInformation.passportValidUntil.dirty || personalInformation.passportValidUntil.touched ||submitted)">
+                <small *ngIf="personalInformation.passportValidUntil.errors.required">
+                  passportValidUntil is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="buttonSectionCenter">
+          <app-button [buttonClass]="'clear'" text="Clear"></app-button>
+          <app-button [buttonClass]="'submit'" [type]="'submit'" text="Submit"
+            (click)="submitPersoanlInformation(personalInformationForm)"></app-button>
+        </div>
+      </form>
+    </mat-expansion-panel>
+    <br>
+
+    <!-- Bank Information section -->
+    <mat-expansion-panel [hideToggle]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Bank Information</mat-panel-title>
+        <mat-panel-description></mat-panel-description>
+      </mat-expansion-panel-header>
+      <form [formGroup]="bankInformationForm">
+        <div class="row">
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Bank Account Number</mat-label>
+              <input matInput appNumberValidation formControlName="bankAccountNumber">
+              <mat-error
+                *ngIf="bankInformation.bankAccountNumber.errors && (bankInformation.bankAccountNumber.dirty || bankInformation.bankAccountNumber.touched ||submitted)">
+                <small *ngIf="bankInformation.bankAccountNumber.errors.required">
+                  bankAccountNumber is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>IFSC Code</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="ifsc">
+              <mat-error
+                *ngIf="bankInformation.ifsc.errors && (bankInformation.ifsc.dirty || bankInformation.ifsc.touched ||submitted)">
+                <small *ngIf="bankInformation.ifsc.errors.required">
+                  ifsc is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Account Holder Name</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="accountHolderName">
+              <mat-error
+                *ngIf="bankInformation.accountHolderName.errors && (bankInformation.accountHolderName.dirty || bankInformation.accountHolderName.touched ||submitted)">
+                <small *ngIf="bankInformation.accountHolderName.errors.required">
+                  accountHolderName is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Bank Name</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="bankName">
+              <mat-error
+                *ngIf="bankInformation.bankName.errors && (bankInformation.bankName.dirty || bankInformation.bankName.touched ||submitted)">
+                <small *ngIf="bankInformation.bankName.errors.required">
+                  bankName is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>UAN</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="uan">
+              <mat-error
+                *ngIf="bankInformation.uan.errors && (bankInformation.uan.dirty || bankInformation.uan.touched ||submitted)">
+                <small *ngIf="bankInformation.uan.errors.required">
+                  uan is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Sort Code</mat-label>
+              <input matInput appTrimAndPreventFirstSpac formControlName="sortCode">
+              <mat-error
+                *ngIf="bankInformation.sortCode.errors && (bankInformation.sortCode.dirty || bankInformation.sortCode.touched ||submitted)">
+                <small *ngIf="bankInformation.sortCode.errors.required">
+                  nickName is required
+                  sortCode </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="buttonSectionCenter">
+          <app-button [buttonClass]="'clear'" text="Clear"></app-button>
+          <app-button [buttonClass]="'submit'" [type]="'submit'" text="Submit"
+            (click)="submitBankInformation(bankInformationForm)"></app-button>
+        </div>
+      </form>
+    </mat-expansion-panel>
+    <br>
+
+    <!-- Offical Information section -->
+    <mat-expansion-panel [hideToggle]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Offical Information</mat-panel-title>
+        <mat-panel-description></mat-panel-description>
+      </mat-expansion-panel-header>
+      <form [formGroup]="officalInformationForm">
+        <div class="row">
+          <div class="col-lg-4">
+            <mat-label>Employee Type</mat-label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-select formControlName="employeeTypeId" placeholder="">
+                <mat-option *ngFor="let item of employeeTypeList"
+                  [value]="item.employeeTypeId">{{item.employeeTypeName}}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="officialInformation.employeeTypeId.errors && (officialInformation.employeeTypeId.dirty || officialInformation.employeeTypeId.touched ||submitted)">
+                <small *ngIf="officialInformation.employeeTypeId.errors.required">
+                  employeeTypeId is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Department</mat-label>
+            <ng-select formControlName="departmentId" (change)="departmentSelectioin($event)">
+              <ng-option *ngFor="let item of departmentList"
+                [value]="item.departmentId">{{item.departmentName}}</ng-option>
+            </ng-select>
+            <mat-error
+              *ngIf="officialInformation.departmentId.errors && (officialInformation.departmentId.dirty || officialInformation.departmentId.touched ||submitted)">
+              <small *ngIf="officialInformation.departmentId.errors.required">
+                departmentId is required
+              </small>
+            </mat-error>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Designation</mat-label>
+            <ng-select formControlName="designationId" (change)="departmentSelectioin($event)">
+              <ng-option *ngFor="let item of designationList"
+                [value]="item.designationId">{{item.designationName}}</ng-option>
+            </ng-select>
+            <mat-error
+              *ngIf="officialInformation.designationId.errors && (officialInformation.designationId.dirty || officialInformation.designationId.touched ||submitted)">
+              <small *ngIf="officialInformation.designationId.errors.required">
+                designationId is required
+              </small>
+            </mat-error>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Joining Date</mat-label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput [matDatepicker]="joiningDate" formControlName="joiningDate">
+              <mat-datepicker-toggle matSuffix [for]="joiningDate">
+              </mat-datepicker-toggle>
+              <mat-datepicker #joiningDate></mat-datepicker>
+              <mat-error
+                *ngIf="officialInformation.joiningDate.errors && (officialInformation.joiningDate.dirty || officialInformation.joiningDate.touched ||submitted)">
+                <small *ngIf="officialInformation.joiningDate.errors.required">
+                  joiningDate is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Confirmation Date</mat-label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput [matDatepicker]="confirmationDate" formControlName="confirmationDate">
+              <mat-datepicker-toggle matSuffix [for]="confirmationDate">
+              </mat-datepicker-toggle>
+              <mat-datepicker #confirmationDate></mat-datepicker>
+              <mat-error
+                *ngIf="officialInformation.confirmationDate.errors && (officialInformation.confirmationDate.dirty || officialInformation.confirmationDate.touched ||submitted)">
+                <small *ngIf="officialInformation.confirmationDate.errors.required">
+                  confirmationDate is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Salary</mat-label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput appNumberValidation formControlName="salary">
+              <mat-error
+                *ngIf="officialInformation.salary.errors && (officialInformation.salary.dirty || officialInformation.salary.touched ||submitted)">
+                <small *ngIf="officialInformation.bankAccountNumber.errors.required">
+                  salary is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Biometric Id</mat-label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput appTrimAndPreventFirstSpac formControlName="biometricId">
+              <mat-error
+                *ngIf="officialInformation.biometricId.errors && (officialInformation.biometricId.dirty || officialInformation.biometricId.touched ||submitted)">
+                <small *ngIf="officialInformation.biometricId.errors.required">
+                  biometricId is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Reporting Manager</mat-label>
+            <ng-select formControlName="reportingManagerId">
+              <ng-option *ngFor="let item of employeeList" [value]="item.employeeId">
+                <span>{{item.displayName}}</span> &nbsp;
+                <small>{{item.officeEmail}}</small>
+              </ng-option>
+            </ng-select>
+            <mat-error
+              *ngIf="officialInformation.reportingManagerId.errors && (officialInformation.reportingManagerId.dirty || officialInformation.reportingManagerId.touched ||submitted)">
+              <small *ngIf="officialInformation.reportingManagerId.errors.required">
+                reportingManagerId is required
+              </small>
+            </mat-error>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Shift Group Id</mat-label>
+            <ng-select formControlName="shiftGroupId">
+              <ng-option *ngFor="let item of shiftGroupList" [value]="item.shiftGoupId">
+                {{item.shiftName}}
+              </ng-option>
+            </ng-select>
+            <mat-error
+              *ngIf="officialInformation.shiftGroupId.errors && (officialInformation.shiftGroupId.dirty || officialInformation.shiftGroupId.touched ||submitted)">
+              <small *ngIf="officialInformation.shiftGroupId.errors.required">
+                shiftGroupId is required
+              </small>
+            </mat-error>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Week Off Id</mat-label>
+            <ng-select formControlName="weekOffId">
+              <ng-option *ngFor="let item of weekOffList" [value]="item.weekOffId">
+                {{item.weekOffName}}
+              </ng-option>
+            </ng-select>
+            <mat-error
+              *ngIf="officialInformation.weekOffId.errors && (officialInformation.weekOffId.dirty || officialInformation.weekOffId.touched ||submitted)">
+              <small *ngIf="officialInformation.weekOffId.errors.required">
+                weekOffId is required
+              </small>
+            </mat-error>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Organization</mat-label>
+            <ng-select formControlName="orgId">
+              <ng-option *ngFor="let item of organizationList" [value]="item.orgId">
+                {{item.orgName}}
+              </ng-option>
+            </ng-select>
+            <mat-error
+              *ngIf="officialInformation.orgId.errors && (officialInformation.orgId.dirty || officialInformation.orgId.touched ||submitted)">
+              <small *ngIf="officialInformation.bankAccountNumber.errors.required">
+                orgId is required
+              </small>
+            </mat-error>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Employee Code</mat-label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput appTrimAndPreventFirstSpac formControlName="employeeCode">
+              <mat-error
+                *ngIf="officialInformation.employeeCode.errors && (officialInformation.employeeCode.dirty || officialInformation.employeeCode.touched ||submitted)">
+                <small *ngIf="officialInformation.employeeCode.errors.required">
+                  employeeCode is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-label>Referee Name</mat-label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput appTrimAndPreventFirstSpac formControlName="refereeNumber">
+              <mat-error
+                *ngIf="officialInformation.refereeNumber.errors && (officialInformation.refereeNumber.dirty || officialInformation.refereeNumber.touched ||submitted)">
+                <small *ngIf="officialInformation.refereeNumber.errors.required">
+                  refereeNumber is required
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-panel-title>Credential Setup</mat-panel-title>
+        <br>
+        <div class="row">
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Office E-mail</mat-label>
+              <input matInput readonly appTrimAndPreventFirstSpac [(ngModel)]="officeEmail"
+                [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" appTrimAndPreventFirstSpac
+                formControlName="password">
+              <a class="show-pwd-icon" matSuffix (click)="hide= !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </a>
+              <mat-error
+                *ngIf="officialInformation.password.errors && (officialInformation.password.dirty || officialInformation.password.touched ||submitted)">
+                <small *ngIf="officialInformation.password.required">
+                  Password is required
+                </small>
+                <small *ngIf="officialInformation.password.pattern">
+                  Password required uppercase letter, lowercase letter, number and special character
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-checkbox formControlName="isEmployeeIsLock" color="primary" style="line-height: 4rem;">Active Credential</mat-checkbox>
+          </div>
+        </div>
+
+        <div class="buttonSectionCenter">
+          <app-button [buttonClass]="'clear'" text="Clear"></app-button>
+          <app-button [buttonClass]="'submit'" [type]="'submit'" text="Submit"
+            (click)="submitOfficialInformatrion(officalInformationForm)"></app-button>
+        </div>
+      </form>
+    </mat-expansion-panel>
+    <br>
+
+  </div>
+</div>

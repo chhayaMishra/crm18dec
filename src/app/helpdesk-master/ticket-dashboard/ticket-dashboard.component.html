@@ -1,0 +1,98 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex gap-5 ms-3 me-3 flex-wrap">
+    <div class="card p-3" *ngFor=" let data of ticketdetail">
+      <div class="d-flex justify-content-between me-2 ms-2 ">
+        <img src={{data?.img}} alt="img" />
+        <p class="countText">{{data?.totalCount}}</p>
+      </div>
+      <p class="text-center mt-2">{{data?.description}}</p>
+
+    </div>
+
+  </div>
+
+  <div class="d-flex ms-3 me-3">
+    <div class="card card-statistic-2 py-4 px-3">
+      <p class="graphleaverh ms-2 mt-2">Monthly Leave Pattern</p>
+      <div class="body">
+        <div class="body">
+          <apx-chart [series]="areaChartOptions.series" [chart]="areaChartOptions.chart"
+            [xaxis]="areaChartOptions.xaxis" [yaxis]="areaChartOptions.yaxis" [colors]="areaChartOptions.colors"
+            [stroke]="areaChartOptions.stroke" [legend]="areaChartOptions.legend" [tooltip]="areaChartOptions.tooltip"
+            [dataLabels]="areaChartOptions.dataLabels"></apx-chart>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-3 ms-3 me-3">
+    <div class="card card-statistic-2 py-4 px-3">
+      <ngx-charts-pie-chart [animations]="false" [view]="[200, 200]" [scheme]="colorScheme" [results]="series"
+        [legend]="true" [labels]="false" [doughnut]="true" [legendPosition]="'right'" [legendTitle]="''"
+        [tooltipDisabled]="true" (select)="onSelect($event)" [labelFormatting]="pieChartLabel.bind(this, series)"
+        [arcWidth]="0.3">
+      </ngx-charts-pie-chart>
+      <p class="text-center">Management Team Tickets</p>
+    </div>
+    <div class="card card-statistic-2 py-4 px-3">
+      <ngx-charts-pie-chart [animations]="false" [view]="[200, 200]" [scheme]="colorScheme" [results]="series"
+        [legend]="true" [labels]="false" [doughnut]="true" [legendPosition]="'right'" [legendTitle]="''"
+        [tooltipDisabled]="true" (select)="onSelect($event)" [labelFormatting]="pieChartLabel.bind(this, series)"
+        [arcWidth]="0.3">
+      </ngx-charts-pie-chart>
+      <p class="text-center">Recruitment Help Desk</p>
+    </div>
+    <div class="card card-statistic-2  py-4 px-3">
+      <ngx-charts-pie-chart [animations]="false" [view]="[200, 200]" [scheme]="colorScheme1" [results]="series"
+        [legend]="true" [labels]="false" [doughnut]="true" [legendPosition]="'right'" [legendTitle]="''"
+        [tooltipDisabled]="true" (select)="onSelect($event)" [labelFormatting]="pieChartLabel.bind(this, series)"
+        [arcWidth]="0.3">
+      </ngx-charts-pie-chart>
+      <p class="text-center">Accounts Helpdesk</p>
+    </div>
+    <div class="card card-statistic-2  py-4 px-3">
+      <ngx-charts-pie-chart [animations]="false" [view]="[200, 200]" [scheme]="colorScheme1" [results]="series"
+        [legend]="true" [labels]="false" [doughnut]="true" [legendPosition]="'right'" [legendTitle]="''"
+        [tooltipDisabled]="true" (select)="onSelect($event)" [labelFormatting]="pieChartLabel.bind(this, series)"
+        [arcWidth]="0.3">
+      </ngx-charts-pie-chart>
+      <p class="text-center">Recruitment Help Desk</p>
+    </div>
+  </div>
+  <div class="d-flex gap-3 ms-3 me-3">
+    <div class="card card-statistic-2 py-4 px-3">
+      <ngx-charts-pie-chart [animations]="false" [view]="[200, 200]" [scheme]="colorScheme1" [results]="series"
+        [legend]="true" [labels]="false" [doughnut]="true" [legendPosition]="'right'" [legendTitle]="''"
+        [tooltipDisabled]="true" (select)="onSelect($event)" [labelFormatting]="pieChartLabel.bind(this, series)"
+        [arcWidth]="0.3">
+      </ngx-charts-pie-chart>
+      <p class="text-center">Management Team Tickets</p>
+    </div>
+    <div class="card card-statistic-2 py-4 px-3">
+      <ngx-charts-pie-chart [animations]="false" [view]="[200, 200]" [scheme]="colorScheme" [results]="series"
+        [legend]="true" [labels]="false" [doughnut]="true" [legendPosition]="'right'" [legendTitle]="''"
+        [tooltipDisabled]="true" (select)="onSelect($event)" [labelFormatting]="pieChartLabel.bind(this, series)"
+        [arcWidth]="0.3">
+      </ngx-charts-pie-chart>
+      <p class="text-center">Recruitment Help Desk</p>
+    </div>
+    <div class="card card-statistic-2  py-4 px-3">
+      <ngx-charts-pie-chart [animations]="false" [view]="[200, 200]" [scheme]="colorScheme1" [results]="series"
+        [legend]="true" [labels]="false" [doughnut]="true" [legendPosition]="'right'" [legendTitle]="''"
+        [tooltipDisabled]="true" (select)="onSelect($event)" [labelFormatting]="pieChartLabel.bind(this, series)"
+        [arcWidth]="0.3">
+      </ngx-charts-pie-chart>
+      <p class="text-center">Accounts Helpdesk</p>
+    </div>
+    <div class="card card-statistic-2  py-4 px-3">
+      <ngx-charts-pie-chart [animations]="false" [view]="[200, 200]" [scheme]="colorScheme" [results]="series"
+        [legend]="true" [labels]="false" [doughnut]="true" [legendPosition]="'right'" [legendTitle]="''"
+        [tooltipDisabled]="true" (select)="onSelect($event)" [labelFormatting]="pieChartLabel.bind(this, series)"
+        [arcWidth]="0.3">
+      </ngx-charts-pie-chart>
+      <p class="text-center">Recruitment Help Desk</p>
+    </div>
+  </div>
+
+</div>

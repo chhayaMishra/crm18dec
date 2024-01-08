@@ -1,0 +1,348 @@
+/* You can add global styles to this file, and also import other style files */
+
+//  dashboard
+// @import '~bootstrap/dist/css/bootstrap.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+@font-face {
+  font-family: "Poppins";
+  src:
+    local("Poppins"),
+    url("./assets/fonts/poppins/poppins-v5-latin-regular.ttf") format("truetype");
+}
+
+.cdk-global-overlay-wrapper,
+.cdk-overlay-container {
+  z-index: 9999 !important;
+}
+
+.cardcurve {
+  border-top-left-radius: 80px 80px !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-label {
+  top: 1.4em;
+  margin-top: -0.25em;
+}
+
+.modal-footer {
+  justify-content: center;
+  gap: 10px;
+}
+
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+.mat-form-field-appearance-outline.mat-form-field-can-float
+  .mat-input-server:focus
+  + .mat-form-field-label-wrapper
+  .mat-form-field-label {
+  transform: translateY(-1.2em) scale(0.75);
+}
+
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0.51em 0 !important;
+}
+
+.ng-select .ng-select-container {
+  height: 40px;
+  overflow-y: hidden;
+}
+
+ng-select .ng-select-container {
+  background: transparent !important;
+}
+
+.ng-select {
+  margin-top: 5px;
+}
+
+.ng-select .ng-select-container:hover {
+  overflow-y: scroll;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  height: 40px;
+  background: transparent;
+}
+
+.ng-select .ng-select-container::-webkit-scrollbar {
+  display: none;
+}
+
+#support_table {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+
+// .cardII14 {
+//   color: var(--b-1, #000c1d);
+//   font-size: 20px;
+//   font-style: normal;
+//   font-weight: 400;
+//   line-height: normal;
+//   text-transform: capitalize;
+// }
+.textareascroll {
+  border-radius: 15px;
+  min-height: 150px !important;
+  overflow-y: auto;
+  resize: none !important;
+}
+
+.textareascroll .form-control {
+  min-height: 150px !important;
+}
+
+.advanced-pie-legend-wrapper {
+  display: none !important;
+}
+
+.subheading_annoucement {
+  color: #4691ff;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+.postText {
+  border-radius: 75px;
+  //   border: 0.75px solid #000;
+  background: #fff;
+  width: 70%;
+  height: 34px;
+}
+
+.div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.box {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  border-radius: 100px;
+  top: 0;
+  left: 0;
+}
+
+span.danger {
+  color: red;
+}
+
+.imgtext {
+  position: absolute;
+  transform: translate(15rem, -31rem);
+}
+
+.imgtext1 {
+  position: absolute;
+  transform: translate(5rem, -20rem);
+}
+
+.eventsCard {
+  width: 60%;
+  border-radius: 6px;
+  padding: 1rem;
+  height: 90%;
+}
+
+.eventsCardtext1 {
+  color: #fff;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+.carousel-indicators li {
+  background-color: black;
+}
+
+.innercontent {
+  width: 90vw;
+  // margin: 7% 0 0 8.5%;
+}
+
+::ng-deep .chart-legend .legend-labels {
+  line-height: 85%;
+  list-style: none;
+  float: left;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: max-content !important;
+  background: none !important;
+}
+
+.selectedbtn {
+  width: 222px;
+  color: white;
+  border: 1px solid #4691ff;
+  background-color: #4691ff;
+  border-radius: 11px;
+  padding: 5px;
+}
+
+.laptopscreen {
+  flex-wrap: wrap;
+  min-width: 900px;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  display: none !important;
+}
+
+.searchNavbar1 {
+  align-items: flex-start;
+  width: 400px;
+  height: 39px;
+  border: 1px solid #fff !important;
+  background: #fff;
+  border-radius: 15px;
+  padding: 0px 1%;
+  background-image: url("/assets/images/search-normal.png");
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.containergap {
+  gap: 8rem !important;
+}
+
+.innergap {
+  gap: 3.5rem !important;
+}
+
+.inputform {
+  display: inline-flex;
+  padding: 10px;
+  align-items: center;
+  border-radius: 10px;
+  background: #f2f5f9;
+  border: 1px solid #f2f5f9;
+  width: 500px;
+}
+
+::-webkit-scrollbar .ps__thumb-y {
+  width: 3px;
+  overflow-y: scroll;
+  background: grey;
+  box-shadow: inset 0 0 4px #707070;
+}
+
+::-webkit-scrollbar-thumb .ps__thumb-y {
+  background: #ffff;
+  border-radius: 10px;
+}
+
+::ng-deep .ps__rail-y.ps--clicking {
+  background-color: #999;
+  width: 1px !important;
+}
+
+.close {
+  border: none;
+}
+
+::-webkit-file-upload-button {
+  padding: 1em;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 100px;
+  border: none;
+  font-weight: 600;
+  color: white;
+  padding: 8px 30px 8px 30px;
+}
+
+mat-label {
+  font-weight: 600;
+  font-size: 12px;
+  color: #1e1f22;
+}
+
+.modal-content {
+  form {
+    height: 100vh;
+    overflow-y: hidden;
+    display: grid;
+  }
+
+  form:hover {
+    overflow-y: scroll;
+  }
+
+  form::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.57em 0 0.57em 0;
+}
+
+.buttonSectionEnd {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.buttonSection {
+  width: fit-content;
+  padding: 10px;
+  display: flex;
+}
+
+.buttonSectionCenter {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+i {
+  cursor: pointer;
+}
+
+.p-text {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #1e1f22;
+}
+
+.fa.disabled,
+.fa[disabled],
+.disabled > .fa,
+[disabled] > .fa {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-input > input {
+  padding-top: 3px !important;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-input > input {
+  padding-top: 0px !important;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+  top: 9px;
+}
+
+button[disabled] {
+  opacity: 0.5;
+}
+
+textarea {
+  border: 1px solid #c1c1c1;
+  border-radius: 4px;
+}

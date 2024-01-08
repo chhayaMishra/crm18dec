@@ -1,0 +1,82 @@
+<div class="container" style="width: 90wh;background-color: #fff;">
+    <form [formGroup]="bookForm">
+        <p>
+
+            <span>Books Inventory</span>
+
+        </p>
+        <ng-container formArrayName="books">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr [ngClass]="e? 'even':'odd'"
+                        *ngFor="let book of booksArray.controls; let e= even; let o= odd; let idx=index; trackById"
+                        [formGroupName]="idx">
+                        <td>
+                            <input formControlName="id" type="text" />
+                            <!-- <ng-template #idElseBlock>{{book.id}}</ng-template> -->
+                        </td>
+                        <td>
+                            <input type="text" formControlName="name" />
+                            <!-- <ng-template #nameElseBlock>{{book.name}}</ng-template> -->
+                        </td>
+                        <td>
+                            <input type="text" formControlName="category" />
+                            <!-- <ng-template #categoryElseBlock> {{book.category}}</ng-template> -->
+                        </td>
+                        <td>
+                            <input type="text" formControlName="price" />
+                            <!-- <ng-template #priceElseBlock>{{book.price}}</ng-template> -->
+
+                        </td>
+                        <td>
+                            <!-- <button class="btb btn-success" *ngIf="!book.isEdit else editElseBlock" (click)="editMode(book)">
+                  Edit
+                </button>
+              <ng-template #editElseBlock>
+                <button class="btb btn-success" *ngIf="book.isEdit else editElseBlock" (click)="update(book)">
+                    Update
+                  </button>
+              </ng-template> -->
+                        </td>
+                        <td>
+                            <button class="btb btn-success" (click)="deleteBook(idx)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+
+        <p>Add a New Book</p>
+        <div class="form-container" [formGroup]="newBookForm">
+
+            <input placeholder="Id" formControlName="id">
+
+
+
+            <input matInput placeholder="Book Name" formControlName="name">
+
+
+            <input matInput placeholder="Category" formControlName="category">
+
+
+            <input matInput placeholder="Price" formControlName="price">
+
+
+            <button class="btn btn-primary" (click)="addNewBook()">Add Book</button>
+        </div>
+    </form>
+
+    <pre>
+        {{bookForm.value | json}}
+      </pre>
+</div>

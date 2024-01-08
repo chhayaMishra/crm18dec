@@ -1,0 +1,40 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3>Recovery Asset History</h3>
+    </div>
+  </div>
+
+  <table class="table display product-overview mb-30" id="support_table">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Asset Type</th>
+        <th>Assign To</th>
+        <th>Assign By</th>
+        <th>Assign Date</th>
+        <th>Condition</th>
+        <th>Recover By</th>
+        <th>Recover Condition</th>
+        <th>Recovered Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of recoveryHistoryList  | paginate : config; let i = index">
+        <td>{{(config.currentPage - 1) * config.itemsPerPage + i + 1}}</td>
+        <td>{{item.assetsType}}</td>
+        <td>{{item.assigneeToEmployeeName}}</td>
+        <td>{{item.assigneeByEmployeeName}}</td>
+        <td>{{item.assignDate | date : 'mediumDate'}}</td>
+        <td>{{item.assetCondition}}</td>
+        <td>{{item.recoveredByEmployeeName}}</td>
+        <td>{{item.recoverAssetsCondition}}</td>
+        <td>{{item.recoverDate | date : 'mediumDate'}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <mat-paginator showFirstLastButtons [length]="config.totalItems" [pageSize]="config.itemsPerPage"
+    [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChanged($event)">
+  </mat-paginator>
+
+</div>

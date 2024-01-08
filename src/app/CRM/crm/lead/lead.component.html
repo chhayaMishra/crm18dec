@@ -1,0 +1,728 @@
+<div class="">
+  <mat-drawer-container class="innercontent">
+    <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
+      <!-- <h2 class="welcome-msg"><strong>Details</strong></h2>
+      <p class="auth-signup-text text-muted">
+        Enter details to create your lead
+      </p> -->
+      <form class="validate-form" [formGroup]="AddformGroup" style="padding: 1rem;">
+        <hr />
+        <h3><strong> Create lead</strong></h3>
+        <hr />
+        <section class="row">
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Topic</mat-label>
+              <input matInput formControlName="Topic" required />
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Budget Amount</mat-label>
+              <input matInput formControlName="BudgetAmount" required />
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Purchase Timeframe</mat-label>
+              <mat-select formControlName="PurchaseTimeframe" required>
+                <mat-option value="Immediate">Immediate</mat-option>
+                <mat-option value="This Quarter">This Quarter</mat-option>
+                <mat-option value="Next Quarter">Next Quarter</mat-option>
+                <mat-option value="This Year">This Year</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Lead Source</mat-label>
+              <mat-select formControlName="LeadSource" required>
+                <mat-option value="Advertisement">Advertisement</mat-option>
+                <mat-option value="Employee Referral"
+                  >Employee Referral</mat-option
+                >
+                <mat-option value="External Referral"
+                  >External Referral</mat-option
+                >
+                <mat-option value="Partner">Partner</mat-option>
+                <mat-option value="Public Relations"
+                  >Public Relations</mat-option
+                >
+                <mat-option value="Seminar">Seminar</mat-option>
+                <mat-option value="Trade Show">Trade Show</mat-option>
+                <mat-option value="Web">Web</mat-option>
+                <mat-option value="Word of Mouth">Word of Mouth</mat-option>
+                <mat-option value="Other">Other</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </section>
+        <hr />
+        <h3><strong> Personal Information</strong></h3>
+        <hr />
+        <section class="row">
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="FirstName" required />
+              <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="LastName" required />
+              <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Lead Type</mat-label>
+              <mat-select formControlName="LeadType" required>
+                <mat-option value="Product Sales">Product Sales</mat-option>
+                <mat-option value="Cloud Sales">Cloud Sales</mat-option>
+                <mat-option value="Fixed Price Sales"
+                  >Fixed Price Sales(FPS)</mat-option
+                >
+                <mat-option value="Recurrency Price Sales"
+                  >Recurrency Price Sales(RPS)</mat-option
+                >
+                <mat-option value="Upselling Recurring Sales"
+                  >Upselling Recurring Sales(URS)</mat-option
+                >
+                <mat-option value="Upselling Fixed Sales"
+                  >Recurrency Price Sales(UFS)</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Job Title</mat-label>
+            <input matInput formControlName="JobTitle" required />
+            <mat-icon matSuffix>subtitles</mat-icon>
+          </mat-form-field>
+          </div>
+
+          <!-- <mat-form-field appearance="outline">
+                      <mat-label>Company Name</mat-label>
+                      <input matInput formControlName="CompanyName" required>
+                  </mat-form-field> -->
+        </section>
+
+        <hr />
+        <h3><strong>Contact Details</strong></h3>
+        <hr />
+        <section class="row p-2">
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Company Name</mat-label>
+              <input matInput formControlName="CompanyName" required />
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="Email" required [email]="true" />
+              <mat-icon matSuffix> email</mat-icon>
+              <mat-error *ngIf="AddformGroup.get('Email').hasError('required')">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="AddformGroup.get('Email').hasError('email')">
+                Please enter a valid email address
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Mobile Phone</mat-label>
+              <input
+                matInput
+                formControlName="MobilePhone"
+                required
+                appNumericInput
+              />
+              <mat-icon matSuffix> contact_phone</mat-icon>
+              <mat-error
+                *ngIf="AddformGroup.get('MobilePhone').hasError('required')"
+              >
+                Mobile phone is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Description</mat-label>
+              <input matInput formControlName="Description" required />
+              <mat-icon matSuffix>description</mat-icon>
+            </mat-form-field>
+          </div>
+         
+          <!-- <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Mobile Phone</mat-label>
+                      <input matInput formControlName="MobilePhone" required appNumericInput>
+                      <mat-error *ngIf="AddformGroup.get('MobilePhone').hasError('required')">
+                          Mobile phone is required
+                      </mat-error>
+                  </mat-form-field> -->
+        </section>
+
+        <!-- <hr />
+        <h3><strong> Currency</strong></h3>
+        <hr />
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Currency</mat-label>
+            <mat-select (selectionChange)="getCurrencySelect($event)" formControlName="currencyId" required>
+              <mat-option *ngFor="let currency of currencyList" [value]="currency.CurrencyId"> -->
+        <!-- {{contact.FirstNameResponse + " " +contact.LastNameResponse}} -->
+        <!-- {{ currency.CurrencyName }} -->
+        <!-- </mat-option>
+            </mat-select> -->
+        <!-- <input matInput formControlName="Contact" required /> -->
+        <!-- </mat-form-field>
+        </section> -->
+        <hr />
+        <section class="row">
+          <!-- <h3><strong> Currency</strong></h3> -->
+          <!-- <hr /> -->
+        <div class="col-md-6">   
+          <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Currency</mat-label>
+          <mat-select
+            (selectionChange)="getCurrencySelect($event)"
+            formControlName="currencyId">
+            <mat-option
+              *ngFor="let currency of currencyList"
+              [value]="currency.CurrencyId">
+              <!-- {{contact.FirstNameResponse + " " +contact.LastNameResponse}} -->
+              {{ currency.CurrencyName }}
+            </mat-option>
+          </mat-select>
+          <!-- <input matInput formControlName="Contact"   /> -->
+        </mat-form-field>
+      </div>
+        <div class="col-md-6">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="Status">
+              <mat-option
+                value="Raw"
+                class="size"
+                style="background-color: rgb(120, 148, 209); color: white"
+                >Raw</mat-option
+              >
+              <mat-option
+                value="New Lead"
+                class="size"
+                style="background-color: rgb(193, 148, 252); color: white"
+                >New Lead</mat-option
+              >
+              <mat-option
+                value="Contact"
+                class="size"
+                style="background-color: rgb(252, 148, 200); color: white"
+                >Contact</mat-option
+              >
+              <mat-option
+                value="Qualified"
+                class="size"
+                style="background-color: rgb(90, 77, 206); color: white"
+                >Qualified</mat-option
+              >
+              <mat-option
+                value="Disqualified"
+                class="size"
+                style="background-color: rgb(243, 164, 61); color: white"
+                >Disqualified</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        </section>
+        <section class="row">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Notes</mat-label>
+            <!-- <input matInput formControlName="Notes" /> -->
+            <textarea matInput formControlName="Notes"></textarea>
+          </mat-form-field>
+        </section>
+
+        <section class="d-flex" style="    justify-content: flex-end;">
+          <!-- <button mat-flat-button color="primary" class="auth-form-btn submit" type="submit"
+            (click)="AddUtility(AddformGroup.value)">
+            Submit
+          </button> -->
+          <!-- <button [buttonstyle]=" {'width': '79px'}"
+          [buttonClass]="'clear'" 
+           text="Reset"  (click)="CloseEvent()">
+            Cancel
+          </button> -->
+          <app-button class="p-2"
+            [buttonstyle]="{
+              width: '139px',
+              'background-color': 'green',
+              color: 'white'
+            }"
+            [buttonClass]="'submit'"
+            text="Create  contact"
+            (click)="addcontact(AddformGroup.value)"
+          >
+          </app-button>
+
+          <app-button class="p-2"
+            [buttonstyle]="{ width: '139px' }"
+            [buttonClass]="'submit'"
+            text="Submit"
+            (click)="AddUtility(AddformGroup.value)"
+          >
+          </app-button>
+          <app-button class="p-2"
+            [buttonstyle]="{ width: '139px' }"
+            [buttonClass]="'submit'"
+            text="Cancel"
+            (click)="CloseEvent()"
+          >
+          </app-button>
+        </section>
+      </form>
+    </mat-drawer>
+
+    <!-- <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+      </div>
+    </ng-template> -->
+    
+   
+    
+
+    <mat-drawer-content>
+      <mat-card class="cardWithShadow theme-card">
+        <mat-card-content class="b-t-1">
+          <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+          <!-- <div class="container-fluid">
+            <div class="col-md-12 innercontent mt-4">
+              <h2 class="welcome-msg"><b>LEAD INFORMATION</b></h2>
+            </div>
+          </div> -->
+          <div
+            class="d-flex align-items-end"
+            style="justify-content: space-between"
+          >
+            <div>
+              <h2 class="welcome-msg"><b>Lead Information</b></h2>
+            </div>
+            <div>
+              <ng-template #content1 let-c="close" let-d="dismiss">
+                <div class="modal-content">
+                  <div class="modal-header techHeader">
+                    <h4 class="modal-title">Excel Validation</h4>
+                    <button
+                      type="button"
+                      style="margin-bottom: 4px"
+                      class="close submit"
+                      aria-label="Close"
+                      (click)="c('Close click')"
+                    >
+                      <span
+                        aria-hidden="true"
+                        style="color: #000; font-size: 26px"
+                        >&times;</span
+                      >
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="card-content">
+                      <div class="card-body">
+                        <div class="list-group">
+                          <h5>
+                            <b>Lead's fields </b> should contain only Alphabet
+                          </h5>
+                          <br />
+                          <div class="Demo">
+                            <h5
+                              style="
+                                font-weight: 500;
+                                font-size: 14px;
+                                line-height: 22px;
+                                color: #616576;
+                                padding-top: 10px;
+                              "
+                            ></h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <label
+                        for="inputFile"
+                        class="btn add-btn ml-2 submit"
+                        style="margin: 0"
+                        >Upload</label
+                      >
+                      <input
+                        hidden
+                        type="file"
+                        (change)="onChange($event, content1)"
+                        id="inputFile"
+                        name="inputFile"
+                        accept=".xlsx, .xls"
+                      />
+                      <button
+                        type="button"
+                        class="btn can-btn mr-2 submit"
+                        (click)="c('Close click')"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <section class="d-flex gap-2 me-4" style="float: right">
+                <button
+                  type="reset"
+                  class="btn add-btn mr-3 submit"
+                  (click)="Import(content1)"
+                >
+                  Import
+                </button>
+
+                <button
+                  type="button"
+                  class="btn add-btn mr-3 submit"
+                  (click)="downloadTemplate()"
+                >
+                  Download Template
+                </button>
+                <button
+                  style="float: right"
+                  class="btn add-btn mr-3 submit"
+                  (click)="exportToExcel()"
+                >
+                  Export
+                </button>
+              </section>
+            </div>
+          </div>
+
+          <div class="container-fluid mainTableData">
+            <div
+              class="d-flex align-items-end"
+              style="justify-content: space-between"
+            >
+              <div class="p-2">
+                <mat-form-field class="searchNavbar1">
+                  <mat-label>Search </mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="searchKeyword"
+                    (ngModelChange)="onSearchChange()"
+                    placeholder="Search "
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="ml-auto p-2">
+                <app-button
+                  [buttonClass]="'submit'"
+                  [type]="'button'"
+                  text="Create Lead"
+                  (click)="openAddDrawer()"
+                ></app-button>
+                <!-- <button mat-icon-button (click)="openAddDrawer()">
+                    <mat-icon>add</mat-icon>
+                  </button> -->
+              </div>
+            </div>
+
+            <div style="padding: 10px" class="">
+              <table
+                mat-table
+                class="mat-elevation-z8"
+                [dataSource]="LeaddetailsData"
+                matSort
+                (matSortChange)="announceSortChange($event)"
+                matSortActive="sno"
+                matSortDirective="desc"
+              >
+                <ng-container matColumnDef="sno">
+                  <th mat-header-cell *matHeaderCellDef>S.no</th>
+                  <td mat-cell *matCellDef="let element; let j = index">
+                    <p style="text-align: center;">{{ j + 1 }}</p>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Topic">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    sortActionDescription="Sort by Topic"
+                  >
+                    Topic
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <p>{{ element.Topic }}</p>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="PurchaseTimeFrame">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    sortActionDescription="Sort by PurchaseTimeFrame"
+                  >
+                    Purchase Timeframe
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <p>{{ element.PurchaseTimeFrame }}</p>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="LeadSource">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    sortActionDescription="Sort by LeadSource"
+                  >
+                    Lead Source
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <p>{{ element.LeadSource }}</p>
+                  </td>
+                </ng-container>
+                <p>
+                  <ng-container matColumnDef="FirstName">
+                    <th
+                      mat-header-cell
+                      *matHeaderCellDef
+                      mat-sort-header
+                      sortActionDescription="Sort by CurrencyName"
+                    >
+                      First Name
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.FirstName }}
+
+                      <!-- <button mat-icon-button (click)="openActivity(leadId)">
+                        <mat-icon>add_circle_outline</mat-icon>
+                      </button> -->
+                    </td>
+                  </ng-container>
+                </p>
+                <ng-container matColumnDef="LastName">
+                  <th mat-header-cell *matHeaderCellDef>Last Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    <p>{{ element.LastName }}</p>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Convo">
+                  <th mat-header-cell *matHeaderCellDef>Activity</th>
+                  <td mat-cell *matCellDef="let element">
+                    <button
+                      mat-icon-button
+                      matTooltip="Start Conversation"
+                      (click)="openActivity(element, element.LeadId)"
+                    >
+                      <mat-icon>wechat</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="LeadType">
+                  <th mat-header-cell *matHeaderCellDef>Lead Type</th>
+                  <td mat-cell *matCellDef="let element">
+                    <p>{{ element.LeadType }}</p>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="JobTitle">
+                  <th mat-header-cell *matHeaderCellDef>Job Title</th>
+                  <td mat-cell *matCellDef="let element">
+                    <p>{{ element.JobTitle }}</p>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="CompanyName">
+                  <th mat-header-cell *matHeaderCellDef>Company Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    <p>{{ element.CompanyName }}</p>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Email">
+                  <th mat-header-cell *matHeaderCellDef>Email</th>
+                  <td mat-cell *matCellDef="let element">
+                    <p>{{ element.Email }}</p>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="MobilePhone">
+                  <th mat-header-cell *matHeaderCellDef>Mobile Phone</th>
+                  <td mat-cell *matCellDef="let element">
+                    <p>{{ element.MobilePhone }}</p>
+                  </td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="CurrencyName">
+                  <th mat-header-cell *matHeaderCellDef>Currency</th>
+                  <td mat-cell *matCellDef="let Account">
+                    <p>{{ Account.CurrencyName }}</p>
+                  </td>
+                </ng-container> -->
+                <ng-container matColumnDef="Status">
+                  <th mat-header-cell *matHeaderCellDef style="    text-align: center;">Status</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let Account"
+                    style="text-align: center"
+                   >
+                  <div >
+                    <button  [ngStyle]="
+                    Account.Status == 'Raw'
+                      ? {
+                          'background-color': ' rgb(120, 148, 209)',
+                          color: 'white',
+                          'text-align': 'center',
+                          border: '10px solid white',
+                          width:'100%',
+                          height:'50px'
+                        }
+                      : Account.Status == 'New Lead'
+                        ? {
+                            'background-color': 'rgb(193, 148, 252)',
+                            color: 'white',
+                            'text-align': 'center',
+                            border: '10px solid white',
+                            width:'100%',
+                            height:'50px'
+                          }
+                        : Account.Status == 'Contact'
+                          ? {
+                              'background-color': ' rgb(252, 148, 200)',
+                              color: 'white',
+                              'text-align': 'center',
+                              border: '10px solid white',
+                              width:'100%',
+                              height:'50px'
+                            }
+                          : Account.Status == 'Qualified'
+                            ? {
+                                'background-color': ' rgb(90, 77, 206)',
+                                color: 'white',
+                                'text-align': 'center',
+                                border: '10px solid white',
+                                width:'100%',
+                                height:'50px'
+                              }
+                            : Account.Status == 'Disqualified'
+                              ? {
+                                  'background-color': ' rgb(243, 164, 61)',
+                                  color: 'white',
+                                  'text-align': 'center',
+                                  border: '10px solid white',
+                                  width:'100%',
+                                  height:'50px'
+                                }
+                              : {
+                                  'background-color': 'white',
+                                  color: '#000000',
+                                  'text-align': 'center',
+                                  border: '10px solid white',
+                                  width:'100%',
+                                  height:'50px'
+                                }
+                  ">
+                      {{ Account.Status }}
+                    </button>
+                   </div>
+                    <!-- <p>{{ Account.Status }}</p> -->
+                  </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="Status">
+                  <th mat-header-cell *matHeaderCellDef  style="width: 150px; text-align: left;">Assigner Status</th>
+                  <td mat-cell *matCellDef="let Account"  [ngStyle]="
+                  Account.Assigner_Task == '0'
+                    ? { 'background-color': 'red', color: '#000000' }
+                    : Acc.Assigner_Task == '1'
+                    ? { 'background-color': 'orange', color: '#000000' }
+                    :element.Assigner_Task =='2'
+                    ? { 'background-color': 'yellow', color: '#000000' }
+                    :element.Assigner_Task=='3'
+                    ?{ 'background-color': 'green', color: '#000000' }
+                    : { 'background-color': 'white', color: '#000000' }
+                ">
+                    {{ element.Assigner_Task }}
+                  </td>
+                </ng-container> -->
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <p style="padding: 1rem 1rem 0rem 2rem">Action</p>
+                    <!-- <button mat-icon-button (click)="openAddDrawer()">
+                      <mat-icon>add</mat-icon>
+                    </button> -->
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button (click)="openEditDrawer(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <!-- <button mat-icon-button (click)="deleteUtilityItem(element.LeadId)">
+                      <mat-icon>delete</mat-icon>
+                    </button> -->
+
+                    <button
+                      mat-icon-button
+                      (click)="openDelete(element.LeadId)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    <!-- <app-button
+                    [buttonstyle]=" {'width': '139px'}"
+                   [buttonClass]="'submit'" 
+                    text="Move to contact"  (click)="addcontact(AddformGroup.value)">  
+                   </app-button> -->
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="createContact">
+                  <th mat-header-cell *matHeaderCellDef>Create a Contact</th>
+                  <td mat-cell *matCellDef="let element">
+                    <app-button style="width: 70%;
+                    margin-bottom: 0.8rem !important;"
+                      [buttonstyle]="{
+                      
+                        'background-color': 'green',
+                        color: 'white',margin:'0'
+                      
+                      }"
+                      [buttonClass]="'submit'"
+                      text="Create contact"
+                      (click)="addcontact(AddformGroup.value)"
+                    >
+                    </app-button>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+              <mat-paginator
+                [pageSize]="pageSize"
+                [pageSizeOptions]="[5, 10, 25, 50]"
+                [length]="totalItems"
+                (page)="onPageChange($event)"
+              ></mat-paginator>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

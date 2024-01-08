@@ -1,0 +1,13 @@
+<div class="buttonSectionEnd">
+  <div class="searchSection">
+    <ng-select multiple="true">
+      <ng-option *ngFor="let item of organizationsList" [value]="item.orgId">{{item.orgName}}</ng-option>
+    </ng-select>
+  </div>
+  <div class="searchSection">
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput appTrimAndPreventFirstSpace [(ngModel)]="searchString" (input)="searchInput($event.target.value)">
+    </mat-form-field>
+  </div>
+</div>

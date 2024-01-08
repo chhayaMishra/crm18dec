@@ -1,0 +1,174 @@
+mat-drawer {
+    width: 50%;
+    // padding: 12px;
+    // border-radius: 10px;
+    // position: absolute;
+  }
+  
+  mat-drawer-container {
+    // height: 90vh;
+    background-color: rgba(104, 139, 165, 0);
+  }
+  
+  .container-fluid.mainTableData {
+    width: 100%;
+    // overflow-x: auto;
+  }
+  
+  .mat-table {
+    width: 100%;
+  }
+  
+  // /* Table container */
+
+  
+  /* Container for the entire page */
+  
+  .in {
+    display: flex;
+    width: 100%; /* Set the entire page width to 100% */
+    height: 100vh;
+  
+    //  overflow: hidden; /* Hide overflow content */
+  }
+  
+  /* Left side drawer container */
+  
+  .example-container {
+    width: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    max-width: 100%; /* Limit the maximum width of the left container */
+  }
+  
+  /* Right side content container */
+  
+  .mat-drawer-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  /* Table container */
+  
+  .mainTableData {
+    width: 100%; /* Set the table container width to 100% */
+  }
+  
+  // /* Header styles */
+  
+  .welcome-msg {
+    font-size: 24px;
+    margin: 5px 0;
+  }
+  
+  // /* Input and select styles */
+  
+  input.mat-input,
+  mat-select {
+    font-size: 16px;
+    background-color: #fff;
+  }
+  
+  // /* Button styles */
+  
+  .auth-form-btn {
+    background-color: #4691ff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .auth-btn-cancle{
+    background-color: #4691ff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 1000px;
+  }
+  
+  // /* Table styles */
+  
+  mat-table {
+    width: 100%;
+  }
+  
+  // /* Filter input style */
+  
+  mat-form-field {
+    margin-bottom: 10px;
+  }
+  
+  // /* Table header styles */
+  
+  th.mat-header-cell {
+    font-weight: bold;
+    // background-color: #4691ff;
+    // color: #fff;
+  }
+  
+  // /* Table cell styles */
+  
+  td.mat-cell {
+    padding: 8px;
+  }
+  
+  // /* Paginator styles */
+  
+  .mat-paginator {
+    margin-top: 20px;
+    display: inline;
+  }
+  
+  // /* Error message styles */
+  
+  .mat-error {
+    color: #ff0000;
+    font-size: 14px;
+  }
+  
+  .header-with-icon {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  ::ng-deep .mat-sort-header-arrow {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  
+  .sort-icon {
+    margin-left: 5px;
+  }
+  
+  .mat-drawer {
+    // width: 1200px;
+    // padding: 12px;
+    // border-radius: 10px;
+    position: absolute;
+  }
+  
+  /* Remove the scrollbar and make the content overflow hidden */
+  
+  .mat-drawer-inner-container {
+    width: 100%;
+    height: 100%;
+    overflow: initial;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  mat-drawer-container {
+    height: 90vh;
+    background-color: rgba(104, 139, 165, 0);
+  }
+  .bg{
+    background-color: #4691ff;
+    color:#fff;
+    }
+  
+  

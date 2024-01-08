@@ -1,0 +1,511 @@
+<div class="">
+  <mat-drawer-container class="innercontent">
+    <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
+      <!-- <h2 class="welcome-msg" style="padding: 1rem"><strong>Create</strong></h2> -->
+      <!-- <p class="auth-signup-text text-muted">
+          Enter details to create 
+        </p> -->
+      <form
+        class="validate-form"
+        [formGroup]="AddformGroup"
+        style="padding: 1rem"
+      >
+        <hr />
+        <h3><strong> Calling Data</strong></h3>
+        <hr />
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="Name" required />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Company Name</mat-label>
+            <input matInput formControlName="CompanyName" required />
+          </mat-form-field>
+        </section>
+
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="FirstName" required />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="LastName" required />
+          </mat-form-field>
+        </section>
+
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Person Assigned</mat-label>
+            <input matInput formControlName="PersonAssigned" required />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Industry Domain </mat-label>
+            <input matInput formControlName="IndustryDomain" required />
+          </mat-form-field>
+        </section>
+
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Number Of Employees</mat-label>
+            <input matInput formControlName="NumberofEmployees" required />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Designation</mat-label>
+            <input matInput formControlName="Designation" required />
+          </mat-form-field>
+        </section>
+
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Status</mat-label>
+            <!-- // <input matInput formControlName="Status" required /> -->
+            <mat-select formControlName="Status" required>
+              <mat-option [value]="">--Select--</mat-option>
+              <mat-option value="Open">Open</mat-option>
+              <mat-option value="Connected">Connected</mat-option>
+              <mat-option
+                value="convert to lead"
+                (click)="addLead(AddformGroup.value)"
+                readonly
+                >Convert to lead</mat-option
+              >
+              <mat-option value="Lost">Lost</mat-option>
+              <mat-option value="Connect later">Connect Later</mat-option>
+              <!-- <mat-option value="Upselling Fixed Sales">Recurrency Price Sales(UFS)</mat-option> -->
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Demo Status</mat-label>
+            <!-- <input matInput formControlName="DemoStatus" required /> -->
+            <mat-select formControlName="DemoStatus" required>
+              <mat-option [value]="">--Select--</mat-option>
+              <mat-option value="Demo Pending">Demo Pending</mat-option>
+              <mat-option value="Demo Marshal">Demo Marshal</mat-option>
+              <mat-option value="Demo Completed">Demo Completed</mat-option>
+              <mat-option value="Prospect for future"
+                >Prospect for future</mat-option
+              >
+              <mat-option value="Onboarded">Onboarded</mat-option>
+              <!-- <mat-option value="Upselling Fixed Sales">Recurrency Price Sales(UFS)</mat-option> -->
+            </mat-select>
+          </mat-form-field>
+        </section>
+
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Follow up by</mat-label>
+            <input matInput formControlName="FollowUpBy" required />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Status Reason</mat-label>
+            <!-- <input matInput formControlName="StatusReason" required /> -->
+            <mat-select formControlName="StatusReason" required>
+              <mat-option [value]="">--Select--</mat-option>
+              <mat-option value="Call went to voicemail"
+                >Call went to voicemail</mat-option
+              >
+              <mat-option value="Call not connected"
+                >Call not connected</mat-option
+              >
+              <mat-option value="Invalid number">Invalid number</mat-option>
+              <mat-option value="Not interested">Not interested</mat-option>
+              <mat-option value="Wrong">Wrong person</mat-option>
+              <!-- <mat-option value="Upselling Fixed Sales">Recurrency Price Sales(UFS)</mat-option> -->
+            </mat-select>
+          </mat-form-field>
+        </section>
+
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Created By </mat-label>
+            <input matInput formControlName="CreatedBy" required />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Created On </mat-label>
+            <input matInput formControlName="CreatedOn" required />
+          </mat-form-field>
+        </section>
+
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Data Type</mat-label>
+            <!-- <input matInput formControlName="DataType" required /> -->
+            <mat-select formControlName="DemoStatus" required>
+              <mat-option [value]="">--Select--</mat-option>
+              <mat-option value="Cloud Sales">Cloud Sales</mat-option>
+              <mat-option value="Event invitation">Event invitation</mat-option>
+              <mat-option value="Product">Product</mat-option>
+              <mat-option value="Service">Service</mat-option>
+              <mat-option value="SAS">SAS</mat-option>
+              <mat-option value="CDP">CDP</mat-option>
+              <mat-option value="other">other</mat-option>
+
+              <!-- <mat-option value="Upselling Fixed Sales">Recurrency Price Sales(UFS)</mat-option> -->
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Whatsapp Status</mat-label>
+            <input matInput formControlName="WhatsappStatus" required />
+          </mat-form-field>
+        </section>
+
+        <hr />
+        <h3><strong> Contact Details</strong></h3>
+        <hr />
+
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Mobile</mat-label>
+            <input matInput formControlName="Mobile" required />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Business Phone</mat-label>
+            <input matInput formControlName="BusinessPhone" required />
+          </mat-form-field>
+        </section>
+
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="Email" required />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>LinkedIn</mat-label>
+            <input matInput formControlName="LinkedIn" required />
+          </mat-form-field>
+        </section>
+
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Company LinkedIn Page</mat-label>
+            <input matInput formControlName="CompanyLinkedInPage" required />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Company Website</mat-label>
+            <input matInput formControlName="CompanyWebsite" required />
+          </mat-form-field>
+        </section>
+
+        <hr />
+        <h3><strong>Address Details</strong></h3>
+        <hr />
+
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Address Line 1</mat-label>
+            <input matInput formControlName="AddressLine1" required />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Address Line 2</mat-label>
+            <input matInput formControlName="AddressLine2" required />
+          </mat-form-field>
+        </section>
+
+        <section class="d-flex gap-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="State" required />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="City" required />
+          </mat-form-field>
+        </section>
+
+        <!-- <button mat-flat-button color="primary" class="auth-form-btn submit" type="submit"
+              (click)="AddUtility(AddformGroup.value)">
+              Submit
+            </button> -->
+        <!-- <button [buttonstyle]=" {'width': '79px'}"
+            [buttonClass]="'clear'" 
+             text="Reset"  (click)="CloseEvent()">
+              Cancel
+            </button> -->
+
+        <!-- <app-button
+            [buttonstyle]=" {'width': '139px','background-color':'green','color':'white'}"
+           [buttonClass]="'submit'" 
+            text="Create to contact"  (click)="addRaw(AddformGroup.value)">  
+           </app-button> -->
+
+        <app-button
+          style="margin-right: 1rem"
+          [buttonstyle]="{ width: '139px' }"
+          [buttonClass]="'submit'"
+          text="Submit"
+          (click)="AddUtility(AddformGroup.value)"
+        >
+        </app-button>
+        <app-button
+          [buttonstyle]="{ width: '139px' }"
+          [buttonClass]="'submit'"
+          text="Cancel"
+          (click)="CloseEvent()"
+        >
+        </app-button>
+
+        <!-- </section> -->
+      </form>
+    </mat-drawer>
+    <mat-drawer-content>
+      <mat-card class="cardWithShadow theme-card" style="height: 100%">
+        <mat-card-content class="b-t-1">
+          <div
+            class="d-flex align-items-end"
+            style="justify-content: space-between"
+          >
+            <div>
+              <h2 class="welcome-msg"><b>Cold Calling Data</b></h2>
+            </div>
+            <div>
+              <ng-template #content1 let-c="close" let-d="dismiss">
+                <div class="modal-content">
+                  <div class="modal-header techHeader">
+                    <h4 class="modal-title">Excel Validation</h4>
+                    <button
+                      type="button"
+                      style="margin-bottom: 4px"
+                      class="close submit"
+                      aria-label="Close"
+                      (click)="c('Close click')"
+                    >
+                      <span
+                        aria-hidden="true"
+                        style="color: #000; font-size: 26px"
+                        >&times;</span
+                      >
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="card-content">
+                      <div class="card-body">
+                        <div class="list-group">
+                          <h5>
+                            <b>Lead's fields </b> should contain only Alphabet
+                          </h5>
+                          <br />
+                          <div class="Demo">
+                            <h5
+                              style="
+                                font-weight: 500;
+                                font-size: 14px;
+                                line-height: 22px;
+                                color: #616576;
+                                padding-top: 10px;
+                              "
+                            ></h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <label
+                        for="inputFile"
+                        class="btn add-btn ml-2 submit"
+                        style="margin: 0"
+                        >Upload</label
+                      >
+                      <input
+                        hidden
+                        type="file"
+                        (change)="onChange($event, content1)"
+                        id="inputFile"
+                        name="inputFile"
+                        accept=".xlsx, .xls"
+                      />
+                      <button
+                        type="button"
+                        class="btn can-btn mr-2 submit"
+                        (click)="c('Close click')"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <section class="d-flex gap-2" style="float: right">
+                <button
+                  type="reset"
+                  class="btn add-btn mr-3 submit"
+                  (click)="Import(content1)"
+                >
+                  Import
+                </button>
+
+                <button
+                  style="float: right"
+                  class="btn add-btn mr-3 submit"
+                  (click)="exportToExcel()"
+                >
+                  Export
+                </button>
+                <button
+                  type="button"
+                  class="btn add-btn mr-3 submit"
+                  (click)="downloadTemplate()"
+                >
+                  Download Template
+                </button>
+                <button
+                  style="float: right"
+                  class="btn add-btn mr-3 submit"
+                  (click)="exportToExcel()"
+                >
+                  Quick Contact
+                </button>
+              </section>
+            </div>
+          </div>
+
+          <div class="container-fluid mainTableData">
+            <div
+              class="d-flex align-items-end"
+              style="justify-content: space-between"
+            >
+              <div class="p-2">
+                <mat-form-field class="searchNavbar1">
+                  <mat-label>Search </mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="searchKeyword"
+                    (ngModelChange)="onSearchChange()"
+                    placeholder="Search "
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="ml-auto p-2">
+                <app-button
+                  [buttonClass]="'submit'"
+                  [type]="'button'"
+                  text="Create Row Data"
+                  (click)="openAddDrawer()"
+                ></app-button>
+                <!-- <button mat-icon-button (click)="openAddDrawer()">
+                    <mat-icon>add</mat-icon>
+                  </button> -->
+              </div>
+            </div>
+
+            <div style="padding: 10px" class="">
+              <table
+                mat-table
+                class="mat-elevation-z8"
+                [dataSource]="RawdetailsData"
+              >
+                <ng-container matColumnDef="sno">
+                  <th mat-header-cell *matHeaderCellDef>S.no</th>
+                  <td mat-cell *matCellDef="let element; let j = index">
+                    {{ j + 1 }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.Name }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="companyname">
+                  <th mat-header-cell *matHeaderCellDef>Company Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.CompanyName }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="companylinkedin">
+                  <th mat-header-cell *matHeaderCellDef>Company Linkedin</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.CompanyLinkedInPage }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="industrydomain">
+                  <th mat-header-cell *matHeaderCellDef>Industry Domain</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.IndustryDomain }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Designation">
+                  <th mat-header-cell *matHeaderCellDef>Designation</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.Designation }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef class="">
+                    <p style="padding: 1rem 1rem 0rem 2rem">Action</p>
+
+                    <!-- <button mat-icon-button (click)="openAddDrawer()">
+                      <mat-icon>add</mat-icon>
+                    </button> -->
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button (click)="openEditDrawer(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <!-- <button mat-icon-button (click)="deleteUtilityItem(element.LeadId)">
+                        <mat-icon>delete</mat-icon>
+                      </button> -->
+
+                    <button mat-icon-button (click)="openDelete(element.RawId)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    <!-- <app-button
+                      [buttonstyle]=" {'width': '139px'}"
+                     [buttonClass]="'submit'" 
+                      text="Move to contact"  (click)="addcontact(AddformGroup.value)">  
+                     </app-button> -->
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="createLead">
+                  <th mat-header-cell *matHeaderCellDef>Create a Contact</th>
+                  <td mat-cell *matCellDef="let element">
+                    <app-button
+                      [buttonstyle]="{
+                        width: '139px',
+                        'background-color': 'green',
+                        color: 'white'
+                      }"
+                      [buttonClass]="'submit'"
+                      text="Create to contact"
+                      (click)="addLead(AddformGroup.value)"
+                    >
+                    </app-button>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+              <mat-paginator
+                [pageSize]="pageSize"
+                [pageSizeOptions]="[5, 10, 25, 50]"
+                [length]="totalItems"
+                (page)="onPageChange($event)"
+              ></mat-paginator>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

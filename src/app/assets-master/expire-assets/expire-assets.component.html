@@ -1,0 +1,143 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3 flex-wrap">
+    <h3 class="textannoucement1">
+      {{id == 1 ? 'Total License Expired' : id == 2 ? 'Total Warranty Expired' : id == 3 ? 'Total Asset Expired' :
+      'Next 10days Expire Assets'}}
+    </h3>
+    <div class="d-flex gap-3">
+      <mat-form-field class="example-full-width" appearance="outline" *ngIf="id == 1">
+        <mat-label>Select Date Range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate matInput placeholder="Start date" [(ngModel)]="startdate">
+          <input matEndDate matInput placeholder="End date" [(ngModel)]="enddate">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+      <app-button [buttonClass]="'submit'" text="Submit" *ngIf="id == 1"></app-button>
+      <app-button [buttonClass]="'submit'" text="Export" (click)="exportExpireAssets()"></app-button>
+    </div>
+  </div>
+</div>
+
+<table class=" table display product-overview mb-30" id="support_table">
+  <thead>
+    <tr>
+      <th>S.No</th>
+      <th>Asset Type</th>
+      <th>Asset Name</th>
+      <th>Serial Number</th>
+      <th>Item Code</th>
+      <th>Asset Category</th>
+      <th *ngIf="id == 1 || id == 3">Start Date</th>
+      <th *ngIf="id == 1 || id == 3">End Date</th>
+      <th *ngIf="id == 2 || id == 3">Purchase Date</th>
+      <th *ngIf="id == 2 || id == 3">Warranty Expiry Date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of expireAssetsList  | paginate : config; let i = index">
+      <td>{{(config.currentPage - 1) * config.itemsPerPage + i + 1}}</td>
+      <td>{{item.assetType}}</td>
+      <td>{{item.itemName}}</td>
+      <td>{{item.serialNumber}}</td>
+      <td>{{item.itemCode}}</td>
+      <td>{{item.assetsCategoryName}}</td>
+      <td *ngIf="id == 1 || id == 3">{{item.licenseStartDate | date : 'mediumDate'}}</td>
+      <td *ngIf="id == 1 || id == 3">{{item.licenseEndDate | date : 'mediumDate'}}</td>
+      <td *ngIf="id == 2 || id == 3">{{item.purchaseDate | date : 'mediumDate'}}</td>
+      <td *ngIf="id == 2 || id == 3">{{item.warrantyExpDate | date : 'mediumDate'}}</td>
+      <td>
+        <app-button [buttonClass]="'submit'" text="Renew"
+          (click)="reNewExpiredAssetPopUP(reNewExpiredAssetComponent, item)"></app-button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<mat-paginator showFirstLastButtons [length]="config.totalItems" [pageSize]="config.itemsPerPage"
+  [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChanged($event)">
+</mat-paginator>
+
+<ng-template #reNewExpiredAssetComponent let-modal>
+  <div class=" modal-header" style="background: #eee; padding: 14px">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #000">Renew Expired Licence</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="reNewForm">
+    <div class="modal-body">
+      <div class=" upload">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-6">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Asset Type</mat-label>
+                    <input matInput appTrimAndPreventFirstSpace readonly formControlName="itemId">
+                    <mat-error
+                      *ngIf="reNew.itemId.errors && (reNew.itemId.dirty || reNew.itemId.touched || submitted) ">
+                      <span *ngIf="reNew.itemId.errors.required">Asset type is required</span>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="type == 1">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>License Start Date</mat-label>
+                    <input matInput [matDatepicker]="licencestartdate" formControlName="licenseStartDate">
+                    <mat-datepicker-toggle matSuffix [for]="licencestartdate"></mat-datepicker-toggle>
+                    <mat-datepicker #licencestartdate></mat-datepicker>
+                    <mat-error
+                      *ngIf="reNew.licenseStartDate.errors && (reNew.licenseStartDate.dirty || reNew.licenseStartDate.touched || submitted) ">
+                      <span *ngIf="reNew.licenseStartDate.errors.required">Asset type is required</span>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="type == 1">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>License Expiry Date</mat-label>
+                    <input matInput [matDatepicker]="licenceenddate" formControlName="licenseExpiryDate">
+                    <mat-datepicker-toggle matSuffix [for]="licenceenddate"></mat-datepicker-toggle>
+                    <mat-datepicker #licenceenddate></mat-datepicker>
+                    <mat-error
+                      *ngIf="reNew.licenseExpiryDate.errors && (reNew.licenseExpiryDate.dirty || reNew.licenseExpiryDate.touched || submitted) ">
+                      <span *ngIf="reNew.licenseExpiryDate.errors.required">Asset type is required</span>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="type == 1">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>License Key</mat-label>
+                    <input matInput appTrimAndPreventFirstSpace formControlName="licenseKey">
+                    <mat-error
+                      *ngIf="reNew.licenseKey.errors && (reNew.licenseKey.dirty || reNew.licenseKey.touched || submitted) ">
+                      <span *ngIf="reNew.licenseKey.errors.required">Asset type is required</span>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="type == 2">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Warrenty Expire Date</mat-label>
+                    <input matInput [matDatepicker]="warrantyExpDate" formControlName="warrantyExpDate">
+                    <mat-datepicker-toggle matSuffix [for]="warrantyExpDate"></mat-datepicker-toggle>
+                    <mat-datepicker #warrantyExpDate></mat-datepicker>
+                    <mat-error
+                      *ngIf="reNew.warrantyExpDate.errors && (reNew.warrantyExpDate.dirty || reNew.warrantyExpDate.touched || submitted) ">
+                      <span *ngIf="reNew.warrantyExpDate.errors.required">Asset type is required</span>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <app-button [buttonClass]="'clear'" text="Cancel"></app-button>
+      <app-button [buttonClass]="'submit'" text="Renew" (click)="reNewAssetsDate(reNewForm)"></app-button>
+    </div>
+  </form>
+</ng-template>

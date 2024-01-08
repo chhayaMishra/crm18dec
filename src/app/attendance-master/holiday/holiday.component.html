@@ -1,0 +1,23 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3 flex-wrap mb-2">
+    <h3 class="textannoucement1">Holiday</h3>
+    <div class="searchSection">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput appTrimAndPreventFirstSpace [(ngModel)]="searchString"
+          (input)="searchInput($event.target.value)">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <mat-tab-group [disableRipple]="false">
+    <mat-tab [label]="item.name" *ngFor="let item of tabs">
+      <app-add-update-holiday *ngIf="item.id == 2" [item]="searchString"></app-add-update-holiday>
+      <app-add-update-holiday-group *ngIf="item.id == 1" [item]="searchString"></app-add-update-holiday-group>
+      <app-assign-holiday-group *ngIf="item.id == 3" [item]="searchString"></app-assign-holiday-group>
+    </mat-tab>
+  </mat-tab-group>
+
+
+
+</div>

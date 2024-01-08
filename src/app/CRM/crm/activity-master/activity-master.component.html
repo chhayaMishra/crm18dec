@@ -1,0 +1,292 @@
+<div class="fullcontainnercss">
+  <mat-card
+    class="cardWithShadow theme-card"
+    style="box-shadow: none !important"
+  >
+    <div class="row">
+      <div class="col-md-6">
+      
+        <div id="wrapper">
+          <div class="scrollbar" id="style-7">
+            <div style="position: relative;">
+              <h4 class="centerImg">No activity found</h4>
+            </div>
+            <!-- <div class="overview-section-content-component mt-4" *ngIf="activtyDatalength!=0">
+              <div
+                class="timeline-centered timeline-sm"
+                *ngFor="let activity of ActivityData"
+              >
+                <article class="timeline-entry">
+                  <div class="timeline-entry-inner">
+                    <time class="timeline-time"
+                      ><span> {{ activity.StartTime | date: " h:mm a" }}</span>
+                      <p>
+                        {{ activity.StartTime | date: "MMMM dd YYYY" }}
+                      </p></time
+                    >
+                    <div class="timeline-icon bg-violet">
+                      <i class="fa fa-paper-plane"></i>
+                    </div>
+                    <div class="timeline-label">
+                      <h4 class="timeline-title">
+                        {{ activity.ActivityType }}
+                      </h4>
+
+                      <p>{{ activity.Notes }}</p>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div> -->
+            <div class="force-overflow"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 t-bg">
+        <div class="container">
+          <form
+            class="form-bg"
+            [formGroup]="AddformGroup"
+            (ngSubmit)="onFormSubmit(AddformGroup.value)"
+          >
+            <section class="d-flex gap-2">
+              <select
+                formControlName="Status"
+                [(ngModel)]="currentStatus"
+                [style.background]="backg"
+                style="
+                  height: 39px;
+                  width: 100%;
+                  margin-top: 0.5rem;
+                  margin-bottom: 20px;
+                  border: 1px solid lightgray;
+                  border-radius: 7px;
+                "
+                (change)="SetStatus($event.target.value)"
+              >
+                <option value="" disabled selected hidden>Status</option>
+                <option
+                  *ngFor="let status of leadStatus"
+                  [style.background]="status.BackgroundColor"
+                  [style.color]="status.color"
+                  [style.margin]="status.margin"
+                  [value]="status.statusName"
+                  (click)="SetStatus(status.statusName)"
+                >
+                  {{ status.statusName }}
+                </option>
+              </select>
+            </section>
+            <section class="d-flex gap-2">
+              <select formControlName="ActivityType">
+                <option value="" disabled selected hidden>Activity Type</option>
+                <option (click)="chhayaTrigger()">chhaya</option>
+                <option
+                  mat-button
+                  color="primary"
+                  (click)="addAccount(AddformGroup.value)"
+                >
+                  <mat-icon matSuffix>person</mat-icon> New Account
+                </option>
+                <option
+                  value="CallSummary"
+                  class="size"
+                  style="
+                    background-color: rgb(120, 148, 209);
+                    color: white;
+                    margin: 10px;
+                  "
+                >
+                  Call Summary
+                </option>
+
+                <option
+                  value="Meeting"
+                  class="size"
+                  style="
+                    background-color: rgba(252, 148, 200, 0.788);
+                    color: white;
+                    margin: 10px;
+                  "
+                >
+                  Meeting
+                </option>
+                <option
+                  value="PhoneCall"
+                  class="size"
+                  style="
+                    background-color: rgb(193, 148, 252);
+                    color: white;
+                    margin: 10px;
+                  "
+                >
+                  Phone Call
+                </option>
+                <option
+                  value="LinkedIn"
+                  class="size"
+                  style="
+                    background-color: rgb(148, 228, 252);
+                    color: white;
+                    margin: 10px;
+                  "
+                >
+                  LinkedIn
+                </option>
+
+                <option
+                  value="FileUpload"
+                  class="size"
+                  style="
+                    background-color: rgb(216, 137, 163);
+                    color: white;
+                    margin: 10px;
+                  "
+                >
+                  File Upload
+                </option>
+              </select>
+            </section>
+            <section class="d-flex gap-2">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Notes</mat-label>
+                <input matInput formControlName="Notes" />
+                <textarea matInput formControlName="Notes"></textarea>
+              </mat-form-field>
+            </section>
+            <section class="d-flex gap-2">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Name</mat-label>
+
+                <input matInput formControlName="Name" readonly />
+                <mat-error
+                  *ngIf="AddformGroup.get('Name').hasError('required')"
+                >
+                  Name is required
+                </mat-error>
+              </mat-form-field>
+            </section>
+            <section class="d-flex gap-2" *ngIf="activityName === 'lead'">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Email</mat-label>
+
+                <input matInput formControlName="Email" readonly />
+              </mat-form-field>
+            </section>
+            <section class="d-flex gap-2" *ngIf="activityName === 'lead'">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Phone</mat-label>
+
+                <input matInput formControlName="Phone" readonly />
+              </mat-form-field>
+            </section>
+            <section class="d-flex gap-2" *ngIf="activityName === 'lead'">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Company</mat-label>
+
+                <input matInput formControlName="Company" readonly />
+              </mat-form-field>
+            </section>
+            <section class="d-flex gap-2">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Owner</mat-label>
+
+                <input matInput formControlName="Owner" readonly />
+                <mat-error
+                  *ngIf="AddformGroup.get('Owner').hasError('required')"
+                >
+                  Owner is required
+                </mat-error>
+              </mat-form-field>
+            </section>
+
+            <div *ngIf="showTime">
+              <section class="d-flex gap-2 mt-4">
+                <mat-form-field style="width: 500px" appearance="outline">
+                  <mat-label>Start time</mat-label>
+                  <input
+                    matInput
+                    formControlName="Starttime"
+                    type="datetime-local"
+                  />
+                </mat-form-field>
+                <mat-form-field style="width: 500px" appearance="outline">
+                  <mat-label>End time</mat-label>
+                  <input
+                    matInput
+                    formControlName="Endtime"
+                    type="datetime-local"
+                  />
+                </mat-form-field>
+              </section>
+            </div>
+            <div *ngIf="showContent">
+              <div style="padding: 15px">
+                <div>
+                  <div
+                    class="dropzone"
+                    fileDragDrop
+                    (filesChangeEmiter)="onFileChange($event)"
+                  >
+                    <div class="text-wrapper">
+                      <div class="centered">
+                        <input
+                          type="file"
+                          name="file"
+                          id="file"
+                          (change)="onFileChange($event.target.files)"
+                          multiple
+                        />
+                        <label for="file"
+                          ><span class="textLink">Select your file</span> or
+                          Drop it here!</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <mat-list>
+                    <h3 mat-subheader>Files</h3>
+                    <mat-list-item *ngFor="let file of files">
+                      <!-- <mat-icon matPrefix>folder_open</mat-icon> -->
+                      <h4 mat-line>{{ file.name }}</h4>
+                      <button
+                        mat-raised-button
+                        color="warn"
+                        (click)="deleteFile(file)"
+                      >
+                        Delete
+                      </button>
+                      <mat-divider></mat-divider>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+              </div>
+            </div>
+
+            <section class="d-flex gap-2" style="float: right">
+              <!-- {{ stausData }} -->
+              <app-button
+                [buttonstyle]="{ width: '139px' }"
+                [buttonClass]="'submit'"
+                text="Submit"
+                (click)="createactivity(AddformGroup.value)"
+              >
+              </app-button>
+              <!-- <app-button
+              [buttonstyle]="{ width: '139px' }"
+              [buttonClass]="'submit'"
+              text="Cancel"
+              (click)="CloseEvent()"
+            >
+            </app-button> -->
+            </section>
+          </form>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

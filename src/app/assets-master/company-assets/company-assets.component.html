@@ -1,0 +1,68 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3>Company Assets</h3>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <div class="buttonSection">
+      <span (click)="activePageSelectoin(item.id)" *ngFor="let item of pageName"
+        [ngClass]="item.class">{{item.name}}</span>
+    </div>
+    <div class="buttonSectionCenter">
+      <app-button *ngIf="activePageId === '1'" [buttonClass]="'submit'" [type]="'submit'" (click)="addAssets()"
+        text="Add Assets"></app-button>
+      <app-button *ngIf="activePageId === '1'" [buttonClass]="'submit'" [type]="'submit'"
+        (click)="faultyImportPopup(faultyImportContent)" text="Faulty Import"></app-button>
+      <app-button *ngIf="activePageId === '1'" [buttonClass]="'submit'" [type]="'submit'" text="Import"
+        (click)="importAssets()"></app-button>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput appTrimAndPreventFirstSpace [(ngModel)]="searchString"
+          (input)="searchInput($event.target.value)">
+      </mat-form-field>
+    </div>
+  </div>
+  <app-all-assets *ngIf="activePageId === '1'" [item]="searchString"
+    (sendDataEvent)="receiveDataFromChild($event)"></app-all-assets>
+  <app-track-assets *ngIf="activePageId === '2'" [item]="searchString"></app-track-assets>
+</div>
+
+<ng-template #faultyImportContent let-modal>
+  <div class=" modal-header" style="background: #eee; padding: 14px">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #000">Faulty Imports</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card-content">
+      <div class="card-body">
+        <table class="table display product-overview" id="support_table">
+          <thead>
+            <tr>
+              <th>S.No.</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of faultyImportsList  | paginate : config; let i = index">
+              <td>{{(config.currentPage - 1) * config.itemsPerPage + i + 1}}</td>
+              <td>{{item.createOn | date : 'medium'}}</td>
+              <td>{{item.unSuccessFullImported}}</td>
+              <td>
+                <i class="fa fa-download" (click)="downloadFaultyImports(item.assetImportFaultyLogsGroupsId)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <mat-paginator showFirstLastButtons [length]="config.totalItems" [pageSize]="config.itemsPerPage"
+          [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChangedCategory($event)">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</ng-template>

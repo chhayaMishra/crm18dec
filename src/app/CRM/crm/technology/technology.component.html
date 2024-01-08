@@ -1,0 +1,150 @@
+<div class="in">
+<mat-drawer-container >
+  <mat-drawer #drawer position="end" class="drawer">
+    <h2 class="welcome-msg"><strong>Details</strong></h2>
+
+    <p class="auth-signup-text text-muted">
+      Enter details to create your Technology
+    </p>
+    <form class="validate-form" [formGroup]="AddformGroup">
+      <section>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Technologyname</mat-label>
+          <input matInput formControlName="Technologyname" required />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="Description" required />
+        </mat-form-field>
+      </section>
+      <!-- <section class="d-flex gap-2">
+        <button
+        mat-flat-button
+        class="auth-btn-cancle"
+        type="cancle"
+        (click)="CloseEvent()"
+      >
+        Cancle
+      </button>
+
+        <button
+          mat-flat-button
+          color="primary"
+          class="auth-form-btn submit"
+          type="submit"
+          (click)="AddUtility(AddformGroup.value)"
+        >
+          Submit
+        </button>
+
+       
+      </section> -->
+
+      <section class="d-flex gap-2 " style="float: right">
+        <app-button [buttonstyle]=" {'width': '139px'}" [buttonClass]="'submit'" text="Submit"
+          (click)="AddUtility(AddformGroup.value)">
+        </app-button>
+        <app-button [buttonstyle]=" {'width': '139px'}" [buttonClass]="'submit'" text="Cancel" (click)="CloseEvent()">
+        </app-button>
+      </section>
+
+    </form>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="container-fluid">
+      <div class="col-md-12 innercontent mt-4">
+        <h2 class="welcome-msg"><b>Technology</b></h2>
+      </div>
+    </div>
+
+    <mat-card class="cardWithShadow theme-card">
+      <mat-card-content class="b-t-1">
+        <div
+          class="container-fluid mainTableData"
+          style="width: 100%; overflow-x: auto"
+        >
+          <mat-form-field class="searchNavbar1 mt-5 mb-4">
+            <mat-label>Search </mat-label>
+            <input
+              matInput
+              type="text"
+              [(ngModel)]="searchKeyword"
+              (ngModelChange)="onSearchChange()"
+              placeholder="Search "
+            />
+          </mat-form-field>
+          <div style="padding: 10px" class="me-4">
+            <table
+              mat-table
+              [dataSource]="TechnologydetailsData"
+              class="mat-elevation-z8"
+            >
+              <ng-container matColumnDef="sno">
+                <th mat-header-cell *matHeaderCellDef>S.no</th>
+                <td mat-cell *matCellDef="let Account; let j = index">
+                  {{ j + 1 }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Technologyname">
+                <th mat-header-cell *matHeaderCellDef>Technologyname</th>
+                <td mat-cell *matCellDef="let Account">
+                  {{ Account.Technologyname }}
+                </td>
+              </ng-container>
+              <!-- Account -->
+
+              <ng-container matColumnDef="Description">
+                <th mat-header-cell *matHeaderCellDef>Description</th>
+                <td mat-cell *matCellDef="let Account">
+                  {{ Account.Description }}
+                </td>
+              </ng-container>
+              <!-- Name Column -->
+
+              <ng-container matColumnDef="Actions">
+                <!-- <th mat-header-cell *matHeaderCellDef colspan="2">Actions</th> -->
+                <th mat-header-cell *matHeaderCellDef>
+                  Action
+                  <button mat-icon-button (click)="openAddDrawer()">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </th>
+
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button (click)="openEditDrawer(element)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <!-- <button
+                    mat-icon-button
+                    (click)="deleteUtilityItem(element.TechnoId)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button> -->
+                  <button
+                  mat-icon-button
+                  (click)="openDelete(element.TechnoId)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+
+          <mat-paginator
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 25, 50]"
+            [length]="totalItems"
+            (page)="onPageChange($event)"
+          >
+          </mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-drawer-content>
+</mat-drawer-container>
+</div>

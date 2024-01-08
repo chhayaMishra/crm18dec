@@ -1,0 +1,83 @@
+<section class="login-block vh-100" style="background-color: #fff;margin-top: -20px;">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center  h-100">
+      <div class="col-md-6 mx-auto d-flex justify-content-center align-items-center">
+        <div class="row" style="text-align: center;">
+          <div class="col-md-12">
+            <img class="logingif" src="../../../assets/loginpageimage/loginpage.gif" width="500" height="420" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 backgroundLoginright mx-auto d-flex justify-content-center align-items-center"
+        style="margin-bottom: -70px;">
+        <div>
+          <div class="card newcard" style="margin-bottom: 0px;margin-top: 0px;">
+            <img src="../../../assets/loginpageimage/Emosy-Logo.png" class="pt-3 classlogoimg"
+              style="width: 45%; margin: auto;display: block;margin-bottom: -36px; margin-top: 3px;">
+            <span class="login100-form-title mt-5 text">Login</span>
+            <button class="SigninwithMicrosoft" (click)="logInWithMicrosoft()">
+              <img src="../../../assets/loginpageimage/MicrosoftTeams-image.png" alt=""
+                style="width: 32px; height: 32px; margin-right: 7px;">
+              Sign in with Microsoft
+            </button>
+            <button class="SigninwithGoogle" (click)="googleLogIn()">
+              <img src="../../../assets/loginpageimage/google-Logo.png" alt=""
+                style="width: 34px; height: 32px; margin-right: 7px; margin-left: -8px;">
+              Sign in with Google
+            </button>
+            <button *ngIf="showButton" class="LoginwithEmail" (click)="LoginwithEmail()">
+              <img src="../../../assets/loginpageimage/credentialsLogin.png" alt=""
+                style="width: 36px; height: 32px; margin-right: 7px; margin-left: -23px;">
+              Login with Email
+            </button>
+            <form *ngIf="formShow" [formGroup]="loginForm" (ngSubmit)="onSubmit(true)" autocomplete="off">
+              <div class="row justify-content-center">
+                <div class="col-lg-10 mt-2 mb-2">
+                  <mat-label>Email</mat-label>
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <input matInput formControlName="UserName" autocomplete="off"
+                      [ngClass]="{ 'is-invalid': f.UserName.errors && ( f.UserName.dirty || f.UserName.touched || submitted )}" />
+                    <mat-error *ngIf="loginForm.get('UserName').hasError('required')">
+                      Email is required
+                    </mat-error>
+                    <mat-error *ngIf="loginForm.get('UserName').hasError('pattern')">
+                      Invalid email
+                    </mat-error>
+                    <mat-icon matSuffix>mail</mat-icon>
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-10 mb-4">
+                  <mat-label>Password</mat-label>
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="Password">
+                    <a class="show-pwd-icon" href="#" matSuffix (click)="hide= !hide"
+                      [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </a>
+                    <mat-error *ngIf="loginForm.get('Password').hasError('required')">
+                      Password is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-lg-10">
+                  <div class="text-right mb-4" style="font-weight: 600;margin-top: -18px;">
+                    <a routerLink="/authentication/forgot-password">Forgot Password?</a>
+                  </div>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-lg-10 m-2" style="margin-bottom: 40px;">
+                  <button mat-flat-button [disabled]="login" style="width: 100%;" type="submit" class="LogIn mr-2">
+                    {{login? 'Logging You In': 'LogIn' }}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

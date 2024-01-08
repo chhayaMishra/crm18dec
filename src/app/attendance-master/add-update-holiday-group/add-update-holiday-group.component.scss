@@ -1,0 +1,27 @@
+.holidayGroupBlock {
+  padding: 20px;
+}
+
+.holidayGroupHeading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.holidayGroupName {
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+.showHolidayGroupInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.holidayGroupName {
+  font-size: 20px;
+  font-weight: 500;
+}

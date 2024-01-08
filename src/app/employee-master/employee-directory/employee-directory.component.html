@@ -1,0 +1,97 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3>Employee Directory</h3>
+    </div>
+    <div class="searchSection d-flex gap-3">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Organization</mat-label>
+        <mat-select multiple [(ngModel)]="organization" (selectionChange)="organizationSelection($event.value)">
+          <mat-option [value]="item?.orgId" *ngFor="let item of organizationList">{{item?.orgName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="searchSection d-flex gap-3">
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Department</mat-label>
+      <mat-select multiple [(ngModel)]="department" (selectionChange)="departmentSelection($event.value)">
+        <mat-option [value]="item?.departmentId"
+          *ngFor="let item of departmentList">{{item?.departmentName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Designation</mat-label>
+      <mat-select multiple [(ngModel)]="designation" (selectionChange)="designationSelection($event.value)">
+        <mat-option [value]="item?.designationId"
+          *ngFor="let item of designationList">{{item?.designationName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Employee Type</mat-label>
+      <mat-select multiple [(ngModel)]="employeeType" (selectionChange)="employeeTypeSelection($event.value)">
+        <mat-option [value]="item?.employeeTypeId"
+          *ngFor="let item of employeeTypeList">{{item?.employeeTypeName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput>
+    </mat-form-field>
+  </div>
+  <div class="buttonSectionCenter mb-3">
+    <app-button [buttonClass]="'clear'" text="Reset" (click)="resetSearchFilter()"></app-button>
+  </div>
+
+  <div class="mb-3">
+    <div class="grid_container">
+      <div class="grid-item" *ngFor="let item of employeeList; let i=index">
+        <div class="card p-4">
+          <div class="row">
+            <div class="col-lg-3 col-md-2">
+              <div class="img" *ngIf="!item?.profileImageUrl" [ngStyle]="{ background: item?.background }">
+                <span class="namecss">
+                  {{item?.displayName| uppercase | shortName}}
+                </span>
+              </div>
+              <div class="img" *ngIf="item?.profileImageUrl">
+                <img class="userImage" src="{{API +'/'+item?.profileImageUrl}}" />
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-10">
+              <div class="row">
+                <div class="col-md-9">
+                  <h4 style="font-weight: 600; font-size: 14px;"> {{(item?.displayName?.length > 18)?
+                    (item?.displayName | slice: 0 : 18)+'..':(item?.displayName)}}
+                  </h4>
+                </div>
+                <div class="col-md-3" style="font-size: 8px;text-align: center;cursor: pointer;">
+                  <i class="fa-solid fa-eye fa-2x" aria-hidden="true" matTooltip="View Profile"
+                    (click)="routerToEmployeeProfile(item)"></i>
+                </div>
+              </div>
+              <div class="empDetails">
+                <h6>{{item?.designationName ? item?.designationName : '--Not Set--'}}</h6>
+              </div>
+              <div>
+                <span class="empHead">Department:</span>
+                <span class="empDetails">{{item?.departmentName ? item?.departmentName : '--Not Set--'}}</span>
+                <br>
+                <span class="empHead">Location: </span>
+                <span class="empDetails">{{item?.location ? item?.location :'--Not Set--'}}</span>
+                <br>
+                <span class="empHead">Email: </span>
+                <span class="empDetails">
+                  {{(item?.officeEmail?.length>25)? (item?.officeEmail | slice:0:20)+'..':(item?.officeEmail)}}</span>
+                <br>
+                <span class="empHead">Mobile: </span>
+                <span class="empDetails">{{item?.mobilePhone ? item?.mobilePhone : '--Not Set--'}}</span>
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

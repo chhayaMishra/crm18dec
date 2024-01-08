@@ -1,0 +1,94 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3>Assets Dashboard</h3>
+    </div>
+  </div>
+
+  <div class="col-lg-12 mt-3">
+    <div class="row">
+      <diV class="col-lg-3 cursor-pointer" *ngFor="let item of dashboardTiles" (mouseover)="hoverOnTiles(item.id)"
+        (mouseleave)="hoverLeaveTiles(item.id)" (click)="filterDataForAssets(item.id)">
+        <div class="card p-4" [ngStyle]="{'background' : item.background}">
+          <div class="row">
+            <div class="col-lg-3">
+              <img [src]="item.image" alt="">
+            </div>
+            <div class="col-lg-9">
+              <label [ngStyle]="{'color': item.text}" class="heading">{{item.name}}</label>
+              <h3>
+                <span [ngStyle]="{'color': item.text}" class="quantity">{{item.assetCount | indianNumberFormat}}</span>
+                <span [ngStyle]="{'color': item.text}" class="quantitySign">Qt.</span>
+              </h3>
+            </div>
+          </div>
+        </div>
+      </diV>
+      <div class="col-lg-6">
+        <div class="card p-4">
+          <span class="assetsHeading">Digital Assets Report</span>
+          <div class="d-flex justify-content-center">
+            <div class="chart">
+              <ngx-charts-pie-chart [view]="[226, 226]" [scheme]="{domain: ['rgb(255, 97, 84)', '#01204C']}"
+                [results]="digitalAssetsReport" [legend]="false" [labels]="false" [doughnut]="true">
+              </ngx-charts-pie-chart>
+            </div>
+            <div class="chartData">
+              <ul class="Legend">
+                <li class="Legend-item d-flex p-3" style="gap:10px" *ngFor="let item of digitalAssetsReport">
+                  <span class="Legend-colorBox" [ngStyle]="{'background': item.color}">
+                  </span>
+                  <span class="Legend-label" style="font-size: 14px;">
+                    {{item.heading}} - {{item.value}}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card p-4">
+          <span class="assetsHeading">Digital Assets Report</span>
+          <div class="d-flex justify-content-center">
+            <div class="chart">
+              <ngx-charts-pie-chart [view]="[226, 226]" [scheme]="colorScheme" [results]="assetsReports"
+                [legend]="false" [labels]="false" [doughnut]="true">
+              </ngx-charts-pie-chart>
+            </div>
+            <div class="chartData">
+              <ul class="Legend"
+                style="display: flex;flex-direction: column;justify-content: center; padding-top: 2rem;">
+                <li class="Legend-item d-flex p-3" style="gap:10px" *ngFor="let item of assetsReports">
+                  <span class="Legend-colorBox" [ngStyle]="{'background': item.color}">
+                  </span>
+                  <span class="Legend-label" style="font-size: 14px;">
+                    {{item.heading}} - {{item.value}}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <diV class="col-lg-4 cursor-pointer" *ngFor="let item of footerTiles">
+        <div class="card p-4" [ngStyle]="{'background' : item.background}">
+          <div class="row">
+            <div class="col-lg-3">
+              <img [src]="item.normalImage" alt="">
+            </div>
+            <div class="col-lg-9">
+              <label [ngStyle]="{'color': item.text}" class="quantity">
+                <i class="fa fa-rupee-sign fa-5x"></i>
+                {{item.assetAmount | indianNumberFormat}}
+              </label>
+              <h3>
+                <span [ngStyle]="{'color': item.text}" class="heading">{{item.name}}</span>
+              </h3>
+            </div>
+          </div>
+        </div>
+      </diV>
+    </div>
+  </div>
+</div>

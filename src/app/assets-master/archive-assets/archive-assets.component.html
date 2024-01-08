@@ -1,0 +1,34 @@
+<table class="table display product-overview mb-30" id="support_table">
+  <thead>
+    <tr>
+      <th>S.No</th>
+      <th>Asset Name</th>
+      <th>Asset Status</th>
+      <th>Location</th>
+      <th>Condition</th>
+      <th>Serial Number</th>
+      <th>Item Code</th>
+      <th>Reason</th>
+      <th>Archived By</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of archiveAssetList  | paginate : config; let i = index">
+      <td>{{(config.currentPage - 1) * config.itemsPerPage + i + 1}}</td>
+      <td>{{item.itemName}}</td>
+      <td>{{item.assetsStatus}}</td>
+      <td>{{item.location}}</td>
+      <td>{{item.assetsCondition}}</td>
+      <td>{{item.serialNumber}}</td>
+      <td>{{item.itemCode}}</td>
+      <td>{{item.archiveReason}}</td>
+      <td>
+        {{item.updatedBy}} <br>
+        <span>{{item.updateOn | date: 'mediumDate'}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<mat-paginator showFirstLastButtons [length]="config.totalItems" [pageSize]="config.itemsPerPage" [pageSizeOptions]="[5, 10, 25, 100]"
+  aria-label="Select page" (page)="pageChanged($event)">
+</mat-paginator>

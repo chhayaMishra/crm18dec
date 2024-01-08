@@ -1,0 +1,212 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3 class="textannoucement1">Ticket Raised</h3>
+      <span>Please find below the tickets that you have created for resolution.</span><br>
+      <span>Count of Open Tickets : {{tableResponce?.openCount}}</span><br>
+      <span>Count of Closed Tickets : {{tableResponce?.closeCount}}</span><br>
+    </div>
+    <div class="buttonSection d-grid text-end">
+      <app-button [buttonClass]="'submit'" text="Create Tickets" (click)="raiseTicketPopUp(raiseTicketComponent)">
+      </app-button>
+      <div class="d-flex gap-3">
+        <div class="icons d-flex" *ngFor="let item of priorityIcons">
+          <mat-icon [class]="item.class" [ngStyle]="{'color':item.color}">{{item.iconName}}</mat-icon>
+          <span class="aligned-with-icon">{{item.name}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tableBody mt-3 sheetTIme">
+    <div class="table-responsive">
+      <span class="font-bold">Open Tickets will show here</span>
+      <table class="table display product-overview mb-30" id="support_table">
+        <thead>
+          <tr>
+            <th>S.No.</th>
+            <th>Ticket No.</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Subcategory</th>
+            <th>Assign To</th>
+            <th>Ticket Status</th>
+            <th>Created On</th>
+            <th>Last Update</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of openTicketList | paginate : configTicketRaisedOpen; let i = index;">
+            <td scope="row">{{ (configTicketRaisedOpen.currentPage-1)*configTicketRaisedOpen.itemsPerPage+i+1 }}</td>
+            <td>{{item.ticketViewId}}</td>
+            <td>
+              <span class="d-flex">
+                <mat-icon [ngStyle]="{'color':item.color}" [class]="item.class">{{item.iconName}}</mat-icon>
+                <a [matTooltip]="item.title | showtooltip : 20" style="color: #2986ce; cursor: pointer;"
+                  (click)="openChatSection(item.ticketId)">
+                  {{item.title | wordslimit : 20}}</a>
+              </span>
+            </td>
+            <td [matTooltip]="item.categoryName | showtooltip : 10">{{item.categoryName | wordslimit : 10}}</td>
+            <td>{{!item.subCategoriesName ?"-" : item.subCategoriesName}}</td>
+            <td>{{item.assignTo}}</td>
+            <td>{{item.ticketStatus}}</td>
+            <td>{{item.createdOn | date:'medium'}}</td>
+            <td>
+              {{!item.lastUpdateBy ? "Not Yet Assigned" :item.lastUpdateBy}} <br>
+              {{!item.lastUpdateDate ? "" : item.lastUpdateDate | date:'medium'}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator showFirstLastButtons [length]="openTicketList?.length" [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChangedOpenTicketList($event)">
+      </mat-paginator>
+    </div>
+
+    <br><br>
+
+    <span>Closed Tickets will show here</span>
+    <table class="table display product-overview mb-30" id="support_table">
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Ticket No.</th>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Subcategory</th>
+          <th>Assign To</th>
+          <th>Ticket Status</th>
+          <th>Created On</th>
+          <th>Closed By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of closeTicketList | paginate : configTicketRaisedClose; let i = index;">
+          <td scope="row">{{ (configTicketRaisedClose.currentPage-1)*configTicketRaisedClose.itemsPerPage+i+1 }}</td>
+          <td>{{item.ticketViewId | wordslimit : 10}}</td>
+          <td>
+            <span class="d-flex">
+              <mat-icon [ngStyle]="{'color':item.color}" [class]="item.class">{{item.iconName}}</mat-icon>
+              <a [matTooltip]="item.title | showtooltip : 20" style="color: #2986ce; cursor: pointer;"
+                (click)="openChatSection(item.ticketId)">
+                {{item.title | wordslimit : 20}}</a>
+            </span>
+          </td>
+          <td [matTooltip]="item.categoryName | showtooltip : 20">{{item.categoryName | wordslimit : 20}}</td>
+          <td>{{!item.subCategoriesName ?"-" : item.subCategoriesName}}</td>
+          <td>{{item.assignTo}}</td>
+          <td>{{item.ticketStatus}}</td>
+          <td>{{item.createdOn | date:'medium'}}</td>
+          <td>
+            {{!item.closeBy ? "Not Yet Assigned" :item.closeBy}} <br>
+            {{!item.ticketClosedOn ? "" : item.ticketClosedOn | date:'medium'}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator showFirstLastButtons [length]="closeTicketList?.length" [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChangedCloseTicketList($event)">
+    </mat-paginator>
+  </div>
+</div>
+
+<ng-template #raiseTicketComponent let-modal>
+  <div class="modal-header" style="background: #eee; padding: 14px">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #000">Raise a Ticket</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="ticketRaiseForm">
+    <div class="modal-body">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <mat-label>I need help regarding (Category)<span class="danger">*</span></mat-label>
+              <ng-select (change)="categorySelection($event)" formControlName="categoryId"
+                placeholder="Please Select Ticket Category">
+                <ng-option *ngFor="let item of ticketCategoryList"
+                  [value]="item.categoryId">{{item.categoryName}}</ng-option>
+              </ng-select>
+              <mat-error
+                *ngIf="ticket.categoryId.errors && (ticket.categoryId.dirty || ticket.categoryId.touched ||submitted)">
+                <small *ngIf="ticket.categoryId.errors.required">
+                  Category Seletion is required
+                </small>
+              </mat-error>
+            </div>
+            <div class="col-lg-6" *ngIf="subCategoryList?.length > 0">
+              <mat-label>Sub Categories<span class="danger">*</span></mat-label>
+              <ng-select formControlName="subCategoriesId" placeholder="Please Select Sub Category">
+                <ng-option *ngFor="let item of subCategoryList"
+                  [value]="item.subCategoriesId">{{item.subCategoriesName}}</ng-option>
+              </ng-select>
+            </div>
+            <div class="col-lg-6">
+              <mat-label>Priority<span class="danger">*</span></mat-label>
+              <ng-select formControlName="priorityType" placeholder="Please Select Priority">
+                <ng-option *ngFor="let item of priorityList"
+                  [value]="item.priorityType">{{item.priorityName}}</ng-option>
+              </ng-select>
+              <mat-error
+                *ngIf="ticket.priorityType.errors && (ticket.priorityType.dirty || ticket.priorityType.touched ||submitted)">
+                <small *ngIf="ticket.priorityType.errors.required">
+                  Priority selection is required
+                </small>
+              </mat-error>
+            </div>
+            <div class="col-lg-12">
+              <mat-label>Title<span class="danger">*</span></mat-label>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <input matInput appTrimAndPreventFirstSpace formControlName="title" placeholder="Please Enter Title">
+                <mat-error *ngIf="ticket.title.errors && (ticket.title.dirty || ticket.title.touched ||submitted)">
+                  <small *ngIf="ticket.title.errors.required">
+                    Title is required
+                  </small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-12">
+              <mat-label>Description<span class="danger">*</span></mat-label>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <textarea matInput id="" cols="30" rows="10" appTrimAndPreventFirstSpace formControlName="description"
+                  placeholder="Please Enter Description"></textarea>
+                <mat-error
+                  *ngIf="ticket.description.errors && (ticket.description.dirty || ticket.description.touched ||submitted)">
+                  <small *ngIf="ticket.description.errors.required">
+                    Description is required
+                  </small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="row ml-2">
+              <div class="form-group col-md-12">
+                <p>Upload Images Maximum 5</p>
+                <input type="file" id="file" #fileInput multiple="true" (change)="uploadFiles($event.target.files)">
+                <div *ngIf="filesArray?.length > 0" class="mt-2 mb-2 ml-2" style="display: flex;">
+                  <div class="ml-2" *ngFor="let item of filesArray; let i = index">
+                    <div *ngIf="item">
+                      <i class="fa fa-times" aria-hidden="true" style="cursor: pointer;" (click)="deleteImage(i)"></i>
+                    </div>
+                    <div class="card-img-top1 p-2" *ngIf="item">
+                      <img class="displayimg" src="{{baseURL +'/'+ item}}" alt="" width="75" height="75">
+                    </div>
+                    <div class="card-img-top1" *ngIf="!item">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <app-button [buttonClass]="'submit'" [type]="'submit'" text="Submit"
+        (click)="submitTicket(ticketRaiseForm)"></app-button>
+      <app-button [buttonClass]="'clear'" text="Clear" [type]="clear" (click)="clearForm()"></app-button>
+    </div>
+  </form>
+</ng-template>

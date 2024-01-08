@@ -1,0 +1,401 @@
+<div class="innercontent mt-5 ms-2">
+  <!-- Warehouse Section  -->
+  <div class="card p-4">
+    <div class="d-flex justify-content-between ms-3 me-3">
+      <div class="headingSection d-flex">
+        <mat-slide-toggle (change)="showHideWarehouse()">
+          <h3>
+            {{showWarehouse ? 'Hide' : 'Show'}} Warehouse
+          </h3>
+        </mat-slide-toggle>
+      </div>
+      <div class="d-flex gap-3" *ngIf="showWarehouse">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Search</mat-label>
+          <input matInput appTrimAndPreventFirstSpace [(ngModel)]="searchStringWarehouse"
+            (input)="searchInputWareHouse($event.target.value)">
+        </mat-form-field>
+        <div class="buttonSectionCenter">
+          <app-button [buttonClass]="'submit'" [type]="'submit'" text="Export" (click)="exportExcel(0)"></app-button>
+          <app-button [buttonClass]="'submit'" [type]="'submit'" text="Add Warehouse"
+            (click)="addUpdateWarehousePopUp(addUpdateWarehouseComponent)"></app-button>
+        </div>
+      </div>
+
+    </div>
+    <div *ngIf="showWarehouse">
+      <p>Total Warehouse : {{configWarehouseList.totalItems}}</p>
+      <table class="table display product-overview" id="support_table">
+        <thead>
+          <tr>
+            <th>S.No.</th>
+            <th>Warehouse Name</th>
+            <th>Warehouse Address</th>
+            <th>Total Items</th>
+            <th>Warehouse Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of warehouseList  | paginate : configWarehouseList; let i = index">
+            <td>{{(configWarehouseList.currentPage - 1) * configWarehouseList.itemsPerPage + i + 1}}</td>
+            <td>{{item.warehouseName}}</td>
+            <td>{{item.warehouseAddress}}</td>
+            <td>{{item.totalItems}}</td>
+            <td>{{item.warehouseName}}</td>
+            <td>
+              <span class="d-flex gap-3 align-items-center">
+                <i class="fa fa-edit"
+                  (click)="addUpdateWarehousePopUp(addUpdateWarehouseComponent, item.warehouseId)"></i>
+                <i class="fa fa-trash" [ngClass]="{'disabled' : item.totalItems != 0}"
+                  (click)="deleteWarehouse(item.warehouseId)"></i>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator showFirstLastButtons [length]="configWarehouseList.totalItems"
+        [pageSize]="configWarehouseList.itemsPerPage" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"
+        (page)="pageChangedWareHouse($event)">
+      </mat-paginator>
+    </div>
+  </div>
+  <!-- Warehouse Section  -->
+
+  <div class="card p-4 mt-4">
+    <div class="d-flex justify-content-between">
+      <h3>Categories</h3>
+      <div class="d-flex gap-3">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Search</mat-label>
+          <input matInput appTrimAndPreventFirstSpace [(ngModel)]="searchString"
+            (input)="searchInputCategory($event.target.value)">
+        </mat-form-field>
+        <div class="buttonSectionCenter">
+          <app-button [buttonClass]="'submit'" [type]="'submit'" text="Export"
+            (click)="exportExcel(activePageId)"></app-button>
+          <app-button [buttonClass]="'submit'" [type]="'submit'"
+            [text]="activePageId == 1 ? 'Add Base Category' : 'Add Category'"
+            (click)="activePageId == 1 ? addUpdateBaseCategoryPopUp(addUpdateBaseCategoryComponent) : addUpdateCategoryPopUp(addUpdateCategoryComponent)">
+          </app-button>
+        </div>
+      </div>
+    </div>
+    <div class="buttonSection">
+      <span (click)="activePageSelectoin(item.id)" *ngFor="let item of pageName"
+        [ngClass]="item.class">{{item.name}}</span>
+    </div>
+
+    <!-- Base Category Section -->
+    <table class="table display product-overview" id="support_table" *ngIf="activePageId == 1">
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Asset Type</th>
+          <th>Base Category Name</th>
+          <th>Description</th>
+          <th>Category Count</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of baseCategoryList  | paginate : configBaseCategoryList; let i = index">
+          <td>{{(configBaseCategoryList.currentPage - 1) * configBaseCategoryList.itemsPerPage + i + 1}}</td>
+          <td>{{item.assetsTypeName}}</td>
+          <td>{{item.assetsBCategoryName}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.categoryCount}}</td>
+          <td>
+            <span class="d-flex gap-3 align-items-center">
+              <i class="fa fa-edit"
+                (click)="addUpdateBaseCategoryPopUp(addUpdateBaseCategoryComponent, item.assetsBCategoryId)"></i>
+              <i class="fa fa-trash" [ngClass]="{'disabled' : item.categoryCount != 0}"
+                (click)="deleteWarehouse(item.assetsBCategoryId)"></i>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator showFirstLastButtons [length]="configBaseCategoryList.totalItems" *ngIf="activePageId == 1"
+      [pageSize]="configBaseCategoryList.itemsPerPage" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"
+      (page)="pageChangedBaseCategory($event)">
+    </mat-paginator>
+    <!-- Base Category Section -->
+
+    <!-- Category Section -->
+    <table class="table display product-overview" id="support_table" *ngIf="activePageId == 2">
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Icon</th>
+          <th>Base Category Name</th>
+          <th>Category Name</th>
+          <th>Category Description</th>
+          <th>Asstes Count</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of categoryList  | paginate : configCategoryList; let i = index">
+          <td>{{(configCategoryList.currentPage - 1) * configCategoryList.itemsPerPage + i + 1}}</td>
+          <td>
+            <mat-icon [style.color]="item.colorCode">
+              {{item?.assetsIconName}}
+            </mat-icon>
+          </td>
+          <td>{{item.baseCategoryName}}</td>
+          <td>{{item.assetsCategoryName}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.count}}</td>
+          <td>
+            <span class="d-flex gap-3 align-items-center">
+              <i class="fa fa-edit"
+                (click)="addUpdateCategoryPopUp(addUpdateCategoryComponent, item.assetsCategoryId)"></i>
+              <i class="fa fa-trash" [ngClass]="{'disabled' : item.count != 0}"
+                (click)="deleteCategory(item.assetsCategoryId)"></i>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator showFirstLastButtons [length]="configCategoryList.totalItems" *ngIf="activePageId == 2"
+      [pageSize]="configCategoryList.itemsPerPage" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"
+      (page)="pageChangedCategory($event)">
+    </mat-paginator>
+    <!-- Category Section -->
+
+  </div>
+</div>
+
+<ng-template #addUpdateBaseCategoryComponent let-modal>
+  <div class=" modal-header" style="background: #eee; padding: 14px">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #000">{{baseCategoryId ? 'Edit' : 'Add'}} Base Category
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="addUpdateBaseCategoryForm">
+    <div class="modal-body">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Select Base Category Type</mat-label>
+                <mat-select formControlName="assetsType">
+                  <mat-option *ngFor="let item of assetsTypeList" [value]="item.value">{{item.name}}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="baseCategory.assetsType.errors && (baseCategory.assetsType.dirty || baseCategory.assetsType.touched ||submitted)">
+                  <small *ngIf="baseCategory.assetsType.errors.required">
+                    Warehouse Name is required
+                  </small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Base Category Name</mat-label>
+                <input matInput appTrimAndPreventFirstSpac formControlName="assetsBCategoryName">
+                <mat-error
+                  *ngIf="baseCategory.assetsBCategoryName.errors && (baseCategory.assetsBCategoryName.dirty || baseCategory.assetsBCategoryName.touched ||submitted)">
+                  <small *ngIf="baseCategory.assetsBCategoryName.errors.required">
+                    Base Category Name is required
+                  </small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Base Category Description</mat-label>
+                <input matInput appTrimAndPreventFirstSpac formControlName="description">
+                <mat-error
+                  *ngIf="baseCategory.description.errors && (baseCategory.description.dirty || baseCategory.description.touched ||submitted)">
+                  <small *ngIf="baseCategory.description.errors.required">
+                    Base Category Description is required
+                  </small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <app-button [buttonClass]="'clear'" [type]="'clear'" text="Clear"></app-button>
+      <app-button [buttonClass]="'submit'" [type]="'submit'" [text]="!baseCategoryId ? 'Save' : 'Update'"
+        (click)="addUpdateBaseCategory(addUpdateBaseCategoryForm)">
+      </app-button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #addUpdateCategoryComponent let-modal>
+  <div class=" modal-header" style="background: #eee; padding: 14px">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #000">{{categoryId ? 'Edit' : 'Add'}} Category</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="addUpdateCategoryForm">
+    <div class="modal-body">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Select Base Category</mat-label>
+                <mat-select formControlName="baseCategoryId">
+                  <mat-option *ngFor="let item of baseCategoryListDropDown"
+                    [value]="item.assetsBCategoryId">{{item.assetsBCategoryName}}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="category.baseCategoryId.errors && (category.baseCategoryId.dirty || category.baseCategoryId.touched ||submitted)">
+                  <small *ngIf="category.baseCategoryId.errors.required">
+                    Warehouse Name is required
+                  </small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Category Name</mat-label>
+                <input matInput appTrimAndPreventFirstSpac formControlName="categoryName">
+                <mat-error
+                  *ngIf="category.categoryName.errors && (category.categoryName.dirty || category.categoryName.touched ||submitted)">
+                  <small *ngIf="category.categoryName.errors.required">
+                    Address is required
+                  </small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Category Description</mat-label>
+                <input matInput appTrimAndPreventFirstSpac formControlName="categoryDescription">
+                <mat-error
+                  *ngIf="category.categoryDescription.errors && (category.categoryDescription.dirty || category.categoryDescription.touched ||submitted)">
+                  <small *ngIf="category.categoryDescription.errors.required">
+                    Description is required
+                  </small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-3">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Category Description</mat-label>
+                <input matInput type="color" formControlName="color">
+              </mat-form-field>
+            </div>
+            <div class="col-lg-3" *ngIf="!imageSelection">
+              <mat-label>Select Icon</mat-label>
+              <br>
+              <i class="fa fa-caret-down" [matMenuTriggerFor]="iconsmenu"></i>
+              <mat-menu class="p-2" #iconsmenu="matMenu">
+                <mat-icon *ngFor="let item of assetsIcon" [style.color]="addUpdateCategoryForm.value.color"
+                  (click)="iconSelection(item, true)">
+                  {{item.name}}
+                </mat-icon>
+                &nbsp;
+                <span class="p-text cursor-pointer" [style.color]="addUpdateCategoryForm.value.color"
+                  (click)="imageSelection = true">Select Image</span>
+              </mat-menu>&nbsp;
+              <mat-icon [style.color]="addUpdateCategoryForm.value.color">
+                {{icon?.name}}
+              </mat-icon>
+            </div>
+            <div class="col-lg-6" *ngIf="imageSelection">
+              <div class="form-group col-md-12">
+                <div class="d-flex justify-content-between">
+                  <p>Upload Images Maximum 5</p>
+                  <p [style.color]="addUpdateCategoryForm.value.color" (click)="imageSelection = false">Select Icon</p>
+                </div>
+                <input type="file" id="file" #fileInput (change)="uploadFiles($event.target.files)">
+                <div *ngIf="filesArray.length > 0" class="mt-2 mb-2 ml-2" style="display: flex;">
+                  <div class="ml-2" *ngFor="let item of filesArray; let i = index">
+                    <div *ngIf="item">
+                      <i class="fa fa-times" aria-hidden="true" style="cursor: pointer;" (click)="deleteImage(i)"></i>
+                    </div>
+                    <div class="card-img-top1 p-2" *ngIf="item">
+                      <img class="displayimg" src="{{api +'/'+ item}}" alt="" width="75" height="75">
+                    </div>
+                    <div class="card-img-top1" *ngIf="!item">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <app-button [buttonClass]="'clear'" text="Clear"></app-button>
+      <app-button [buttonClass]="'submit'" [type]="'submit'" [text]="!categoryId ? 'Save' : 'Update'"
+        (click)="addUpdateCategory(addUpdateCategoryForm)">
+      </app-button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #addUpdateWarehouseComponent let-modal>
+  <div class=" modal-header" style="background: #eee; padding: 14px">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #000">{{warehouseId ? 'Edit' : 'Add'}} Warehouse</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="addUpdateWarehouseForm">
+    <div class="modal-body">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Warehouse Name</mat-label>
+                <input matInput appTrimAndPreventFirstSpac formControlName="warehouseName">
+                <mat-error
+                  *ngIf="warehouse.warehouseName.errors && (warehouse.warehouseName.dirty || warehouse.warehouseName.touched ||submitted)">
+                  <small *ngIf="warehouse.warehouseName.errors.required">
+                    Warehouse Name is required
+                  </small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Warehouse Address</mat-label>
+                <input matInput appTrimAndPreventFirstSpac formControlName="warehouseDescription">
+                <mat-error
+                  *ngIf="warehouse.warehouseDescription.errors && (warehouse.warehouseDescription.dirty || warehouse.warehouseDescription.touched ||submitted)">
+                  <small *ngIf="warehouse.warehouseDescription.errors.required">
+                    Address is required
+                  </small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Warehouse Description</mat-label>
+                <input matInput appTrimAndPreventFirstSpac formControlName="warehouseAddress">
+                <mat-error
+                  *ngIf="warehouse.warehouseAddress.errors && (warehouse.warehouseAddress.dirty || warehouse.warehouseAddress.touched ||submitted)">
+                  <small *ngIf="warehouse.warehouseAddress.errors.required">
+                    Description is required
+                  </small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <app-button [buttonClass]="'clear'" text="Clear"></app-button>
+      <app-button [buttonClass]="'submit'" [type]="'submit'" [text]="!warehouseId ? 'Save' : 'Update'"
+        (click)="addUpdateWarehouse(addUpdateWarehouseForm)">
+      </app-button>
+    </div>
+  </form>
+</ng-template>

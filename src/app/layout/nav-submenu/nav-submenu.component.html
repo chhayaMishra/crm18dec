@@ -1,0 +1,11 @@
+<nav #navbar class="navbar navbar-default subnavbar" *ngIf="showSubMenu()">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse">
+            <ul *ngFor="let data of subMenu" class="nav navbar-nav">
+                <li class="nav-item">
+                    <a  [routerLink]="data.path" [ngStyle]="activeSubmenu(data)"> {{data.title}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

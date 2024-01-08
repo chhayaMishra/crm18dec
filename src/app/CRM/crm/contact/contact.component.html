@@ -1,0 +1,695 @@
+<div class="">
+  <mat-drawer-container class="innercontent">
+    <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
+      <!-- <p class="auth-signup-text text-muted">Enter details to create contact</p> -->
+      <!-- contact Form -->
+      <form class="validate-form" [formGroup]="AddformGroup" style="padding: 1rem !important;">
+        <section class="row">
+          <div class="col-md-12">
+            <span class="welcome-msg"
+              ><strong>Enter details to create contact</strong></span
+            >
+          </div>
+
+          <div class="col-md-4">
+            <mat-form-field appearance="outline" style="width: 100%">
+              <mat-label>Contact Type</mat-label>
+              <mat-select formControlName="ContactType" required>
+                <mat-option value="Client">Client</mat-option>
+                <mat-option value="Employee">Employee</mat-option>
+                <mat-option value="Other">Other</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field appearance="outline" style="width: 100%">
+              <mat-label>Organization Id</mat-label>
+              <input matInput formControlName="OrganizationId" />
+              <mat-icon matSuffix>domain</mat-icon>
+
+              <mat-error *ngIf="AddformGroup.get('OrganizationId')">
+                Organization Id is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field appearance="outline" style="width: 100%">
+              <mat-label>Employee Id</mat-label>
+              <input matInput formControlName="EmployeeId" />
+              <mat-icon matSuffix>person_add</mat-icon>
+              <mat-error *ngIf="AddformGroup.get('EmployeeId')">
+                Employee Id is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </section>
+
+        <section class="row">
+          <div class="col-md-12">
+            <hr />
+            <h6><strong> Personal Information</strong></h6>
+            <hr />
+          </div>
+
+          <div class="col-md-4">
+            <div *ngIf="showContent; else message">
+              <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>Full Name</mat-label>
+                <input
+                  formControlName="FirstName"
+                  matInput
+                  placeholder="Full name"
+                  [matAutocomplete]="auto"
+                  [readonly]="isReadOnly"
+                />
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  (optionSelected)="onEmployeeSelected($event)"
+                >
+                  <mat-option
+                    *ngFor="let employee of employeeList"
+                    [value]="employee.displayName"
+                  >
+                    {{ employee.displayName }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+
+            <ng-template #message>
+              <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>First Name</mat-label>
+                <input
+                  formControlName="FirstName"
+                  matInput
+                  placeholder="First Name"
+                  [matAutocomplete]="auto"
+                  [readonly]="isReadOnly"
+                />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>Last Name</mat-label>
+                <input
+                  matInput
+                  formControlName="LastName"
+                  placeholder="Last Name"
+                  required
+                />
+                <mat-icon matSuffix>person</mat-icon>
+              </mat-form-field>
+            </ng-template>
+          </div>
+
+          <div class="col-md-4">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Job Title</mat-label>
+              <input matInput formControlName="JobTitle" required />
+              <mat-icon matSuffix>subtitles</mat-icon>
+              <mat-error
+                *ngIf="AddformGroup.get('JobTitle').hasError('required')"
+              >
+                Job Title is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Account Name</mat-label>
+              <mat-select
+                (selectionChange)="getAccountSelect($event)"
+                formControlName="accountId"
+                required
+              >
+                <mat-option
+                  mat-button
+                  color="primary"
+                  (click)="addAccount(AddformGroup.value)"
+                >
+                  <mat-icon matSuffix>person</mat-icon> New Account
+                </mat-option>
+                <mat-option
+                  *ngFor="let account of accountList"
+                  [value]="account.AccountId"
+                >
+                  {{ account.AccountName }}
+                </mat-option>
+              </mat-select>
+
+              <mat-icon matSuffix>account_circle</mat-icon>
+              <mat-error
+                *ngIf="AddformGroup.get('AccountName').hasError('required')"
+                >Account Name is required</mat-error
+              >
+            </mat-form-field>
+          </div>
+        </section>
+
+        <section class="row">
+        
+          <div class="col-md-12">
+            <hr />
+            <h6><strong>Contact Details</strong></h6>
+            <hr />
+          </div>
+          <div class="col-md-3">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                formControlName="Email"
+                required
+                id="email"
+                name="email"
+              />
+              <mat-icon matSuffix> email</mat-icon>
+              <mat-error *ngIf="AddformGroup.get('Email').hasError('required')">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="AddformGroup.get('Email').hasError('email')">
+                Please enter a valid email address
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Business Phone</mat-label>
+              <input matInput formControlName="BusinessPhone" />
+              <mat-icon matSuffix> phone</mat-icon>
+              <mat-error *ngIf="AddformGroup.get('BusinessPhone')">
+                BusinessPhone is required
+              </mat-error>
+              <!-- No need for an error message for invalidMobileNumber -->
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Mobile Phone</mat-label>
+              <input matInput formControlName="MobilePhone" required />
+              <mat-icon matSuffix> contact_phone</mat-icon>
+              <mat-error
+                *ngIf="AddformGroup.get('MobilePhone').hasError('required')"
+              >
+                Mobile phone is required
+              </mat-error>
+              <!-- No need for an error message for invalidMobileNumber -->
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Fax</mat-label>
+              <input matInput formControlName="Fax" required />
+              <mat-icon matSuffix>send</mat-icon>
+              <mat-error *ngIf="AddformGroup.get('Fax').hasError('required')">
+                Fax is required
+              </mat-error>
+              <!-- No need for an error message for invalidFax -->
+            </mat-form-field>
+          </div>
+        </section>
+
+        <section class="row">
+       
+          <div class="col-md-12">
+            <hr />
+            <h6><strong> Address </strong></h6>
+            <hr />
+          </div>
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="Address" required />
+            <mat-icon matSuffix> location_on</mat-icon>
+            <mat-error *ngIf="AddformGroup.get('Address').hasError('required')">
+              Address is required.
+            </mat-error>
+          </mat-form-field>
+        </section>
+
+        <section class="row">
+          <div class="col-md-12">
+            
+          <hr />
+          <h6><strong> Other Information </strong></h6>
+          <hr />
+          </div>
+          <div class="col-md-3">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Gender</mat-label>
+              <mat-select formControlName="Gender" required>
+                <mat-option value="Male">Male</mat-option>
+                <mat-option value="Female">Female</mat-option>
+                <mat-option value="Other">Other</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="AddformGroup.get('Gender').hasError('required')"
+              >
+                Gender is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Marital Status</mat-label>
+              <mat-select formControlName="MaritalStatus">
+                <mat-option value="Single">Single</mat-option>
+                <mat-option value="Married">Married</mat-option>
+                <mat-option value="Other">Other</mat-option>
+              </mat-select>
+              <mat-error *ngIf="AddformGroup.get('MaritalStatus')">
+                Marital Status is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Spouse/Partner Name</mat-label>
+              <input matInput formControlName="SpousePartnerName" />
+              <mat-icon matSuffix>person_outline</mat-icon>
+              <mat-error *ngIf="AddformGroup.get('SpousePartnerName')">
+                Partner Name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Preferd Method of Contact</mat-label>
+              <input
+                matInput
+                formControlName="PreferdMethodofContact"
+                required
+              />
+              <mat-icon matSuffix> contacts</mat-icon>
+              <mat-error
+                *ngIf="
+                  AddformGroup.get('PreferdMethodofContact').hasError(
+                    'required'
+                  )
+                "
+              >
+                Preferd are required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </section>
+
+        <section class="row">
+          <div class="col-md-6">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Birthday</mat-label>
+              <input matInput formControlName="Birthday" type="date" />
+              <mat-error
+                *ngIf="AddformGroup.get('Birthday').hasError('required')"
+              >
+                Birthday is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Anniversary</mat-label>
+              <input matInput formControlName="Anniversary" type="date" />
+            </mat-form-field>
+          </div>
+        </section>
+
+        <!-- <hr />
+        <h6><strong> Currency and Credit Information </strong></h6>
+        <hr />
+
+        <section class="d-flex gap-2"> -->
+        <!-- <mat-form-field style="width: 250px" appearance="outline">
+            <mat-label>Currency</mat-label>
+            <mat-select (selectionChange)="getCurrencySelect($event)" formControlName="currencyId" required>
+              <mat-option *ngFor="let currency of currencyList" [value]="currency.CurrencyId">
+               {{contact.FirstNameResponse + " " +contact.LastNameResponse}} 
+                {{ currency.CurrencyName }}
+              </mat-option>
+            </mat-select> -->
+        <!-- <input matInput formControlName="Contact" required /> -->
+        <!-- </mat-form-field> -->
+        <!-- <mat-form-field style="width: 250px" appearance="outline">
+            <mat-label>Credit Limit</mat-label>
+            <input matInput formControlName="CreditLimit" />
+            <mat-icon matSuffix>credit_card</mat-icon>
+            <mat-error *ngIf="AddformGroup.get('CreditLimit')">
+              Credit Limit is required.
+            </mat-error></mat-form-field>
+
+          <mat-form-field style="width: 250px" appearance="outline">
+            <mat-label>Credit Hold</mat-label>
+            <mat-select formControlName="CreditHold">
+              <mat-option value=""></mat-option>  -->
+        <!-- <mat-option value="Yes">Yes</mat-option>
+              <mat-option value="No">No</mat-option>
+            </mat-select>
+            <mat-error *ngIf="AddformGroup.get('CreditHold')">
+              Credit Hold is required.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="width: 250px" appearance="outline">
+            <mat-label>Payment Terms</mat-label>
+            <input matInput formControlName="PaymentTerms" required />
+            <mat-icon matSuffix>payment</mat-icon>
+            <mat-error *ngIf="
+                AddformGroup.get('PaymentTerms').hasError('required')
+              ">Payment Terms is required</mat-error>
+          </mat-form-field>
+        </section>  -->
+
+        <!-- <section class="d-flex gap-2">
+          <button
+          mat-flat-button
+          class="auth-btn-cancle"
+          type="cancle"
+          (click)="CloseEvent()"
+        >
+          Cancle
+        </button>
+
+          <button
+            mat-flat-button
+            color="primary"
+            class="auth-form-btn submit"
+            type="submit"
+            (click)="AddUtility(AddformGroup.value)"
+          >
+            Submit
+          </button>
+
+         
+        </section> -->
+
+        <section class="d-flex" style="justify-content: flex-end">
+          <app-button
+            style="margin-right: 1rem"
+            [buttonstyle]="{ width: '139px' }"
+            [buttonClass]="'submit'"
+            text="Submit"
+            (click)="AddUtility(AddformGroup.value)"
+          >
+          </app-button>
+          <app-button
+            [buttonstyle]="{ width: '139px' }"
+            [buttonClass]="'submit'"
+            text="Cancel"
+            (click)="CloseEvent()"
+          >
+          </app-button>
+        </section>
+      </form>
+    </mat-drawer>
+
+    <mat-drawer-content>
+      <mat-card class="cardWithShadow theme-card">
+        <mat-card-content class="b-t-1">
+          <!-- <div class="container-fluid">
+        <div class="col-md-12 mt-4">
+        
+        </div>
+      </div> -->
+
+          <div
+            class="d-flex align-items-end"
+            style="justify-content: space-between"
+          >
+            <div>
+              <h2 class="welcome-msg"><b>Contact Information</b></h2>
+            </div>
+            <div>
+              <ng-template #content1 let-c="close" let-d="dismiss">
+                <div class="modal-content">
+                  <div class="modal-header techHeader">
+                    <h4 class="modal-title">Excel Validation</h4>
+                    <button
+                      type="button"
+                      style="margin-bottom: 4px"
+                      class="close submit"
+                      aria-label="Close"
+                      (click)="c('Close click')"
+                    >
+                      <span
+                        aria-hidden="true"
+                        style="color: #000; font-size: 26px"
+                        >&times;</span
+                      >
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="card-content">
+                      <div class="card-body">
+                        <div class="list-group">
+                          <h5>
+                            <b>Contact's fields </b> should contain only
+                            Alphabet
+                          </h5>
+                          <br />
+                          <div class="Demo">
+                            <h5
+                              style="
+                                font-weight: 500;
+                                font-size: 14px;
+                                line-height: 22px;
+                                color: #616576;
+                                padding-top: 10px;
+                              "
+                            ></h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <label
+                        for="inputFile"
+                        class="btn add-btn ml-2 submit"
+                        style="margin: 0"
+                        >Upload</label
+                      >
+                      <input
+                        hidden
+                        type="file"
+                        (change)="onChange($event, content1)"
+                        id="inputFile"
+                        name="inputFile"
+                        accept=".xlsx, .xls"
+                      />
+                      <button
+                        type="button"
+                        class="btn can-btn mr-2 submit"
+                        (click)="c('Close click')"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <section class="d-flex gap-2 me-4" style="float: right">
+                <button
+                  type="reset"
+                  class="btn add-btn mr-3 submit"
+                  (click)="Import(content1)"
+                >
+                  Import
+                </button>
+
+                <button
+                  type="button"
+                  class="btn add-btn mr-3 submit"
+                  (click)="downloadTemplate()"
+                >
+                  Download Template
+                </button>
+                <button
+                  style="float: right"
+                  class="btn add-btn mr-3 submit"
+                  (click)="exportToExcel()"
+                >
+                  Export
+                </button>
+              </section>
+            </div>
+          </div>
+
+          <div class="container-fluid mainTableData">
+            <div
+              class="d-flex align-items-end"
+              style="justify-content: space-between"
+            >
+              <div class="p-2">
+                <mat-form-field class="searchNavbar1 mb-4">
+                  <mat-label>Search</mat-label>
+
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="searchKeyword"
+                    (ngModelChange)="onSearchChange()"
+                    placeholder="Search "
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="ml-auto p-2">
+                <app-button
+                  [buttonClass]="'submit'"
+                  [type]="'button'"
+                  text="Create Contact"
+                  (click)="openAddDrawer()"
+                ></app-button>
+                <!-- <button mat-icon-button (click)="openAddDrawer()">
+                <mat-icon>add</mat-icon>
+              </button> -->
+              </div>
+            </div>
+
+            <!-- contact table -->
+            <div style="padding: 10px" class="mt-2">
+              <table
+                mat-table
+                class="mat-elevation-z8"
+                [dataSource]="ContactdetailsData"
+              >
+                <!-- S.no column -->
+
+                <ng-container matColumnDef="sno">
+                  <th mat-header-cell *matHeaderCellDef>S.no</th>
+                  <td mat-cell *matCellDef="let element; let j = index">
+                    {{ j + 1 }}
+                  </td>
+                </ng-container>
+
+                <!-- OrganizationId column -->
+                <ng-container matColumnDef="OrganizationId">
+                  <th mat-header-cell *matHeaderCellDef>Organization Id</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.OrganizationId }}
+                  </td>
+                </ng-container>
+
+                <!-- EmployeeId column -->
+                <ng-container matColumnDef="EmployeeId">
+                  <th mat-header-cell *matHeaderCellDef>Employee Id</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.EmployeeId }}
+                  </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="FirstName">
+                  <th mat-header-cell *matHeaderCellDef>First Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.FirstName }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="LastName">
+                  <th mat-header-cell *matHeaderCellDef>Last Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.LastName }}
+                  </td>
+                </ng-container> -->
+
+                <ng-container matColumnDef="FullName">
+                  <th mat-header-cell *matHeaderCellDef>Full Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.FullName }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="JobTitle">
+                  <th mat-header-cell *matHeaderCellDef>Job Title</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.JobTitle }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="AccountName">
+                  <th mat-header-cell *matHeaderCellDef>Account Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.AccountName }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Email">
+                  <th mat-header-cell *matHeaderCellDef>Email</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.Email }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="BusinessPhone">
+                  <th mat-header-cell *matHeaderCellDef>Business Phone</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.BusinessPhone }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="MobilePhone">
+                  <th mat-header-cell *matHeaderCellDef>Mobile Phone</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.MobilePhone }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Fax">
+                  <th mat-header-cell *matHeaderCellDef>Fax</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.Fax }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Address">
+                  <th mat-header-cell *matHeaderCellDef>Address</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.Address }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <p style="padding: 1rem 1rem 0rem 2rem">Action</p>
+
+                    <!-- <button mat-icon-button (click)="openAddDrawer()">
+                      <mat-icon>add</mat-icon>
+                    </button> -->
+                  </th>
+
+                  <td mat-cell *matCellDef="let element">
+                    <!-- <button mat-icon-button (click)="EditUtility(element)"> -->
+                    <button mat-icon-button (click)="openEditDrawer(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <!-- <button mat-icon-button (click)="DeleteUtility(element.ContactId)">
+                      <mat-icon>delete</mat-icon>
+                    </button> -->
+                    <button
+                      mat-icon-button
+                      (click)="openDelete(element.ContactId)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <!-- Define the table rows and header row -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+
+              <mat-paginator
+                [pageSize]="pageSize"
+                [pageSizeOptions]="[5, 10, 25, 50, 100]"
+                [length]="totalItems"
+                (page)="onPageChange($event)"
+              ></mat-paginator>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

@@ -1,0 +1,101 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3 flex-wrap mb-2">
+    <h3 class="textannoucement1">Ticket Report</h3>
+    <app-button *ngIf="ticketReportList.length > 0" [buttonClass]="'submit'" text="Export"
+      (click)="export()"></app-button>
+  </div>
+
+  <div class="card p-4">
+    <div class="col-lg-12">
+      <div class="row">
+        <div class="col-lg-2">
+          <mat-label>Select date range</mat-label>
+          <mat-form-field appearance="outline" style="display: inline;">
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate matInput placeholder="Start date" [(ngModel)]="startdate">
+              <input matEndDate matInput placeholder="End date" [(ngModel)]="enddate">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-2">
+          <mat-label>Select Category</mat-label>
+          <ng-select multiple="true" placeholder="Select Category" [(ngModel)]="categoryId">
+            <ng-option [value]="item.categoryId" *ngFor="let item of ticketcategorylists">
+              {{ item.categoryName }}
+            </ng-option>
+          </ng-select>
+        </div>
+        <div class="col-lg-2">
+          <mat-label>Select Priority</mat-label>
+          <ng-select multiple="true" placeholder="Select Priority" [(ngModel)]="priorityId">
+            <ng-option value="1">Low</ng-option>
+            <ng-option value="2">Medium</ng-option>
+            <ng-option value="3">High</ng-option>
+            <ng-option value="4">Urgent</ng-option>
+            <ng-option value="5">Road Block</ng-option>
+          </ng-select>
+        </div>
+        <div class="col-lg-2">
+          <mat-label>Select Status</mat-label>
+          <ng-select multiple="true" placeholder="Select Status" [(ngModel)]="statusId">
+            <ng-option value="1">Pending</ng-option>
+            <ng-option value="2">In Progress</ng-option>
+            <ng-option value="3">Completed</ng-option>
+          </ng-select>
+        </div>
+        <div class="col-lg-2 d-flex gap-2 align-items-center">
+          <app-button [buttonClass]="'clear'" text="Reset" (click)="resetFilter()"></app-button>
+          <app-button [buttonClass]="'submit'" text="Run" (click)="reportSearch(true)"></app-button>
+        </div>
+        <div class="col-lg-2">
+          <mat-label>Search</mat-label>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <input matInput appTrimAndPreventFirstSpace [(ngModel)]="searchString" placeholder="Search"
+              (input)="searchInput($event.target.value)">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <table class="table display product-overview mb-30" id="support_table">
+    <thead>
+      <tr>
+        <th>S.No.</th>
+        <th>Ticket No.</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Subcategory</th>
+        <th>Assign To</th>
+        <th>Ticket Status</th>
+        <th>Created On</th>
+        <th>Last Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of ticketReportList | paginate : config; let i = index">
+        <td> {{ (config.currentPage - 1) * config.itemsPerPage + i + 1 }}</td>
+        <td>{{item.ticketViewId}}</td>
+        <td [matTooltip]="item.title | showtooltip: 25">{{item.title | wordslimit: 25}}</td>
+        <td [matTooltip]="item.categoryName| showtooltip: 25">{{item.categoryName| wordslimit: 25}}</td>
+        <td>{{item.subCategoriesName ? item.subCategoriesName : '-'}}</td>
+        <td>{{item.assignTo}}</td>
+        <td>{{item.ticketStatusName}}</td>
+        <td>
+          <span>{{item.creatdByName}}</span><br>
+          <small>{{item.createdOn | date : 'mediumDate'}}</small>
+        </td>
+        <td>
+          <span>{{lastUpdateBy ? item.lastUpdateBy : 'Not Assigned Yet'}}</span>
+          <small>{{!item.lastUpdateDate ? '': item.lastUpdateDate | date : 'mediumDate' }}</small>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <mat-paginator showFirstLastButtons *ngIf="ticketReportList.length > 0" [length]="config.totalItems"
+    [pageSize]="config.itemsPerPage" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"
+    (page)="pageChanged($event)">
+  </mat-paginator>
+</div>

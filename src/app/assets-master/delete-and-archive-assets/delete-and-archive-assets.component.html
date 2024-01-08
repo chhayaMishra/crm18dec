@@ -1,0 +1,27 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3>Company Assets</h3>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <div class="buttonSection">
+      <span (click)="activePageSelectoin(item.id)" *ngFor="let item of pageName"
+        [ngClass]="item.class">{{item.name}}</span>
+    </div>
+    <div class="buttonSectionCenter">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput appTrimAndPreventFirstSpace [(ngModel)]="searchString"
+          (input)="searchInput($event.target.value)">
+      </mat-form-field>
+      <app-button [buttonClass]="'clear'" [type]="'submit'" text="Reset" (click)="resetFilters()"></app-button>
+      <app-button *ngIf="activePageId === '2'" [buttonClass]="'submit'" [type]="'submit'" text="Submit"></app-button>
+      <app-button [buttonClass]="'submit'" [type]="'submit'" text="Export"
+        (click)="exportAssetsList(activePageId)"></app-button>
+    </div>
+  </div>
+  <app-delete-assets *ngIf="activePageId === '1'" [item]="searchString"></app-delete-assets>
+  <app-archive-assets *ngIf="activePageId === '2'" [item]="searchString"></app-archive-assets>
+</div>

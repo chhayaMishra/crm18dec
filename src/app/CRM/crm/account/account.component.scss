@@ -1,0 +1,135 @@
+mat-drawer {
+  width: 500px;
+  padding: 12px;
+  border-radius: 10px;
+  position: absolute;
+}
+mat-drawer-container {
+  height: 90vh;
+  background-color: rgba(104, 139, 165, 0);
+}
+.container-fluid.mainTableData {
+  width: 100%;
+  overflow-x: auto;
+}
+.mat-table {
+  width: 100%;
+}
+
+/* Left side drawer container */
+.example-container {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* Right side content container */
+.mat-drawer-content {
+  flex-grow: 1;
+  padding: 20px;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Table container */
+.mainTableData {
+  width: 100%; /* Set the table container width to 100% */
+}
+
+// /* Header styles */
+.welcome-msg {
+  font-size: 24px;
+  margin: 5px 0;
+}
+
+// /* Input and select styles */
+input.mat-input,
+mat-select {
+  font-size: 16px;
+  background-color: #fff;
+}
+
+// /* Button styles */
+.auth-form-btn {
+  background-color: #4691ff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+// /* Table styles */
+mat-table {
+  width: 100%;
+}
+
+// /* Filter input style */
+mat-form-field {
+  margin-bottom: 10px;
+}
+
+// /* Table header styles */
+th.mat-header-cell {
+  font-weight: bold;
+  // background-color: #4691ff;
+  // color: #fff;
+}
+
+// /* Table cell styles */
+td.mat-cell {
+  padding: 8px;
+}
+
+// /* Paginator styles */
+.mat-paginator {
+  margin-top: 20px;
+  display: inline;
+}
+
+// /* Error message styles */
+.mat-error {
+  color: #ff0000;
+  font-size: 14px;
+}
+
+html,
+body {
+  overflow: hidden; /* Hide overflow content */
+}
+
+.header-with-icon {
+  display: flex;
+
+  align-items: center;
+
+  cursor: pointer;
+}
+.sort-icon {
+  margin-left: 0px;
+}
+
+.row {
+
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
+}
+.bg{
+background-color: #4691ff;
+color:#fff;
+}
+
+.auth-btn-cancle{
+  background-color:#4691ff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 500px;
+}

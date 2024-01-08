@@ -1,0 +1,106 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3 class="textannoucement1">Ticket Received</h3>
+      <span>Please find enclosed tickets that have been allocated to your category.</span><br>
+    </div>
+  </div>
+
+  <div class="tableBody mt-3 sheetTIme">
+    <div class="table-responsive">
+      <div class="d-flex gap-3 justify-content-end">
+        <div class="icons d-flex" *ngFor="let item of priorityIcons">
+          <mat-icon [class]="item.class" [ngStyle]="{'color':item.color}">{{item.iconName}}</mat-icon>
+          <span class="aligned-with-icon">{{item.name}}</span>
+        </div>
+      </div><br>
+      <span class="font-bold">Open Tickets will show here</span>
+      <table class="table display product-overview mb-30" id="support_table">
+        <thead>
+          <tr>
+            <th>S.No.</th>
+            <th>Ticket No.</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Subcategory</th>
+            <th>Assign To</th>
+            <th>Ticket Status</th>
+            <th>Created On</th>
+            <th>Last Update</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of openTicketList | paginate : configTicketRecivedOpen; let i = index;">
+            <td scope="row">{{ (configTicketRecivedOpen.currentPage-1)*configTicketRecivedOpen.itemsPerPage+i+1 }}</td>
+            <td>{{item.ticketViewId}}</td>
+            <td>
+              <span class="d-flex">
+                <mat-icon [ngStyle]="{'color':item.color}" [class]="item.class">{{item.iconName}}</mat-icon>
+                <a [matTooltip]="item.title | showtooltip : 20" style="color: #2986ce; cursor: pointer;"
+                  (click)="openChatSection(item.ticketId)">
+                  {{item.title | wordslimit : 20}}</a>
+              </span>
+            </td>
+            <td [matTooltip]="item.categoryName | showtooltip : 20">{{item.categoryName | wordslimit : 20}}</td>
+            <td>{{!item.subCategoriesName ?"-" : item.subCategoriesName}}</td>
+            <td>{{item.assignTo}}</td>
+            <td>{{item.ticketStatus}}</td>
+            <td>{{item.createdOn | date:'medium'}}</td>
+            <td>
+              {{!item.lastUpdateBy ? "Not Yet Assigned" :item.lastUpdateBy}} <br>
+              {{!item.lastUpdateDate ? "" : item.lastUpdateDate | date:'medium'}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator showFirstLastButtons [length]="configTicketRecivedOpen.totalItems" [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChangedOpenTicketList($event)">
+      </mat-paginator>
+    </div>
+
+    <br><br>
+
+    <span>Closed Tickets will show here</span>
+    <table class="table display product-overview mb-30" id="support_table">
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Ticket No.</th>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Subcategory</th>
+          <th>Assign To</th>
+          <th>Ticket Status</th>
+          <th>Created On</th>
+          <th>Closed By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of closeTicketList | paginate : configTicketRecivedClose; let i = index;">
+          <td scope="row">{{ (configTicketRecivedClose.currentPage-1)*configTicketRecivedClose.itemsPerPage+i+1 }}</td>
+          <td>{{item.ticketViewId}}</td>
+          <td>
+            <span class="d-flex">
+              <mat-icon [ngStyle]="{'color':item.color}" [class]="item.class">{{item.iconName}}</mat-icon>
+              <a [matTooltip]="item.title | showtooltip : 20" style="color: #2986ce; cursor: pointer;"
+                (click)="openChatSection(item.ticketId)">
+                {{item.title | wordslimit: 20}}</a>
+            </span>
+          </td>
+          <td [matTooltip]="item.categoryName | showtooltip : 20">{{item.categoryName | wordslimit : 20}}</td>
+          <td>{{!item.subCategoriesName ?"-" : item.subCategoriesName}}</td>
+          <td>{{item.assignTo}}</td>
+          <td>{{item.ticketStatus}}</td>
+          <td>{{item.createdOn | date:'medium'}}</td>
+          <td>
+            {{!item.closeBy ? "Not Yet Assigned" :item.closeBy}} <br>
+            {{!item.ticketClosedOn ? "" : item.ticketClosedOn | date:'medium'}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator showFirstLastButtons [length]="configTicketRecivedClose.totalItems" [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChangedCloseTicketList($event)">
+    </mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class=" modal-header" style="background: #eee; padding: 14px">
+  <h4 class="modal-title" id="modal-basic-title" style="color: #000">Export Excel</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closePopup()">
+    <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+  </button>
+</div>
+<div class="modal-body" style="height: 50vh; padding: 4%;">
+  <div class="card-content">
+    <div class="card-body">
+      <div class="customCheckNBox">
+        <mat-checkbox *ngFor="let item of data.checkBoxArray; let i=index" color="primary"
+          (change)="checkBoxCheck($event.checked, item, i)">{{item.name}}</mat-checkbox>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <app-button [buttonClass]="'submit'" [type]="'submit'" [text]="'Default Export'"
+    (click)="excelExport(true)"></app-button>
+  <app-button [buttonClass]="'submit'" [type]="'submit'" [text]="'Custom Export'"
+    (click)="excelExport(false)"></app-button>
+</div>

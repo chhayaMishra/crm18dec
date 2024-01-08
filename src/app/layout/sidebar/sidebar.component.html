@@ -1,0 +1,38 @@
+<div>
+  <!-- Left Sidebar -->
+  <aside id="leftsidebar" class="sidebar" (mouseenter)="mouseHover($event)"
+    (mouseleave)="mouseOut($event)">
+    <!-- Menu -->
+    <div class="menu">
+      <ul class="list"
+        [ngStyle]="{'position' : 'relative', 'max-height' : listMaxHeight+'px', 'max-width' : listMaxWidth+'px' ,'text-align': 'center' }"
+        [perfectScrollbar]>
+        <li class="sidebar-user-panel" style="margin-bottom: 6rem">
+          <div class="user-panel">
+            <div class="image">
+              <img src="../../../assets/SidebarLogo/EmossyLogo.svg" alt>
+            </div>
+          </div>
+
+        </li>
+        <!-- Top Most level menu -->
+        <li *ngFor="let sidebarItem of routeData" class="listhover m-0">
+          <div (click)="routeMenu(sidebarItem)" [ngClass]="!sidebarItem?.isHover ? 'p-4 divlist' : 'arrow-div p-4' ">
+            <img src={{!sidebarItem?.isHover?sidebarItem.icon:checkiconhover(sidebarItem)}}  [ngClass]="!sidebarItem?.isHover ? 'imagesidebar' : 'imagesidebar'  "/>
+            <p  class="" [ngStyle]="{color : sidebarItem?.isHover? checkcolor() : ''}">{{sidebarItem.title}}</p>
+          </div>
+        </li>
+        <li>
+          <a class (click)="logout()" class="menu-top">
+            <i class="material-icons-two-tone">power_settings_new</i>
+            <span class="hide-menu">Logout
+              
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- #Menu -->
+  </aside>
+  <!-- #END# Left Sidebar -->
+</div>

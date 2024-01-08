@@ -1,0 +1,106 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3>Assets Report</h3>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <div class="buttonSectionCenter">
+        <app-button [buttonClass]="'clear'" [type]="'submit'" text="Reset" (click)="resetFilters()"></app-button>
+        <app-button [buttonClass]="'submit'" [type]="'submit'" text="Export" (click)="excelExport()"></app-button>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end">
+    <div class="buttonSectionCenter">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Purchase Date</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate matInput [(ngModel)]="startDate" placeholder="Start Date">
+          <input matEndDate matInput [(ngModel)]="endDate" placeholder="End Date">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Select Warehouse</mat-label>
+        <mat-select multiple [(ngModel)]="warehouseId">
+          <mat-option *ngFor="let item of warehouseList" [value]="item.warehouseId">{{item.warehouseName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Select Base Category</mat-label>
+        <mat-select multiple [(ngModel)]="baseCategoryId" (selectionChange)="baseCategorySelection($event.value)">
+          <mat-option *ngFor="let item of baseCategoryList"
+            [value]="item.assetsBCategoryId">{{item.assetsBCategoryName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Select Category</mat-label>
+        <mat-select multiple [(ngModel)]="categoryId">
+          <mat-option *ngFor="let item of categoryList" [value]="item.categoryId">{{ item.categoryName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Select Asset Status</mat-label>
+        <mat-select multiple [(ngModel)]="statusId">
+          <mat-option *ngFor="let item of statusList" [value]="item.value">{{item.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Select Condition</mat-label>
+        <mat-select multiple [(ngModel)]="conditionId">
+          <mat-option *ngFor="let data of conditionList" [value]="data.value">{{data.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <app-button [buttonClass]="'submit'" [type]="'submit'" text="Search" (click)="searchAssetsReports()"></app-button>
+    </div>
+  </div>
+  <div style="overflow: auto;">
+    <table class="table display product-overview" id="support_table">
+      <thead>
+        <tr>
+          <th>S No.</th>
+          <th>Asset Code</th>
+          <th>Asset Name</th>
+          <th>Description</th>
+          <th>Location</th>
+          <th>Base Category</th>
+          <th>Category</th>
+          <th>Type</th>
+          <th>Purchased ON</th>
+          <th>Condition</th>
+          <th>Status</th>
+          <th>Employee Name</th>
+          <th>Warehouse</th>
+          <th>Asset Assigned Date</th>
+          <th>Purchased Price</th>
+          <th>Repair Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of assestsReportList  | paginate : config; let i = index">
+          <td> {{(config.currentPage - 1) * config.itemsPerPage + i + 1}}</td>
+          <td>{{item.itemName}}</td>
+          <td>{{item.assetsItemCode}}</td>
+          <td>{{item.assetsDescription | wordslimit: 30}} </td>
+          <td>{{item.assetsLocation}}</td>
+          <td>{{item.assetsBaseCategoryName}}</td>
+          <td>{{item.assetsCategoryName}}</td>
+          <td>{{item.assetsTypeName}}</td>
+          <td>{{item.purchaseDate | date : 'MMM dd yyyy'}}</td>
+          <td>{{item.assetsCondition}}</td>
+          <td>{{item.assetsStatus}}</td>
+          <td>{{item.employeeName}}</td>
+          <td>{{item.warehouseName}}</td>
+          <td>{{item.assignDate | date : 'MMM dd yyyy'}}</td>
+          <td>{{item.price}}</td>
+          <td>{{item.underRepairedAmount}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <mat-paginator showFirstLastButtons [length]="config.totalItems" [pageSize]="config.itemsPerPage"
+    [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChanged($event)">
+  </mat-paginator>
+</div>

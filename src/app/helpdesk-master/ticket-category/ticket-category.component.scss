@@ -1,0 +1,54 @@
+.categoryhead {
+  width: 35px;
+  height: 35px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 80px;
+  background-color: #accff01a;
+  color: #1d8ffa;
+  font-weight: 600;
+}
+
+.teamSection {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .teamEmployees {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+.scrollSection {
+  overflow-y: hidden;
+  height: 60px;
+}
+
+.scrollSection:hover {
+  overflow-y: scroll;
+}
+
+// .scrollSection::-webkit-scrollbar {
+//   display: none;
+// }
+
+.details {
+  width: 100%;
+  text-wrap: nowrap;
+  overflow-x: hidden;
+}
+
+.details:hover {
+  overflow-x: scroll;
+}
+
+.details::-webkit-scrollbar {
+  display: none;
+}

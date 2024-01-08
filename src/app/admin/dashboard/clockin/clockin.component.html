@@ -1,0 +1,276 @@
+<div class="d-flex flex-column mt-3 middleflex">
+
+    <!-- 2 col 1 card -->
+    <div class="card card-statistic-2 px-3 py-3">
+      <div class="d-flex justify-content-between me-2 ms-2 mt-2">
+        <p class="polltext">Remote Clock In</p>
+        <p class="cardI14 ">View Details</p>
+      </div>
+      <div class="d-flex justify-content-between">
+         <div class="d-flex flex-column ms-2">
+            <p class="m-0">Mar 03, 2023 Friday</p>
+            <p class="timestyle m-0">05:12</p>
+         </div>
+        
+        <div class="d-flex gap-2">
+          <app-button
+          [buttonstyle]=" {'width': '122px'}"
+          [buttonClass]="'submit'"      
+            text="Clock In"></app-button>
+          <app-button
+          [buttonClass]="'clear'" 
+          [buttonstyle]=" {'width': '122px'}"
+           
+            text="Clock Out"></app-button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 2 col 2 card -->
+    <div class="card card-statistic-2 px-3 py-3">
+      <div class="d-flex justify-content-between me-2 ms-2 mt-2">
+        <p class="polltext">Leave Balance</p>
+        <p class="cardI14 ">View Details</p>
+      </div>
+       <div class="d-flex gap-4 ms-3">
+
+         <div class="d-flex  flex-column ">
+           <ngx-charts-pie-chart
+           [animations]="false"
+           [view]="[130, 130]"
+           [scheme]="colorScheme"
+           [legend]="false"
+           [results]="series"
+           [labels]="false"
+           [doughnut]="true"
+           [legendPosition]="'right'"
+           [legendTitle]="''"
+           [tooltipDisabled]="true"
+           (select)="onSelect($event)"
+           [arcWidth]="0.3"
+         >
+         </ngx-charts-pie-chart>
+         <p class="text-center">Earned Leave</p>
+             <app-button
+             [buttonStyle]="{'width':'140px'} "
+             [buttonClass]="'submit'" 
+              
+               text="Apply for leave ">
+             </app-button>
+         </div>
+         <div class="d-flex  flex-column">
+           <ngx-charts-pie-chart
+           [animations]="false"
+           [view]="[130, 130]"
+           [scheme]="colorScheme"
+           [legend]="false"
+           [results]="series"
+           [labels]="false"
+           [doughnut]="true"
+           [legendPosition]="'right'"
+           [legendTitle]="''"
+           [tooltipDisabled]="true"
+           (select)="onSelect($event)"
+           [arcWidth]="0.3"
+         >
+         </ngx-charts-pie-chart>
+         <p class="text-center">Casual Leave</p>
+             <app-button
+             [buttonStyle]="{'width':'140px'} "
+             [buttonClass]="'submit'" 
+               text="Apply for leave ">
+             </app-button>
+         </div>
+         <div class="d-flex  flex-column">
+           <ngx-charts-pie-chart
+           [animations]="false"
+           [view]="[130, 130]"
+           [scheme]="colorScheme"
+           [legend]="false"
+           [results]="series"
+           [labels]="false"
+           [doughnut]="true"
+           [legendPosition]="'right'"
+           [legendTitle]="''"
+           [tooltipDisabled]="true"
+           (select)="onSelect($event)"
+           [arcWidth]="0.3"
+         >
+         </ngx-charts-pie-chart>
+         <p class="text-center">Sick Leave</p>
+             <app-button
+             [buttonStyle]="{'width':'140px'} "
+             [buttonClass]="'submit'" 
+            
+               text="Apply for leave ">
+             </app-button>
+         </div>
+       </div>
+
+    </div>
+
+    <!-- 2 col 3 card -->
+    <div class="card card-statistic-2 px-3 py-3">
+      <div class="d-flex justify-content-between me-2 ms-1 mt-2">
+        <p class="polltext">To-Do List <span class="cardI14 ms-3">Today</span> </p>
+        <p class="cardI14 ">View Details</p>
+      </div>
+      <div class="d-flex flex-column">
+
+        <div class="card py-3 px-3">
+          <p class="poppins16 m-0">Task Name</p>
+            <div class="d-flex gap-2">
+              <p class="cardI14 ">Lorem Ipsum is simply dummy text of dummy
+                text of the printing.</p>
+              <span class="material-icons"> more_vert </span>
+            </div>
+        </div>
+
+        <div class="card  py-3 px-3 ">
+    
+          <p class="poppins16 m-0">Task Name</p>
+            <div class="d-flex gap-2">
+              <p class="cardI14 ">Lorem Ipsum is simply dummy text of dummy
+                text of the printing.</p>
+              <span class="material-icons"> more_vert </span>
+            </div>
+ 
+        </div>
+
+        <div class="card  py-3 px-3">
+          <p class="poppins16 m-0">Task Name</p>
+            <div class="d-flex gap-2">
+              <p class="cardI14 ">Lorem Ipsum is simply dummy text of dummy
+                text of the printing.</p>
+              <span class="material-icons"> more_vert </span>
+            </div>
+    
+        </div>
+        <app-button
+        [buttonstyle]=" {'width': '500px'}"
+        [buttonClass]="'submit'" 
+          text="Add New Task">
+        </app-button>
+     
+
+      </div>
+
+    </div>
+
+    <!-- 2 col 4 card -->
+    <div class="card card-statistic-2 px-2 py-2">
+      <div class="d-flex justify-content-between me-2 ms-1 mt-2">
+        <p class="polltext">Latest News</p>
+        <p class="cardI14 ">View Details</p>
+      </div>
+      <div class="d-flex flex-column">
+
+        <div class="card py-4 px-3">
+          <div class="d-flex gap-3">
+            <img src="../../../assets/images/invoice_logo.png" alt width="80"
+              class="rounded" />
+            <div class>
+              <p>News Title</p>
+              <div class="d-flex gap-2">
+                <p class="cardI14 ">Lorem Ipsum is simply dummy text of dummy
+                  text of the printing.</p>
+                <span class="material-icons"> more_vert </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card py-4 px-3">
+          <div class="d-flex gap-3">
+            <img src="../../../assets/images/invoice_logo.png" alt width="80"
+              class="rounded" />
+            <div class>
+              <p>News Title</p>
+              <div class="d-flex gap-2">
+                <p class="cardI14 ">Lorem Ipsum is simply dummy text of dummy
+                  text of the printing.</p>
+                <span class="material-icons"> more_vert </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card py-4 px-3">
+          <div class="d-flex gap-3">
+            <img src="../../../assets/images/invoice_logo.png" alt width="80"
+              class="rounded" />
+            <div class>
+              <p>News Title</p>
+              <div class="d-flex gap-2">
+                <p class="cardI14 ">Lorem Ipsum is simply dummy text of dummy
+                  text of the printing.</p>
+                <span class="material-icons"> more_vert </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 2 col 5 card -->
+    <div class="card card-statistic-2 px-2 py-2">
+      <div class="d-flex justify-content-between me-2 ms-1 mt-2">
+        <p class="polltext">Latest Blog</p>
+        <p class="cardI14 ">View Details</p>
+      </div>
+      <div class="d-flex flex-column">
+
+        <div class="card py-4 px-3">
+          <div class="d-flex gap-3">
+            <img src="../../../assets/images/invoice_logo.png" alt width="80"
+              class="rounded" />
+            <div class>
+              <p>Blog Name</p>
+              <div class="d-flex gap-2">
+                <p class="cardI14 ">Lorem Ipsum is simply dummy text of dummy
+                  text of the printing.</p>
+                <span class="material-icons"> more_vert </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card py-4 px-3">
+          <div class="d-flex gap-3">
+            <img src="../../../assets/images/invoice_logo.png" alt width="80"
+              class="rounded" />
+            <div class>
+              <p>Blog Name</p>
+              <div class="d-flex gap-2">
+                <p class="cardI14 ">Lorem Ipsum is simply dummy text of dummy
+                  text of the printing.</p>
+                <span class="material-icons"> more_vert </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card py-4 px-3">
+          <div class="d-flex gap-3">
+            <img src="../../../assets/images/invoice_logo.png" alt width="80"
+              class="rounded" />
+            <div class>
+              <p>Blog Name</p>
+              <div class="d-flex gap-2">
+                <p class="cardI14 ">Lorem Ipsum is simply dummy text of dummy
+                  text of the printing.</p>
+                <span class="material-icons"> more_vert </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>

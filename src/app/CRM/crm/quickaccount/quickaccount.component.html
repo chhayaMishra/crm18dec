@@ -1,0 +1,86 @@
+<div class="in">
+    <h2 class="welcome-msg">ACCOUNT INFORMATION
+ 
+    </h2>
+    
+    <p class="text-muted">Enter details to create your account</p>
+    <form class="validate-form" [formGroup]="AddformGroup" (ngSubmit)="onFormSubmit(AddformGroup.value)">
+        <section class="d-flex gap-2">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Account Name</mat-label>
+                <input matInput formControlName="AccountName" />
+                <mat-icon matSuffix> person</mat-icon>
+                <mat-error *ngIf="AddformGroup.get('AccountName').hasError(' ')">
+                    Account name is .
+                </mat-error>
+            </mat-form-field>
+        </section>
+        <section class="d-flex gap-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Phone</mat-label>
+                <input matInput formControlName="MainPhone" />
+                <mat-icon matSuffix>phone</mat-icon>
+                <mat-error *ngIf="AddformGroup.get('MainPhone').hasError(' ')">
+                    Phone is !
+                </mat-error>
+                <mat-error *ngIf="AddformGroup.get('MainPhone').hasError('pattern')">
+                    Phone must be 10 digit number!
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Website</mat-label>
+
+                <input matInput formControlName="Website" />
+                <mat-icon matSuffix>alternate_email</mat-icon>
+                <mat-error *ngIf="AddformGroup.get('Website').hasError(' ')">
+                    Website is
+                </mat-error>
+            </mat-form-field>
+        </section>
+        <section class="d-flex gap-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Fax</mat-label>
+                <input matInput formControlName="Fax" />
+                <mat-icon matSuffix>fax</mat-icon>
+                <mat-error *ngIf="AddformGroup.get('Fax').hasError(' ')">
+                    Fax is .
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Ticker Symbol</mat-label>
+                <mat-icon matSuffix>extension</mat-icon>
+                <input matInput formControlName="TickerSymbol" />
+
+                <mat-error *ngIf="AddformGroup.get('TickerSymbol').hasError(' ')">
+                    Ticker Symbol is
+                </mat-error>
+            </mat-form-field>
+        </section>
+        <section class="d-flex gap-4">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Parent Account</mat-label>
+
+                <input matInput formControlName="ParentAccount" />
+                <mat-icon matSuffix>group</mat-icon>
+                <mat-error *ngIf="AddformGroup.get('ParentAccount').hasError(' ')">
+                    Parent Account is .
+                </mat-error>
+            </mat-form-field>
+       
+        </section>
+      
+        <section class="d-flex gap-2" style="float: right">
+
+            <app-button [buttonstyle]="{ width: '139px' }" [buttonClass]="'submit'" text="Submit"
+                (click)="AddUtility(AddformGroup.value)">
+            </app-button>
+          
+            <app-button [buttonstyle]=" {'width': '139px'}" [buttonClass]="'submit'" text="Cancel" (click)="CloseEvent()">
+            </app-button>
+  
+  
+        </section>
+    </form>
+</div>

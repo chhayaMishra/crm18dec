@@ -1,0 +1,93 @@
+<div class="buttonSectionEnd">
+  <app-button [buttonClass]="'submit'" [type]="'button'" text="Create Holiday Group"
+    (click)="addUpdateHolidayGroupPopup(addUpdateHolidayGroupContent)"></app-button>
+</div>
+
+<div class="holidayGroupBlock">
+  <div class="row">
+    <div class="col-lg-2">
+      <div class="holidayGroupHeading mb-3">
+        <div class="holidayGroupInfo">
+          <div class="card cursor-pointer p-3" *ngFor="let item of holidayGroupList | paginate : config; let i=index"
+            (click)="holidayGroupSelection(item.groupId)" [ngClass]="item.className">
+            <div class="infoSection">
+              <div class="holidayGroupName">
+                {{item.title}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-10">
+      <div class="card showHolidayGroupInfo p-3">
+        <span class="holidayGroupName">{{holidayGroupInfo?.title}}</span>
+        <div class="d-flex gap-2">
+          <i class="fa fa-edit"
+            (click)="addUpdateHolidayGroupPopup(addUpdateHolidayGroupContent, holidayGroupInfo?.groupId)"></i>
+          <i class="fa fa-trash" (click)="deleteHolidayGroup(holidayGroupInfo?.groupId)"></i>
+        </div>
+      </div>
+      <mat-tab-group>
+        <mat-tab [label]="item.name" *ngFor="let item of tabs">
+          <app-add-holiday-in-holiday-group *ngIf="item.id == 1" [groupId]="selectedHolidayGroupId">
+          </app-add-holiday-in-holiday-group>
+          <app-assign-employee-to-holiday-group *ngIf="item.id == 2" [groupId]="selectedHolidayGroupId">
+          </app-assign-employee-to-holiday-group>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #addUpdateHolidayGroupContent let-modal>
+  <div class=" modal-header" style="background: #eee; padding: 14px">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #000">{{groupId ? 'Update' : 'Add'}} Holiday Group
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="addUpdateHolidayGroupForm">
+    <div class="modal-body">
+      <div class=" upload">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Holiday Group Name</mat-label>
+                  <input matInput appTrimAndPreventFirstSpac formControlName="title">
+                  <mat-error
+                    *ngIf="holidayGroup.title.errors && (holidayGroup.title.dirty || holidayGroup.title.touched || submitted)">
+                    <small *ngIf="holidayGroup.title.errors.required">
+                      Holiday Group Name is required
+                    </small>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Description</mat-label>
+                  <input matInput appTrimAndPreventFirstSpac formControlName="description">
+                  <mat-error
+                    *ngIf="holidayGroup.description.errors && (holidayGroup.description.dirty || holidayGroup.description.touched || submitted)">
+                    <small *ngIf="holidayGroup.description.errors.required">
+                      Description is required
+                    </small>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <app-button [buttonClass]="'clear'" [text]="'Clear'" (click)="resetForm()"></app-button>
+      <app-button [buttonClass]="'submit'" [text]="groupId ? 'Update':'Submit'" [type]="'submit'"
+        (click)="addUpdateHolidayGroup(addUpdateHolidayGroupForm)"></app-button>
+    </div>
+  </form>
+</ng-template>

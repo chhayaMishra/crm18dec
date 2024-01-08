@@ -1,0 +1,373 @@
+<div class="in">
+    <mat-drawer-container class="innercontent">
+        <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
+            <div style="padding: 20px">
+                <h1 mat-dialog-title class="text-center" *ngIf="isEditing == false">Add Utility </h1>
+                <h1 mat-dialog-title class="text-center" *ngIf="isEditing == true">Edit Utility </h1>
+                <div>
+                    <form [formGroup]="AddformGroup" (ngSubmit)="onFormSubmit(AddformGroup.value)">
+                        <!-- Add Utility form -->
+                        <!-- <div class="row" *ngIf="Addform == true">
+                            <div class="col-md-6" >
+                                <div class="col-md-6" > <mat-form-field>
+                                        <mat-label>Utility Name</mat-label>
+                                        <input matInput formControlName="utilityName" class="inputcssfont">
+                                    </mat-form-field></div>
+                                <div class="col-md-6"> <mat-form-field>
+                                        <mat-label>User Name</mat-label>
+                                        <input matInput formControlName="userName" class="inputcssfont">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <mat-label>Server IP</mat-label>
+                                        <input matInput formControlName="serverIp" class="inputcssfont">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <mat-label>Link URL</mat-label>
+                                        <input matInput formControlName="linkUrl" class="inputcssfont">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <mat-label>Utility Token</mat-label>
+                                        <textarea matInput formControlName="userToken" class="inputcssfont"></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <mat-label>Company Name</mat-label>
+                                        <mat-select (selectionChange)="getComanySelect($event)">
+                                          <mat-option *ngFor="let comp of ComanyList" [value]="comp">
+                                            {{comp.companyDomain}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex">
+                                    <div class=""> 
+                                       <mat-label>
+                                        Accept Terms of Service
+                                    </mat-label> 
+                                </div>
+                                    <div class=""> 
+                                        <mat-slide-toggle formControlName="isEnabled">Accept Terms of Service</mat-slide-toggle>
+                                   <switch name="enabled" ng-model="enabled" ng-change="changeCallback"></switch> 
+                                </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- Add End Utility form -->
+
+                        <!-- <div class="row" *ngIf="isEditing == false">
+                            <div class="col-md-6">
+                                <mat-form-field>
+                                    <mat-label>Utility Name</mat-label>
+                                    <input matInput formControlName="utilityName" class="inputcssfont">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field>
+                                    <mat-label>User Name</mat-label>
+                                    <input matInput formControlName="userName" class="inputcssfont">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="isEditing == false">
+                            <div class="col-md-6">
+                                <mat-form-field>
+                                    <mat-label>Server IP</mat-label>
+                                    <input matInput formControlName="serverIp" class="inputcssfont">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field>
+                                    <mat-label>Link URL</mat-label>
+                                    <input matInput formControlName="linkUrl" class="inputcssfont">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="isEditing == false">
+                            <div class="col-md-6">
+                                <mat-form-field>
+                                    <mat-label>Utility Token</mat-label>
+                                    <textarea matInput formControlName="userToken" class="inputcssfont"></textarea>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field>
+                                    <mat-label>Company Name</mat-label>
+                                    <mat-select formControlName="ComanyName"
+                                        (selectionChange)="getComanySelect($event)">
+                                        <mat-option *ngFor="let comp of ComanyList" [value]="comp.companyDomain">
+                                            {{comp.companyDomain}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="isEditing == false">
+                            <div class="col-md-6">
+                                <div class="d-flex">
+                                    <div class=""> -->
+                        <!-- <mat-label>
+                            Accept Terms of Service
+                        </mat-label> -->
+                        <!-- </div> -->
+                        <!-- <div class="">
+                                        <mat-slide-toggle formControlName="isEnabled">Accept Terms of
+                                            Service</mat-slide-toggle> -->
+                        <!-- <switch name="enabled" ng-model="enabled" ng-change="changeCallback"></switch> -->
+                        <!-- </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+
+                        <div class="row" *ngIf="isEditing == false">
+                            <section class="d-flex gap-2">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Utility Name</mat-label>
+                                    <input matInput formControlName="utilityName" class="inputcssfont">
+
+
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>User Name</mat-label>
+                                    <input matInput formControlName="userName" class="inputcssfont">
+                                </mat-form-field>
+                            </section>
+
+
+                            <section class="d-flex gap-2">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Server IP</mat-label>
+                                    <input matInput formControlName="serverIp" class="inputcssfont">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Link URL</mat-label>
+                                    <input matInput formControlName="linkUrl" class="inputcssfont">
+                                </mat-form-field>
+                            </section>
+
+
+
+                            <section class="d-flex gap-2">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Utility Token</mat-label>
+                                    <textarea matInput formControlName="userToken" class="inputcssfont"></textarea>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Company Name</mat-label>
+                                    <mat-select formControlName="ComanyName"
+                                        (selectionChange)="getComanySelect($event)">
+                                        <mat-option *ngFor="let comp of ComanyList" [value]="comp.companyDomain">
+                                            {{comp.companyDomain}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </section>
+
+
+                            <section class="d-flex gap-2">
+                                <mat-slide-toggle formControlName="isEnabled">Accept Terms of
+                                    Service</mat-slide-toggle>
+                            </section>
+                        </div>
+
+                        <!-- Edit Utility form -->
+                        <div class="row" *ngIf="isEditing == true">
+                            <div class="col-md-6">
+                                <div class="col-md-6"> <mat-form-field>
+                                        <mat-label>Utility Name</mat-label>
+                                        <input matInput formControlName="utilityName" class="inputcssfont">
+                                    </mat-form-field></div>
+                                <div class="col-md-6"> <mat-form-field>
+                                        <mat-label>User Name</mat-label>
+                                        <input matInput formControlName="userName" class="inputcssfont">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <mat-label>Server IP</mat-label>
+                                        <input matInput formControlName="serverIp" class="inputcssfont">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <mat-label>Link URL</mat-label>
+                                        <input matInput formControlName="linkUrl" class="inputcssfont">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <mat-label>Utility Token</mat-label>
+                                        <textarea matInput formControlName="userToken" class="inputcssfont"></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <mat-label>Company Name</mat-label>
+                                        <mat-select formControlName="ComanyName"
+                                            (selectionChange)="getComanySelect($event)">
+                                            <mat-option *ngFor="let comp of ComanyList" [value]="comp.companyDomain">
+                                                {{comp.companyDomain}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <!-- <mat-label>
+                                            Accept Terms of Service
+                                        </mat-label> -->
+                                        </div>
+                                        <div class="">
+                                            <mat-slide-toggle formControlName="isEnabled">Accept Terms of
+                                                Service</mat-slide-toggle>
+                                            <!-- <switch name="enabled" ng-model="enabled" ng-change="changeCallback"></switch> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Edit End Utility form -->
+                    </form>
+                </div>
+                <section class="d-flex gap-2 me-4 mt-2" style="float: right">
+                    <div mat-dialog-actions>
+                        <button mat-button (click)="onNoClick()" style="color: #4691FF; margin: 15px;
+                    border: 1px solid #4691FF;">Cancel</button>
+                        <button mat-button cdkFocusInitial (click)="AddUtility()" style="background: #4691FF;
+                    color: #fff;" *ngIf="isEditing == false">Add</button>
+                        <button mat-button cdkFocusInitial (click)="EditUtility()" style="background: #4691FF;
+                      color: #fff;" *ngIf="isEditing == true">Update</button>
+                    </div>
+                </section>
+            </div>
+        </mat-drawer>
+        <mat-drawer-content>
+            <mat-card class="cardWithShadow theme-card" style="height: auto !important;">
+                <mat-card-content class="b-t-1">
+
+                    <div class="container-fluid mainTableData" style="width: 100%; overflow-x: auto">
+                        <div class="container-fluid mainTableData" style="width: 100%;
+                overflow-x: auto;">
+                            <span style="display: inline-block; width: 100%">
+                                <mat-accordion>
+                                    <section matSort class="mat-elevation-z2 mat-header-row" style="width: 100%;">
+                                        <table class="table" style="border: none;">
+                                            <thead>
+                                                <tr>
+                                                    <!-- <th scope="col" class="text-center">Sr.No</th> -->
+                                                    <th scope="col" class="text-left"
+                                                        style="border: none;    width: 25%;">Company Name</th>
+                                                    <!-- <th scope="col" class="text-center">GST Number</th> -->
+                                                    <!-- <th scope="col" class="text-center">Register Address</th> -->
+                                                    <th scope="col" class="text-left"
+                                                        style="border: none;    width: 25%;">Register Email</th>
+                                                    <th scope="col" class="text-right"
+                                                        style="border: none;    width: 25%;">Created On</th>
+                                                    <th scope="col" class="text-right"
+                                                        style="border: none;    width: 25%;">
+                                                        <!-- <p style="margin: 0 0px -10px 0;">Add</p> -->
+                                                        <!-- <p style="margin: 0 0px -10px 0;"> <b><mat-icon
+                                                                    (click)="openDialog()" class="ml-4"
+                                                                    style="font-weight:600;">add</mat-icon> </b></p> -->
+
+                                                        <button mat-icon-button (click)="openAddDrawer()">
+                                                            <mat-icon>add</mat-icon>
+                                                        </button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </section>
+                                    <mat-expansion-panel *ngFor="let comp of ComapnydetailsData; let i = index;"
+                                        style="background: #F8F8F8;padding-bottom:5px;padding-top: 5px; padding-left:0;width: 100%;">
+                                        <mat-expansion-panel-header style="background:  #E9F4FF;padding: 0 10px 0 0;">
+                                            <section class="mat-row" style="width: 100%;">
+                                                <span
+                                                    class="mat-cell text-left spancls">{{comp.registerCompanyName}}</span>
+                                                <span class="mat-cell text-left spancls">{{comp.registerEmail}}</span>
+                                                <span class="mat-cell text-right spancls">{{comp.createdOn|date}}</span>
+                                                <!-- <span
+                                                    class="mat-cell text-right spancls mr-4"><mat-icon>menu_open</mat-icon></span> -->
+                                            </section>
+                                        </mat-expansion-panel-header>
+                                        <div>
+                                            <table class="table">
+                                                <thead style="background-color: #F0F0F0;">
+                                                    <tr>
+                                                        <th scope="col">Sr.No</th>
+                                                        <th scope="col">Utility Name</th>
+                                                        <th scope="col">Link URL</th>
+                                                        <th scope="col">User Email</th>
+                                                        <th scope="col">User Token</th>
+                                                        <th scope="col">Server IP</th>
+                                                        <th scope="col">Enabled</th>
+                                                        <th scope="col"
+                                                            style="display: flex; justify-content: space-around;">
+                                                            <p style="margin: 0 0px -10px 0;">Action</p>
+                                    <!-- <p style="margin: 0 0px -10px 0;"> <b><mat-icon (click)="openDialog(comp)" class="ml-4" style="font-weight:600;">add</mat-icon></b></p> -->
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody style="background-color:white">
+                                                    <tr *ngFor="let utility of comp.utilities; let j=index;">
+                                                        <th scope="row">{{j+1}}</th>
+                                                        <td>
+                                                            <p>{{utility.utilityName}}</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>{{utility.linkUrl}}</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>{{utility.userName}}</p>
+                                                        </td>
+                                                        <td>
+                                                            <p style="width: 400px;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;">{{utility.userToken}}</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>{{utility.serverIp}}</p>
+                                                        </td>
+                                                        <td>
+                                                            <p> <mat-slide-toggle
+                                                                    [(ngModel)]="utility.isEnabled"></mat-slide-toggle>
+                                                            </p>
+                                                        </td>
+                                                        <td style="display: flex;justify-content: space-around;">
+                                                            <p><mat-icon
+                                                                    (click)="openEditDrawer(utility)">edit</mat-icon>
+                                                            </p>
+                                                            <p><mat-icon
+                                                                    (click)="DeleteUtility(utility.utilityId)">delete</mat-icon>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </span>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>

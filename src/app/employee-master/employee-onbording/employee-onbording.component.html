@@ -1,0 +1,57 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3">
+    <div class="headingSection">
+      <h3>Employee Onbording</h3>
+    </div>
+    <div class="searchSection d-flex gap-3">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Filter by status</mat-label>
+        <mat-select multiple [(ngModel)]="statusId" (selectionChange)="statusSelection($event.value)">
+          <mat-option value="0">Pending</mat-option>
+          <mat-option value="1">Employee Pending</mat-option>
+          <mat-option value="2">HR Pending</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput appTrimAndPreventFirstSpac [(ngModel)]="searchString"
+          (input)="searchInput($event.target.value)">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="p-3">
+    <table class="table display product-overview mb-30" id="support_table">
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Employee Name</th>
+          <th>Contact no</th>
+          <th>Personal Mail</th>
+          <th>Official Mail</th>
+          <th>Onboarding</th>
+          <th>Added By</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of onbordingInformation?.tableData | paginate:config; let i = index;">
+          <td>{{ (config.currentPage-1)*config.itemsPerPage+i+1 }}</td>
+          <td>{{item.displayName}}</td>
+          <td>{{item.mobilePhone}}</td>
+          <td>{{item.personalEmail}}</td>
+          <td>{{item.officeEmail}}</td>
+          <td>{{item.status}}</td>
+          <td>{{item.addedBy}}<br><small>{{item.createdOn | date : 'mediumDate'}}</small></td>
+          <td>
+            <i class="fa fa-edit" aria-hidden="true" (click)="updateOnbordingEmployee(item.employeeOnBoardingId)"></i> &nbsp;
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator showFirstLastButtons [length]="config.totalItems" [pageSize]="config.itemsPerPage"
+      [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChanged($event)">
+    </mat-paginator>
+  </div>
+</div>

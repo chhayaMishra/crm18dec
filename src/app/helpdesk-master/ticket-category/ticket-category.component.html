@@ -1,0 +1,75 @@
+<div class="innercontent mt-5 ms-2">
+  <div class="d-flex justify-content-between ms-3 me-3 flex-wrap">
+    <div class="d-grid">
+      <h3 class="textannoucement1">Ticket Category</h3>
+      <span>Ticket category help in classification to ticket</span>
+      <span>{{categoryType ? 'Active' : 'In-Active'}} Tickets Categories: {{ticketCategoryList.length}}</span>
+    </div>
+    <div class="d-flex gap-3">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Category Type</mat-label>
+        <mat-select [(ngModel)]="categoryType" (selectionChange)="getallticketcategory($event.value)">
+          <mat-option [value]="true">Active Category</mat-option>
+          <mat-option [value]="false">Inactive Category</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <app-button [buttonClass]="'submit'" text="Add Ticket Category" (click)="addUpdateTicketCategory()">
+      </app-button>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-lg-3" *ngFor="let data of ticketCategoryList">
+      <div class="card p-3">
+        <div class="d-flex justify-content-between">
+          <p class="graphleaverh" [matTooltip]="data.categoryName.length > 20 ? data.categoryName : ''">
+            {{data.categoryName.length < 20 ? data.categoryName : (data.categoryName | slice : 0 : 20)+ '...' }}</p>
+              <i class="fa fa-edit" (click)="addUpdateTicketCategory(data.categoryId)"></i>
+        </div>
+        <div class="details">
+          <p [matTooltip]="data.description.length > 34 ? data.description : '' ">
+            {{data.description.length < 34 ? data.description : (data.description | slice : 0 : 34)+ '...' }} </p>
+        </div>
+        <hr>
+        <div class="team">
+          <mat-label>Category Head</mat-label>
+          <div class="teamSection p-2">
+            <span class="teamEmployees" [matTooltip]="data.categoryHead">
+              {{data.categoryHead | shortName}}
+            </span>
+          </div>
+          <hr>
+          <mat-label>Helping Team</mat-label>
+          <div class="row gap-2 p-2 scrollSection">
+            <div class="teamSection" *ngFor="let item of data.employeeNameList" [matTooltip]="item">
+              <span class="teamEmployees">{{item | shortName}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="pb-4">
+          <mat-accordion mutli style="position: absolute; width: 90%;">
+            <mat-expansion-panel style="background: #F7F7F7;z-index: 1" [disabled]="data.subCategory.length == 0">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Subcategories Count : {{data.subCategory.length}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <span *ngIf="data.subCategory.length != 0">
+                <span *ngFor="let subcategory of data.subCategory;let i= index">
+                  <p>({{i+1}}){{' '+subcategory.subCategoryname}}</p>
+                </span>
+              </span>
+              <span *ngIf="data.subCategory.length == 0">
+                <p>No subcategory found
+                <p>
+              </span>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+        <div class="d-flex mt-5">
+          <p class="p-text">Created By : </p> &nbsp;&nbsp;<span>{{data.createdBy}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

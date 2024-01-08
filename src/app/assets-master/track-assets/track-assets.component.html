@@ -1,0 +1,167 @@
+<table class="table display product-overview mb-30" id="support_table" style="border-spacing: 3px;">
+  <thead>
+    <tr>
+      <th>S No.</th>
+      <th>Assign To</th>
+      <th>Department</th>
+      <th>Total Amount</th>
+      <th>Physical Assets</th>
+      <th>Digital Assets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of assignAssetsList  | paginate : config; let i = index">
+      <td>{{(config.currentPage - 1) * config.itemsPerPage + i + 1}}</td>
+      <td>{{item.employeeName}}</td>
+      <td>{{item.department}}</td>
+      <td>{{item.totalAmount}}</td>
+      <td style="width: 30%;">
+        <div class="d-flex gap-4" *ngIf="item.physicalsAssets.length > 0">
+          <p class="boldWord">Count: {{item.physicalsAssets.length}}</p>
+          <p class="boldWord">Amount: {{item.totalPhysicalAssetsAmount}}</p>
+        </div>
+        <div class="grid-container">
+          <div class="grid-item" *ngFor="let physical of item.physicalsAssets">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-3 p-0">
+                  <div class="asseticon">
+                    <img [src]="api +'/'+ physical.assetIconImgUrl" width="50px" height="50px"
+                      *ngIf="physical.assetIconImgUrl">
+                    <mat-icon *ngIf="!physical.assetIconImgUrl">{{physical.assetsIconName}}</mat-icon>
+                  </div>
+                </div>
+                <div class="col-lg-7">
+                  <p class="assetsName" [matTooltip]="physical.itemName | showtooltip : 9">{{physical.itemName |
+                    wordslimit : 9}}</p>
+                  <label class="assetsCode">{{physical.itemCode}}</label>
+                </div>
+                <div class="col-lg-2 p-0">
+                  <i class="fa-solid fa-ellipsis fa-rotate-90" style="margin-left: -5px;"
+                    [matMenuTriggerFor]="menu"></i>
+                  <mat-menu #menu="matMenu">
+                    <a mat-menu-item (click)="openPopUpForRecoverAssets(recoverAssetsContent,physical)">Recover
+                      Asset</a>
+                  </mat-menu>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td style="width: 30%;">
+        <div class=" d-flex gap-4" *ngIf="item.digitalAssets.length > 0">
+          <p class="boldWord">Count: {{item.digitalAssets.length}}</p>
+          <p class="boldWord">Amount: {{item.totalDigitalAssetsAmount}}</p>
+        </div>
+        <div class="grid-container">
+          <div class="grid-item" *ngFor="let digital of item.digitalAssets">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-3 p-0">
+                  <div class="asseticon">
+                    <img [src]="api +'/'+ digital.assetIconImgUrl" width="50px" height="50px"
+                      *ngIf="digital.assetIconImgUrl">
+                    <mat-icon *ngIf="!digital.assetIconImgUrl">{{digital.assetsIconName}}</mat-icon>
+                  </div>
+                </div>
+                <div class="col-lg-7">
+                  <p class="assetsName" [matTooltip]="digital.itemName | showtooltip : 9">{{digital.itemName |
+                    wordslimit:9}}</p>
+                  <label class="assetsCode">{{digital.itemCode}}</label>
+                </div>
+                <div class="col-lg-2 p-0">
+                  <i class="fa-solid fa-ellipsis fa-rotate-90" style="margin-left: -5px;"
+                    [matMenuTriggerFor]="menu"></i>
+                  <mat-menu #menu="matMenu">
+                    <a mat-menu-item (click)="openPopUpForRecoverAssets(recoverAssetsContent,digital)">Recover
+                      Asset</a>
+                  </mat-menu>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<mat-paginator showFirstLastButtons [length]="config.totalItems" [pageSize]="config.itemsPerPage"
+  [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="pageChanged($event)">
+</mat-paginator>
+
+<ng-template #recoverAssetsContent let-modal>
+  <div class=" modal-header" style="background: #eee; padding: 14px">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #000">Recover the Asset From {{employeeName}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: #000;font-size: 26px;">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="recoverAssetsForm">
+    <div class="modal-body">
+      <div class=" upload">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-6">
+                  <mat-label>ASSIGNED TO</mat-label><br>
+                  <p autocomplete="on">
+                    <input type="text" formControlName="assignedToName" autocomplete="on" style="border: none;"
+                      readonly>
+                  </p>
+                </div>
+                <div class="col-lg-6">
+                  <mat-label>CONDITION</mat-label><br>
+                  <p autocomplete="on">
+                    <input type="text" formControlName="conditionName" autocomplete="on" style="border: none;" readonly>
+                  </p>
+                </div>
+                <div class="col-lg-12">
+                  <mat-label>Condition of the asset<span class="text-danger">*</span></mat-label>
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-select name="planType" formControlName="conditionId">
+                      <mat-option *ngFor="let item of conditionList" [value]="item.value">{{item.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="recovery.conditionId.errors && (recovery.conditionId.dirty || recovery.conditionId.touched || submitted) ">
+                      <span *ngIf="recovery.conditionId.errors.required">Asset type is required</span>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-12">
+                  <div class="row ml-2">
+                    <div class="form-group col-md-12">
+                      <p>Upload Images Maximum 5</p>
+                      <input type="file" id="file" #fileInput multiple="true"
+                        (change)="uploadFiles($event.target.files)">
+                      <div *ngIf="filesArray.length > 0" class="mt-2 mb-2 ml-2" style="display: flex;">
+                        <div class="ml-2" *ngFor="let item of filesArray; let i = index">
+                          <div *ngIf="item">
+                            <i class="fa fa-times" aria-hidden="true" style="cursor: pointer;"
+                              (click)="deleteImage(i)"></i>
+                          </div>
+                          <div class="card-img-top1 p-2" *ngIf="item">
+                            <img class="displayimg" src="{{api +'/'+ item}}" alt="" width="75" height="75">
+                          </div>
+                          <div class="card-img-top1" *ngIf="!item">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <app-button [buttonClass]="'submit'" text="Recover"
+        (click)="recoverAssetsFromEmployee(recoverAssetsForm)"></app-button>
+      <app-button [buttonClass]="'clear'" text="Cancel"></app-button>
+    </div>
+  </form>
+</ng-template>

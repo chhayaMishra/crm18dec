@@ -1,0 +1,20 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th *ngFor="let item of tableHead">{{item.name}}</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of tableDetails;let i = index">
+      <td *ngFor="let data of tableHead">{{item[data.id]}}</td>
+      <td>
+        <span class="d-flex gap-3"> 
+          <i class="fa fa-edit" title="edit"></i>
+          <i class="fa fa-trash" title="delete"></i>
+        </span>
+       
+      </td>
+    </tr>
+  </tbody>
+</table>
